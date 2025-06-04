@@ -7,10 +7,12 @@ body {
   color: #000;
 }
 header {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
   background-color: #fff;
 }
 .lab {
