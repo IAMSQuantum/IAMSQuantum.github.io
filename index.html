@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Welcome to Lab 110 – Lab 110</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<div class="lab">
+<img alt="Quantum Metrology Lab" src="qm_lab_logo.png"/>
+<div class="lab-title">Quantum Metrology Lab</div>
+</div>
+<div class="lab">
+<img alt="Hybrid Atom-Nanophotonics Lab" src="nanophotonic_lab_logo.png"/>
+<div class="lab-title">Hybrid Atom-Nanophotonics Lab</div>
+</div>
+</header>
+<nav>
+<a href="index.html">Home</a>
+<a href="research.html">Research</a>
+<a href="team.html">Team</a>
+<a href="publications.html">Publications</a>
+<a href="projects.html">Student Projects</a>
+<a href="gallery.html">Gallery</a>
+<a href="join.html">Join Us</a>
+<a href="contact.html">Contact</a>
+</nav>
+<main>
+<h1>Welcome to the IAMS Ytterbium Lab</h1>
+<p>We develop quantum technology using ultracold ytterbium atoms.</p>
+<h1>Positions Available!</h1>
+<p>We have projects available for undergraduate, masters and PhD students. Scholarships and paid internships available for local and international students - see the Taiwan International Graduate Program (TIPG).</p>
+<p>Paid research assistant positions available. Please contact us in you want to know more.</p>
+</main>
+<style>
+.slideshow-wrapper {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin: 20px auto;
+  background: black;
+  overflow: hidden;
+
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+.slideshow-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  
+  z-index: 0;
+
+  object-fit: contain;
+  background-color: black;
+  z-index: 0;
+
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+  z-index: 0;
+}
+.slideshow-image.active {
+  
+  z-index: 1;
+
+  opacity: 1;
+  z-index: 1;
+}
+.caption {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 0;
+  font-size: 16px;
+}
+.dots-container {
+  text-align: center;
+  margin-top: 10px;
+}
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+.dot.active {
+  background-color: #717171;
+}
+</style>
+<div class="slideshow-wrapper" id="slideshow-wrapper">
+<div class="caption" id="caption" style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: white; font-weight: bold; background: rgba(0, 0, 0, 0.5); padding: 5px 0; font-size: 16px; z-index: 2;"></div>
+</div>
+<div class="dots-container" id="dots-container"></div>
+<script>
+const imageData = [
+  { src: "Home01.jpg", caption: "Dinner in Taiwan:-) - February 2025." },
+  { src: "Home02.jpg", caption: "Laser systems for cooling trapping and controlling ytterbium atoms - April 2025." },
+  { src: "Home03.jpg", caption: "Squirrels having lunch near our lab - February 2025." },
+  { src: "Home04.jpg", caption: "Ytterbium lab renovation - November 2024." },
+  { src: "Home05.jpg", caption: "Control and monitoring computers - April 2025." },
+  { src: "Home06.jpg", caption: "Laser system for cooling, trapping and controlling ytterbium atoms - April 2025." },
+  { src: "Home07.jpg", caption: "Ytterbium lab with new pumping station - April 2025." },
+  { src: "Home08.jpg", caption: "" },
+  { src: "Home09.jpg", caption: "Two new optical tables just arrived - February 2025." },
+  { src: "Home10.jpg", caption: "Garden next to our lab - February 2025." },
+  { src: "Home11.jpg", caption: "Discussion corner next to our lab - February 2025." },
+  { src: "Home12.jpg", caption: "Garden next to our lab - February 2025." }
+];
+
+const wrapper = document.getElementById("slideshow-wrapper");
+const captionBox = document.getElementById("caption");
+const dotsContainer = document.getElementById("dots-container");
+
+let currentSlide = 0;
+let images = [];
+
+function showSlide(index) {
+  images.forEach((img, i) => {
+    img.classList.toggle("active", i === index);
+    dotsContainer.children[i].classList.toggle("active", i === index);
+  });
+  captionBox.innerText = imageData[index].caption;
+  currentSlide = index;
+}
+
+function nextSlide() {
+  const next = (currentSlide + 1) % imageData.length;
+  showSlide(next);
+}
+
+function startSlideshow() {
+  setInterval(nextSlide, 3000);
+}
+
+function initSlideshow() {
+  imageData.forEach((data, index) => {
+    const img = document.createElement("img");
+    img.src = data.src + '?cb=' + new Date().getTime();
+    img.className = "slideshow-image";
+    if (index === 0) img.classList.add("active");
+    wrapper.insertBefore(img, captionBox);
+    images.push(img);
+
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    if (index === 0) dot.classList.add("active");
+    dot.onclick = () => showSlide(index);
+    dotsContainer.appendChild(dot);
+  });
+  captionBox.innerText = imageData[0].caption;
+  startSlideshow();
+}
+
+window.onload = initSlideshow;
+</script>
+
+
+<footer style="background-color:white; color:black; padding:20px; text-align:center;">
+<div style="display:flex; flex-direction:column; align-items:center;">
+<div style="margin-bottom:10px;">
+<div style="display:flex; justify-content:center; align-items:center; gap:30px;">
+<a href="https://www.sinica.edu.tw/en" target="_blank">
+<img alt="Academia Sinica" class="academia-logo" src="AcademiaSinica.png"/>
+</a>
+<a href="https://www.iams.sinica.edu.tw/en/" target="_blank">
+<img alt="IAMS" class="iams-logo" src="IAMSLogo.jpg"/>
+</a>
+</div>
+</div>
+<div>
+<p>Institute of Atomic and Molecular Sciences, Academia Sinica</p>
+<p>Tel: +886-2-2366-8236 | Address: No. 1, Roosevelt Rd. Sec. 4, Taipei 10617, Taiwan</p>
+</div>
+</div>
+</footer>
+</body>
+</html>
