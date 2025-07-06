@@ -5,6 +5,12 @@
 <meta charset="utf-8"/>
 <title>Our Research – Lab 110</title>
 <link href="style.css" rel="stylesheet"/>
+<style>
+  /* Increase line spacing for all paragraphs inside <main> */
+  main p {
+    line-height: 1.5;
+  }
+</style>
 </head>
 <body>
 <header>
@@ -28,16 +34,126 @@
 <a href="contact.html">Contact</a><a href="research_zh.html">繁體中文</a>
 </nav>
 <main>
-<h1>Our Research</h1>
+<!-- <h1>Motivation</h1> -->
+ 
+<h2>Motivation</h2>
 <p>
+    The advent of optical atomic clocks with fractional frequency uncertainties below <strong>10<sup>–18</sup></strong> 
+    has revolutionized frequency metrology — accumulating 1 sec error over a time span of the age of the universe. 
+    It simultaneously opened new avenues in quantum sensing and quantum information science. 
+    Among the leading platforms pushing this frontier are <strong>alkaline-earth(-like) (AEL) atoms</strong>, 
+    such as strontium and ytterbium. Their two-electron valence structure gives rise to a uniquely rich spectrum of 
+    optical transitions, ranging from broad, MHz-level lines to <strong>ultranarrow mHz clock transitions</strong> 
+    <em>(see figure)</em>. This spectrum allows for unprecedented control over atomic states — both internal and motional.
+</p>
+<p>
+    Crucially, the long-lived metastable states that underpin the ultranarrow clock transitions have not only 
+    enabled the most stable clocks to date, but also revealed a <strong>multidimensional qubit space, enabling</strong>, 
+    spanning ground state nuclear spin qubits, optical qubits, metastable hyperfine spin states, and metastable nuclear 
+    spin states. These features make AEL atoms exceptional candidates for next-generation quantum technologies that 
+    unify <strong>precision metrology</strong>, <strong>quantum simulation</strong>, and 
+    <strong>scalable quantum computing</strong>.
+</p>
+
+<style>
+  .image-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .image-box {
+    text-align: center;
+    width: 45%;
+  }
+  
+  .image-box img {
+    height: 300px;             /* Fixed height */
+    width: 100%;
+    object-fit: contain;       /* Preserve aspect ratio with padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: #fff;          /* Optional: clean background behind padding */
+  }
+  </style>
+  
+  <div class="image-row">
+    <div class="image-box">
+      <img src="Research01_SSBEC.png" alt="Ultracold SSBEC atom experiment">
+      <p><em>The first continuous Bose-Einstein Condensate [Nature (2022)].</em></p>
+    </div>
+    <div class="image-box">
+      <img src="Research02_Yb electronic states.png" alt="Transition diagram">
+      <p><em>Energy level diagram highlighting optical transitions used in AEL atoms.</em></p>
+    </div>
+  </div>
+
+  <style>
+    #cw-source ul {
+      line-height: 1.8;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    </style>
+
+  <section id="cw-source">
+    <p>
+      In 2022, the two PIs of our group (during their PhD) published the world’s first 
+      <strong>matter-wave analog of a continuous laser</strong> — a true continuous-wave (CW) 
+      <strong>atom laser</strong> — by developing new techniques to maintain a high-flux, 
+      near-quantum-degenerate source of alkaline-earth-like (AEL) atoms (Sr). This achievement marked 
+      a major milestone in continuous ultracold atom generation and 
+      <a href="https://doi.org/10.1038/s41586-022-04731-z" target="_blank">opened up</a> 
+      a new experimental paradigm.
+    </p>
+  
+    <p>
+      Naturally, a compelling question arises: how does this continuous source architecture reshape 
+      the landscape of quantum technology?
+    </p>
+  
+    <p>This motivates a series of key investigations:</p>
+    <ul>
+      <li>
+        Can we <strong>advance atomic clocks</strong> by replacing pulsed operation with 
+        <strong>continuous interrogation of optical qubits</strong>, potentially 
+        <a href="https://iopscience.iop.org/article/10.35848/1882-0786/ac0e16" target="_blank">enabling τ<sup>–1</sup> scaling 
+          in stability</a> or realizing a <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.102.163601" target="_blank">continuous superradiace on a mHz clock transition?</a>
+      </li>
+      <li>
+        Can we link neutral atom processing nodes, forming a Quantum networks?
+      </li>
+      <li>
+        Can the <strong>ultranarrow clock transitions</strong> be harnessed not just for spectroscopy, but also 
+        as precision tools to <strong>engineer entangled and many-body quantum states</strong>?
+      </li>
+      <li>
+        Can we build a continuous / <strong>scalable quantum processor</strong> using long-lived metastable states — 
+        and if so, how do we initialize, operate, and maintain such a system with high fidelity over time?
+      </li>
+    </ul>
+  
+    <p>
+      These are the guiding questions that shape our ongoing work. Our goal is to develop the core control tools 
+      and system architectures needed to turn continuous AEL sources into the backbone of future quantum sensors, 
+      simulators, and computing platforms.
+    </p>
+  </section>
+  
+
+
+<!-- <p>
     This is where our lab began, making the first continuous Bose-Einstein Condensate 
     <a href="https://doi.org/10.1038/s41586-022-04731-z" target="_blank">[Nature (2022)]</a>.
   </p>
-<img alt="BEC Experimental Setup" src="./SSBEC.jpg" style="width:100%; max-width:800px; display:block; margin:20px auto;"/>
-<div style="text-align:center; margin-top:20px;">
+<img alt="BEC Experimental Setup" src="./SSBEC.jpg" style="width:100%; max-width:800px; display:block; margin:20px auto;"/> -->
+<!-- <div style="text-align:center; margin-top:20px;">
 <img alt="Under Construction" src="./construction.png" style="width:200px;"/>
 <p><em>Under construction: more about our research coming soon.</em></p>
-</div>
+</div> -->
+
 </main>
 <footer style="background-color:white; color:black; padding:20px; text-align:center;">
 <div style="display:flex; flex-direction:column; align-items:center;">
