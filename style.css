@@ -1,149 +1,141 @@
 
+/* ==============================
+   Lab 110 — Cleaned stylesheet
+   - Removes duplicate rules
+   - Fixes stray brace
+   - Normalizes nav padding & spacing
+   - Keeps layout consistent across pages
+   ============================== */
+
+/* Base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  font-family: sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background: #fff;
   color: #000;
-  position: relative;
-  z-index: 0;
 }
+
+/* Header / Lab titles */
 header {
   padding: 20px;
   max-width: 900px;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  background: #fff;
 }
-.lab {
-  text-align: center;
-}
-.lab img {
-  height: 120px;
-  max-height: 22.5vh;
-}
-.lab-title {
-  margin-top: 5px;
-  font-weight: bold;
-}
+.lab { text-align: center; }
+.lab img { height: 120px; max-height: 22.5vh; width: auto; }
+.lab-title { margin-top: 6px; font-weight: 700; }
+
+/* Top Navigation */
 nav {
-  background-color: #222;
+  background: #222;
   padding: 12px 0;
   text-align: center;
-  overflow: visible;
   position: relative;
   z-index: 1;
 }
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 15px;
-  font-weight: bold;
-}
-nav a:hover {
-  text-decoration: underline;
-}
-main {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.footer-logo {
-  height: 120px;
-  width: auto;
-  margin: 0 15px;
-}
-
-.academia-logo {
-  height: 100px;
-  width: auto;
-  margin: 0 15px;
-}
-
-.iams-logo {
-  height: 120px;
-  width: auto;
-  margin: 0 15px;
-}
-
 .menu {
-  list-style-type: none;
+  list-style: none;
   margin: 0;
   padding: 0;
-  background-color: #333;
-  overflow: visible;
+  background: #333;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
+  gap: 4px;               /* consistent gap control */
 }
-
-.menu li {
-  position: relative;
-}
-
-.menu > li {
-  float: left;
-}
-
-.menu li a,
-.menu li span {
+.menu > li { position: relative; }
+.menu a,
+.menu span,
+.dropdown .dropbtn {
   display: block;
-  color: white;
-  text-align: center;
-  padding: 12px 20px;
+  color: #fff;
   text-decoration: none;
+  font-weight: 600;
+  padding: 10px 8px;      /* single, canonical padding */
   white-space: nowrap;
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
+}
+.menu a:hover,
+.menu span:hover { background: #111; }
+
+/* Active item underline */
+.menu a.active,
+.dropdown .dropbtn.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 700;
 }
 
-.menu li a:hover,
-.menu li span:hover {
-  background-color: #111;
-}
-
-/* Dropdown Styles */
+/* Dropdown */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #333; /* same as header */
-  min-width: 180px;
   top: 100%;
   left: 0;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  z-index: 9999;
-  padding: 0;
-  margin: 0;
+  min-width: 180px;
+  background: #333;
+  box-shadow: 0 8px 16px rgba(0,0,0,.2);
+  z-index: 999;
 }
-
-.dropdown-content li {
-  list-style: none;
-}
-
-.dropdown-content li a {
+.dropdown-content li { list-style: none; margin: 0; }
+.dropdown-content a {
   display: block;
-  width: 100%;              /* Ensures full width */
-  padding: 12px 16px;
+  width: 100%;
+  padding: 10px 12px;
   text-align: left;
-  color: white;
-  background-color: #333;
+  color: #fff;
   text-decoration: none;
-  box-sizing: border-box;   /* Include padding in width */
+  background: #333;
+}
+.dropdown-content a:hover { background: #111; }
+.dropdown:hover .dropdown-content { display: block; }
+
+/* Main */
+main {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.dropdown-content li a:hover {
-  background-color: #111; /* darker hover */
+/* Footer logos */
+.footer-logo { height: 120px; width: auto; margin: 0 15px; }
+.academia-logo { height: 100px; width: auto; margin: 0 15px; }
+.iams-logo     { height: 120px; width: auto; margin: 0 15px; }
+
+/* Publications lists */
+.pub-list { line-height: 1.5; padding-left: 1.2em; }
+.pub-list li { margin-bottom: 8px; }
+.pub-list .title { font-weight: 600; }
+.pub-list.selected li { margin-bottom: 10px; }
+.pub-list a.arxiv { font-size: .95em; margin-left: 6px; }
+a.pdf-local { font-size: .95em; margin-left: 6px; }
+
+/* Scholar icon */
+.scholar-icon { height: 16px; width: auto; vertical-align: -0.2em; }
+
+/* Contact page – PI cards */
+.pi-grid  { display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-start; }
+.pi-card  { display: flex; gap: 18px; align-items: center; max-width: 560px; }
+.pi-photo { width: 100px; height: auto; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.pi-text  { display: flex; flex-direction: column; gap: 6px; }
+.pi-name  { margin: 0; font-size: 1.4rem; }
+/*.pi-name-zh { font-size: 1.4rem; color: #333; }*/
+.pi-text { font-size: 0.9rem; } 
+.pi-lines div { margin: 2px 0; }
+.contact-block { margin-top: 28px; }
+
+@media (max-width: 900px) {
+  header { flex-direction: column; gap: 16px; }
+  .pi-card { max-width: 100%; }
+  .pi-photo { width: 180px; }
 }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-
+/* Utility (optional) */
+.hidden { display: none !important; }
+.center { text-align: center; }
