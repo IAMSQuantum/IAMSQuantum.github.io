@@ -21,7 +21,7 @@ body {
 /* Header / Lab titles */
 header {
   padding: 20px;
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -99,7 +99,7 @@ nav {
 /* Main */
 main {
   padding: 20px;
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -120,17 +120,23 @@ a.pdf-local { font-size: .95em; margin-left: 6px; }
 .scholar-icon { height: 16px; width: auto; vertical-align: -0.2em; }
 
 /* Contact page – PI cards */
-.pi-grid  { display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-start; }
-.pi-card  { display: flex; gap: 18px; align-items: center; max-width: 560px; }
+.pi-grid  { display: flex; flex-wrap: wrap; column-gap: 10px; row-gap: 28px; align-items: flex-start; }
+.pi-card  { display: flex; gap: 18px; align-items: center; max-width: 530px; }
 .pi-photo { width: 100px; height: auto; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
 .pi-text  { display: flex; flex-direction: column; gap: 6px; }
 .pi-name  { margin: 0; font-size: 1.4rem; }
 /*.pi-name-zh { font-size: 1.4rem; color: #333; }*/
-.pi-text { font-size: 0.9rem; } 
+.pi-text { font-size: 0.8rem; } 
 .pi-lines div { margin: 2px 0; }
 .contact-block { margin-top: 28px; }
 
-@media (max-width: 900px) {
+.pi-spacer {
+  visibility: hidden;   /* keeps space but hides content */
+  width: 255px;         /* adjust until equal to the longest card */
+  height: 0;            /* don’t add vertical space */
+}
+
+@media (max-width: 400px) {
   header { flex-direction: column; gap: 16px; }
   .pi-card { max-width: 100%; }
   .pi-photo { width: 180px; }
