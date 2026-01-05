@@ -32,6 +32,34 @@ header {
 .lab img { height: 120px; max-height: 22.5vh; width: auto; }
 .lab-title { margin-top: 6px; font-weight: 700; }
 
+.project-image {
+  width: 45%;
+  max-width: 420px;
+  margin: 0 0 20px 20px;
+  float: right;
+}
+
+.project-image.left {
+  float: left;
+  margin: 0 20px 20px 0;
+}
+
+/* Ensure sections don’t collapse */
+section::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+@media (max-width: 700px) {
+  .project-image {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 20px auto;
+  }
+}
+
 /* Top Navigation */
 nav {
   background: #222;
