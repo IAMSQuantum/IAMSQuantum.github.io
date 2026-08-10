@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>論文著作 — IAMS 鐿原子實驗室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lavender:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --indigo:#3B3664;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace;
+  min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden;
+}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%);}
+#stars{position:fixed; inset:0; z-index:0; pointer-events:none}
+.vig{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 80% 70% at 50% 45%, transparent 55%, rgba(0,0,0,.4) 88%, rgba(0,0,0,.65) 100%)}
+a{color:inherit}
+.topbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px clamp(20px,5vw,60px); background:rgba(2,6,4,.72);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--lavender); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap; text-shadow:0 0 12px rgba(62,130,142,.3)}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--lavender)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.45)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:1; flex:1; width:100%; display:flex; flex-direction:column}
+.hero{text-align:center; padding:46px 20px 6px}
+.hero .eyebrow{font-size:10.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--mint)}
+.hero h1{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(28px,4vw,46px);
+  text-transform:uppercase; letter-spacing:.3em; color:#FFF6F4; margin-top:10px;
+  text-shadow:0 0 16px rgba(255,235,237,.3), 0 0 50px rgba(62,130,142,.2)}
+.hero p{margin-top:12px; color:var(--ink-dim); font-size:13px; letter-spacing:.04em}
+.shelf-wrap{position:relative; flex:1; min-height:clamp(420px,56vh,560px);
+  display:flex; align-items:center; justify-content:center;
+  perspective:1600px; overflow:hidden; touch-action:pan-y; cursor:grab; user-select:none}
+.shelf-wrap.dragging{cursor:grabbing}
+.shelf{position:relative; transform-style:preserve-3d; width:0; height:0}
+.book{position:absolute; top:0; left:0; width:200px; height:280px;
+  margin:-140px 0 0 -100px;
+  transform-style:preserve-3d; transition:transform .05s linear;
+  will-change:transform; cursor:pointer; text-decoration:none}
+.book .cover{position:relative; width:100%; height:100%; border-radius:5px 9px 9px 5px;
+  overflow:hidden; box-shadow:-16px 18px 40px rgba(0,0,0,.55); background:var(--c1)}
+.book .cover::before{content:""; position:absolute; inset:0;
+  background:linear-gradient(150deg, var(--c1), var(--c2))}
+.book .cover::after{content:""; position:absolute; top:0; left:0; width:11px; height:100%;
+  background:linear-gradient(90deg, rgba(0,0,0,.32), rgba(255,255,255,.14) 55%, rgba(0,0,0,.14))}
+.book .sheen{position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+  opacity:0; transition:opacity .3s}
+.book.active .sheen{opacity:1}
+.book .c-inner{position:relative; z-index:2; height:100%; padding:20px 18px 16px;
+  display:flex; flex-direction:column; color:#fff}
+.book .journal{font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.85)}
+.book .rule{height:1px; margin:9px 0 12px; background:rgba(255,255,255,.4)}
+.book .title{font-family:'Exo 2',sans-serif; font-weight:400; font-size:15.5px; line-height:1.28;
+  letter-spacing:.01em; text-shadow:0 1px 8px rgba(0,0,0,.3);
+  display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden}
+.book .spacer{flex:1}
+.book .authors{font-size:9.5px; line-height:1.5; color:rgba(255,255,255,.8);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.book .year{font-family:'Exo 2',sans-serif; font-weight:200; font-size:30px; margin-top:8px;
+  color:rgba(255,255,255,.95); letter-spacing:.02em}
+.book .doi{position:absolute; z-index:4; bottom:-32px; left:50%; transform:translateX(-50%);
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--mint);
+  white-space:nowrap; opacity:0; transition:opacity .3s; pointer-events:none}
+.book.active .doi{opacity:1}
+.book .reflect{position:absolute; top:100%; left:0; width:100%; height:60%;
+  border-radius:5px 9px 9px 5px; background:linear-gradient(150deg, var(--c1), var(--c2));
+  transform:scaleY(-1); transform-origin:top; opacity:.16;
+  -webkit-mask:linear-gradient(#000, transparent 62%); mask:linear-gradient(#000, transparent 62%)}
+.controls{display:flex; align-items:center; justify-content:center; gap:18px; padding:6px 20px 10px}
+.controls button{font-family:'Space Mono',monospace; font-size:16px; color:var(--ink);
+  width:42px; height:42px; border-radius:50%; background:var(--panel-bg);
+  border:1px solid var(--line); backdrop-filter:blur(8px); cursor:pointer;
+  transition:border-color .2s, box-shadow .2s, transform .15s}
+.controls button:hover{border-color:rgba(166,201,182,.55); box-shadow:0 0 16px rgba(166,201,182,.25)}
+.controls button:active{transform:scale(.92)}
+.controls .count{font-size:11px; letter-spacing:.18em; color:var(--ink-dim); min-width:64px; text-align:center}
+.now-title{text-align:center; padding:2px 24px 30px; min-height:52px}
+.now-title .nt{font-family:'Exo 2',sans-serif; font-weight:300; font-size:16px; color:#FFF6F4;
+  letter-spacing:.02em; max-width:70ch; margin:0 auto; line-height:1.4}
+.now-title .nm{margin-top:6px; font-size:10.5px; letter-spacing:.1em; color:var(--ink-dim)}
+.now-title .nm a{color:var(--mint); text-decoration:none; border-bottom:1px dotted rgba(166,201,182,.5)}
+.now-title .nm a:hover{color:var(--lavender)}
+.hint{text-align:center; font-size:9.5px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--ink-dim); opacity:.6; padding-bottom:14px}
+footer{position:relative; z-index:1; border-top:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
+footer nav a:hover{color:var(--lavender)}
+
+.hero .scholar{margin-top:12px; font-size:11px; letter-spacing:.08em; color:var(--ink-dim)}
+.hero .scholar a{color:var(--mint); text-decoration:none; border-bottom:1px dotted rgba(166,201,182,.5)}
+.hero .scholar a:hover{color:var(--lavender)}
+.shelf-label{text-align:center; padding-top:18px;
+  font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:var(--ink-dim)}
+
+/* ---------- full list (the reading list) ---------- */
+.list-wrap{width:min(980px,100%); margin:0 auto; padding:8px clamp(20px,4vw,40px) 64px}
+.lsec-head{display:flex; align-items:center; gap:16px; margin:26px 0 6px}
+.lsec-head h2{font-family:'Exo 2',sans-serif; font-weight:300; font-size:15px;
+  letter-spacing:.4em; text-transform:uppercase; color:var(--lavender); white-space:nowrap}
+.lsec-head::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, rgba(62,130,142,.45), transparent)}
+.lsec-head .ln{font-size:10px; letter-spacing:.2em; color:var(--ink-dim)}
+.lsub{margin:26px 0 4px; font-size:10px; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--teal); display:flex; align-items:center; gap:12px}
+.lsub::after{content:""; flex:1; height:1px; background:rgba(255,235,237,.08)}
+.pub{display:grid; grid-template-columns:52px 1fr; gap:16px; align-items:baseline;
+  padding:13px 4px; border-bottom:1px dashed rgba(255,235,237,.09);
+  transition:background .2s}
+.pub:hover{background:rgba(255,235,237,.025)}
+.pub .py{font-size:12px; letter-spacing:.06em; color:var(--ink-dim)}
+.pub .pt{font-family:'Exo 2',sans-serif; font-weight:300; font-size:15px; line-height:1.4}
+.pub .pt a{color:#EFE9F0; text-decoration:none; transition:color .2s}
+.pub .pt a:hover{color:var(--mint)}
+.pub .pa{margin-top:4px; font-size:10.5px; line-height:1.7; color:var(--ink-dim); letter-spacing:.02em}
+.pub .pa b{color:#D8CEE0; font-weight:700}
+.pub .pv{margin-top:2px; font-size:10.5px; color:var(--teal); letter-spacing:.04em}
+.pub .pv a{color:var(--mint); text-decoration:none; border-bottom:1px dotted rgba(166,201,182,.4); margin-left:8px}
+.pub .pv a:hover{color:var(--lavender)}
+@media (max-width:560px){ .pub{grid-template-columns:1fr} .pub .py{opacity:.7} }
+
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.08)} to{opacity:1; transform:scale(1)}}
+body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
+@keyframes pageOut{to{opacity:0; transform:scale(.05)}}
+@media (max-width:760px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  .book{width:150px; height:210px; margin:-105px 0 0 -75px}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter,body.leave{animation:none}
+  .book{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+<canvas id="stars"></canvas>
+<div class="vig"></div>
+
+<header class="topbar">
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html" class="now" aria-current="page">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="publications_zh.html" class="zh">繁體中文</a>
+      <a href="../classic/publications-papers_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">IAMS 鐿原子實驗室 · 論文典藏</div>
+    <h1>論文著作</h1>
+    <p class="scholar">Google Scholar:
+      <a href="https://scholar.google.com/citations?user=lgdXa2MAAAAJ&hl=en" target="_blank" rel="noopener">Chun-Chia Chen</a> ·
+      <a href="https://scholar.google.com/citations?user=2YctvyYAAAAJ&hl=en" target="_blank" rel="noopener">Shayne Bennetts</a>
+    </p>
+  </section>
+
+  <div class="shelf-label">精選論文</div>
+
+  <div class="shelf-wrap" id="shelfWrap" aria-label="論文書架">
+    <div class="shelf" id="shelf"></div>
+  </div>
+
+  <div class="controls">
+    <button id="prev" aria-label="上一篇">‹</button>
+    <span class="count" id="count">— / —</span>
+    <button id="next" aria-label="下一篇">›</button>
+  </div>
+
+  <div class="now-title" id="nowTitle" aria-live="polite"></div>
+
+  <section class="list-wrap" aria-label="全部論文">
+    <div class="lsec-head"><h2>全部論文</h2><span class="ln" id="pubTotal"></span></div>
+    <div id="pubList"></div>
+  </section>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">原分所 ↗</a>
+  </nav>
+  <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
+</footer>
+
+<script>
+// ---------- Publications: edit this array to add/update papers ----------
+// Order here = order on the shelf. Covers are generated from journal colour + title + year.
+window.YB_PAPERS = [
+ {
+  "title": "Narrow-line mediated Sisyphus cooling in the \u00b3P\u2082 metastable state of strontium",
+  "journal": "Phys. Rev. Research",
+  "authors": "C.-C. Chen*, R. Takeuchi*, S. Okaba, H. Katori",
+  "year": 2025,
+  "doi": "https://doi.org/10.1103/PhysRevResearch.7.L022076"
+ },
+ {
+  "title": "Clock-line mediated Sisyphus cooling",
+  "journal": "Phys. Rev. Lett.",
+  "authors": "C.-C. Chen, J. L. Siegel, \u2026 A. D. Ludlow",
+  "year": 2024,
+  "doi": "https://doi.org/10.1103/PhysRevLett.133.053401"
+ },
+ {
+  "title": "The path to continuous Bose\u2013Einstein condensation",
+  "journal": "Adv. At. Mol. Opt. Phys.",
+  "authors": "C.-C. Chen*, S. Bennetts*, F. Schreck",
+  "year": 2023,
+  "doi": "https://doi.org/10.1016/bs.aamop.2023.04.004"
+ },
+ {
+  "title": "Continuous Bose\u2013Einstein condensation",
+  "journal": "Nature",
+  "authors": "C.-C. Chen, R. Gonz\u00e1lez Escudero, J. Min\u00e1\u0159, B. Pasquiou, S. Bennetts, F. Schreck",
+  "year": 2022,
+  "doi": "https://doi.org/10.1038/s41586-022-04731-z"
+ },
+ {
+  "title": "Continuous guided strontium beam with high phase-space density",
+  "journal": "Phys. Rev. Applied",
+  "authors": "C.-C. Chen*, S. Bennetts*, R. Gonz\u00e1lez Escudero, B. Pasquiou, F. Schreck",
+  "year": 2019,
+  "doi": "https://doi.org/10.1103/PhysRevApplied.12.044014"
+ },
+ {
+  "title": "Sisyphus optical lattice decelerator",
+  "journal": "Phys. Rev. A",
+  "authors": "C.-C. Chen, S. Bennetts, R. Gonz\u00e1lez Escudero, F. Schreck, B. Pasquiou*",
+  "year": 2019,
+  "doi": "https://doi.org/10.1103/PhysRevA.100.023401"
+ },
+ {
+  "title": "Steady-state magneto-optical trap with 100-fold improved phase-space density",
+  "journal": "Phys. Rev. Lett.",
+  "authors": "S. Bennetts, C.-C. Chen, B. Pasquiou*, F. Schreck",
+  "year": 2017,
+  "doi": "https://doi.org/10.1103/PhysRevLett.119.223202"
+ }
+];
+window.YB_JOURNAL_COLORS = {
+  'Nature':                  ['#0B3D2E','#07240F'],
+  'Phys. Rev. Lett.':        ['#5E1F33','#2E0E19'],
+  'Phys. Rev. Research':     ['#123A52','#08202E'],
+  'Phys. Rev. A':            ['#3B1F5E','#1B0E2E'],
+  'Phys. Rev. Applied':      ['#0E4A4E','#04262A'],
+  'Adv. At. Mol. Opt. Phys.':['#5A2233','#2A0E18'],
+  '_default':                ['#3E828E','#1D3E44'],
+};
+
+window.YB_ALL = [
+{
+"y": 2025,
+"a": "C.-C. Chen*, R. Takeuchi*, S. Okaba, H. Katori",
+"t": "Narrow-line mediated Sisyphus cooling in the \u00b3P\u2082 metastable state of strontium",
+"v": "Phys. Rev. Research 7, L022076",
+"u": "https://doi.org/10.1103/PhysRevResearch.7.L022076",
+"sec": "Recent"
+},
+{
+"y": 2025,
+"a": "A. Abdalla et al.",
+"t": "Terrestrial very-long-baseline atom interferometry: summary of the second workshop",
+"v": "EPJ Quantum Technology 12, 1\u201379",
+"u": "https://doi.org/10.1140/epjqt/s40507-025-00344-3"
+},
+{
+"y": 2025,
+"a": "S. Dubey, G. A. Kazakov*, B. Heizenreder, S. Zhou, S. Bennetts, S. A. Sch\u00e4ffer, A. Sitaram, F. Schreck",
+"t": "Modeling of a continuous superradiant laser on the sub-mHz transition in neutral strontium-88",
+"v": "Phys. Rev. Research 7, 013292",
+"u": "https://doi.org/10.1103/PhysRevResearch.7.013292"
+},
+{
+"y": 2024,
+"a": "F. Fam\u00e0, S. Zhou, B. Heizenreder, M. Tang, S. Bennetts, S. B. J\u00e4ger, S. A. Sch\u00e4ffer, F. Schreck*",
+"t": "Continuous cavity QED with an atomic beam",
+"v": "Phys. Rev. A 110, 063721",
+"u": "https://doi.org/10.1103/PhysRevA.110.063721"
+},
+{
+"y": 2024,
+"a": "C.-C. Chen, J. L. Siegel, B. D. Hunt, T. Grogan, Y. S. Hassan, K. Beloy, K. Gibble, R. C. Brown, A. D. Ludlow",
+"t": "Clock-line mediated Sisyphus cooling",
+"v": "Phys. Rev. Lett. 133, 053401",
+"u": "https://doi.org/10.1103/PhysRevLett.133.053401"
+},
+{
+"y": 2024,
+"a": "J. L. Siegel, W. F. McGrew, Y. S. Hassan, C.-C. Chen, K. Beloy, T. Grogan, A. D. Ludlow",
+"t": "Excited-band coherent delocalization for improved optical lattice clock performance",
+"v": "Phys. Rev. Lett. 132, 133201",
+"u": "https://doi.org/10.1103/PhysRevLett.132.133201",
+"sec": "Before starting our Taiwan lab"
+},
+{
+"y": 2024,
+"a": "J. Samland, S. Bennetts, C.-C. Chen, R. Gonz\u00e1lez Escudero, F. Schreck, B. Pasquiou*",
+"t": "Optical pumping of 5s4d \u00b9D\u2082 strontium atoms for laser cooling and imaging",
+"v": "Phys. Rev. Research 6, 013319",
+"u": "https://doi.org/10.1103/PhysRevResearch.6.013319",
+"x": "https://arxiv.org/abs/2311.02941"
+},
+{
+"y": 2023,
+"a": "C.-C. Chen*, S. Bennetts*, F. Schreck",
+"t": "The path to continuous Bose\u2013Einstein condensation",
+"v": "Adv. At. Mol. Opt. Phys. 72, 361\u2013430 \u2014 book chapter",
+"u": "https://doi.org/10.1016/bs.aamop.2023.04.004"
+},
+{
+"y": 2022,
+"a": "C.-C. Chen, R. Gonz\u00e1lez Escudero, J. Min\u00e1\u0159, B. Pasquiou, S. Bennetts, F. Schreck*",
+"t": "Continuous Bose\u2013Einstein condensation",
+"v": "Nature 606, 683\u2013687",
+"u": "https://doi.org/10.1038/s41586-022-04731-z",
+"x": "https://arxiv.org/abs/2012.07605"
+},
+{
+"y": 2022,
+"a": "X. Zhang, K. Beloy, Y. S. Hassan, W. F. McGrew, C.-C. Chen, J. L. Siegel, T. Grogan, A. D. Ludlow*",
+"t": "Subrecoil clock-transition laser cooling enabling shallow optical lattice clocks",
+"v": "Phys. Rev. Lett. 129, 113202",
+"u": "https://doi.org/10.1103/PhysRevLett.129.113202"
+},
+{
+"y": 2021,
+"a": "R. Gonz\u00e1lez Escudero, C.-C. Chen, S. Bennetts, B. Pasquiou, F. Schreck*",
+"t": "Steady-state magneto-optical trap of fermionic strontium on a narrow-line transition",
+"v": "Phys. Rev. Research 3, 033159",
+"u": "https://doi.org/10.1103/PhysRevResearch.3.033159"
+},
+{
+"y": 2019,
+"a": "C.-C. Chen*, S. Bennetts*, R. Gonz\u00e1lez Escudero, B. Pasquiou, F. Schreck",
+"t": "Continuous guided strontium beam with high phase-space density",
+"v": "Phys. Rev. Applied 12, 044014",
+"u": "https://doi.org/10.1103/PhysRevApplied.12.044014",
+"x": "https://arxiv.org/abs/1907.02793"
+},
+{
+"y": 2019,
+"a": "C.-C. Chen, S. Bennetts, R. Gonz\u00e1lez Escudero, F. Schreck, B. Pasquiou*",
+"t": "Sisyphus optical lattice decelerator",
+"v": "Phys. Rev. A 100, 023401",
+"u": "https://doi.org/10.1103/PhysRevA.100.023401"
+},
+{
+"y": 2019,
+"a": "O. Onishchenko*, S. Pyatchenkov, A. Urech, C.-C. Chen, S. Bennetts, G. A. Siviloglou, F. Schreck",
+"t": "Frequency of the ultranarrow \u00b9S\u2080\u2013\u00b3P\u2082 transition in \u2078\u2077Sr",
+"v": "Phys. Rev. A 99, 052503",
+"u": "https://doi.org/10.1103/PhysRevA.99.052503",
+"x": "https://arxiv.org/abs/1812.02115"
+},
+{
+"y": 2018,
+"a": "A. Ciamei, J. Szczepkowski, A. Bayerle, V. Barb\u00e9, L. Reichs\u00f6llner, C.-C. Chen, et al.",
+"t": "The RbSr \u00b2\u03a3\u207a ground state investigated via spectroscopy of hot and ultracold molecules",
+"v": "Phys. Chem. Chem. Phys. 20, 26221\u201326240",
+"u": "https://doi.org/10.1039/C8CP03919D"
+},
+{
+"y": 2017,
+"a": "S. Bennetts, C.-C. Chen, B. Pasquiou*, F. Schreck",
+"t": "Steady-state magneto-optical trap with 100-fold improved phase-space density",
+"v": "Phys. Rev. Lett. 119, 223202",
+"u": "https://doi.org/10.1103/PhysRevLett.119.223202",
+"x": "https://arxiv.org/abs/1707.05370"
+},
+{
+"y": 2017,
+"a": "C.-Y. Huang, C.-C. Chen, L.-A. Sun, G.-B. Liao, K.-S. Wu, Y.-J. Lin, M.-S. Chang",
+"t": "A simple recipe for rapid all-optical formation of spinor Bose\u2013Einstein condensates",
+"v": "J. Phys. B 50, 155302",
+"u": "https://doi.org/10.1088/1361-6455/aa7980"
+},
+{
+"y": 2017,
+"a": "A. Ciamei, A. Bayerle, C.-C. Chen, B. Pasquiou, F. Schreck",
+"t": "Efficient production of long-lived ultracold molecules",
+"v": "Phys. Rev. A 96, 013406",
+"u": "https://doi.org/10.1103/PhysRevA.96.013406"
+},
+{
+"y": 2014,
+"a": "G. D. McDonald*, C. C. N. Kuhn, K. S. Hardman, S. Bennetts, P. J. Everitt, P. A. Altin, J. E. Debs, J. D. Close, N. P. Robins",
+"t": "A bright solitonic matter-wave interferometer",
+"v": "Phys. Rev. Lett. 113, 013002",
+"u": "https://doi.org/10.1103/PhysRevLett.113.013002",
+"sec": "Older papers"
+},
+{
+"y": 2014,
+"a": "C. C. N. Kuhn, G. D. McDonald, K. S. Hardman, S. Bennetts, P. J. Everitt, P. A. Altin, J. E. Debs, J. D. Close, N. P. Robins*",
+"t": "A Bose-condensed, simultaneous dual-species Mach\u2013Zehnder atom interferometer",
+"v": "New J. Phys. 16, 073035",
+"u": "https://doi.org/10.1088/1367-2630/16/7/073035"
+},
+{
+"y": 2014,
+"a": "G. D. McDonald*, C. C. N. Kuhn, S. Bennetts, J. E. Debs, K. S. Hardman, J. D. Close, N. P. Robins",
+"t": "A faster scaling in acceleration-sensitive atom interferometers",
+"v": "EPL 105, 63001",
+"u": "https://doi.org/10.1209/0295-5075/105/63001"
+},
+{
+"y": 2014,
+"a": "K. S. Hardman*, C. C. N. Kuhn, G. D. McDonald, J. E. Debs, S. Bennetts, J. D. Close, N. P. Robins",
+"t": "The role of source coherence for atom interferometry",
+"v": "Phys. Rev. A 89, 023626",
+"u": "https://doi.org/10.1103/PhysRevA.89.023626"
+},
+{
+"y": 2014,
+"a": "S. Bennetts*, G. D. McDonald, K. S. Hardman, J. E. Debs, C. C. N. Kuhn, J. D. Close, N. P. Robins",
+"t": "External cavity diode lasers with 5 kHz linewidth and 200 nm tuning range at 1.55 \u03bcm",
+"v": "Opt. Express 22, 10642\u201310654",
+"u": "https://doi.org/10.1364/OE.22.010642"
+},
+{
+"y": 2014,
+"a": "K. S. Hardman*, S. Bennetts, J. E. Debs, C. C. N. Kuhn, G. D. McDonald, N. P. Robins",
+"t": "Construction and characterization of external cavity diode lasers for atomic physics",
+"v": "J. Vis. Exp. 86, e51184",
+"u": "https://dx.doi.org/10.3791/51184"
+},
+{
+"y": 2013,
+"a": "G. D. McDonald*, C. C. N. Kuhn, S. Bennetts, J. E. Debs, K. S. Hardman, J. D. Close, N. P. Robins",
+"t": "80 \u0127k momentum separation with Bloch oscillations in an optically guided atom interferometer",
+"v": "Phys. Rev. A 88, 053620",
+"u": "https://doi.org/10.1103/PhysRevA.88.053620"
+},
+{
+"y": 2013,
+"a": "G. D. McDonald*, H. Keal, P. A. Altin, J. E. Debs, S. Bennetts, C. C. N. Kuhn, K. S. Hardman, M. T. Johnsson, J. D. Close, N. P. Robins",
+"t": "Optically guided linear Mach\u2013Zehnder atom interferometer",
+"v": "Phys. Rev. A 87, 013632",
+"u": "https://doi.org/10.1103/PhysRevA.87.013632"
+},
+{
+"y": 2013,
+"a": "P. A. Altin, M. T. Johnsson, V. Negnevitsky, G. R. Dennis, R. Anderson, J. E. Debs, S. S. Szigeti, K. S. Hardman, S. Bennetts, G. D. McDonald, L. D. Turner, J. D. Close, N. P. Robins",
+"t": "Precision atomic gravimeter based on Bragg diffraction",
+"v": "New J. Phys. 15, 023009",
+"u": "https://doi.org/10.1088/1367-2630/15/2/023009"
+},
+{
+"y": 2013,
+"a": "A. Hemming*, S. Bennetts, N. Simakov, A. Davidson, J. Haub, A. Carter",
+"t": "High power operation of cladding-pumped holmium-doped silica fibre lasers",
+"v": "Opt. Express 21, 4560",
+"u": "https://doi.org/10.1364/OE.21.004560"
+},
+{
+"y": 2013,
+"a": "A. Hemming*, J. Richards, A. Davidson, N. Carmody, S. Bennetts, N. Simakov, J. Haub",
+"t": "99 W mid-IR operation of a ZGP OPO at 25% duty cycle",
+"v": "Opt. Express 21, 10062",
+"u": "https://doi.org/10.1364/OE.21.010062"
+},
+{
+"y": 2012,
+"a": "S. S. San\u00e9, S. Bennetts, J. E. Debs, C. C. N. Kuhn, G. D. McDonald, P. A. Altin, J. D. Close, N. P. Robins*",
+"t": "11 W narrow-linewidth laser source at 780 nm for laser cooling and manipulation of rubidium",
+"v": "Opt. Express 20, 8915",
+"u": "https://doi.org/10.1364/OE.20.008915"
+},
+{
+"y": 2012,
+"a": "H.-C. Chuang, C.-R. Chang, C.-C. Chen, M.-S. Chang",
+"t": "An external cavity diode laser using a volume holographic grating",
+"v": "Opt. Laser Technol. 44, 2182\u20132185",
+"u": "https://doi.org/10.1016/j.optlastec.2012.03.004"
+},
+{
+"y": 2010,
+"a": "A. Hemming*, S. D. Jackson, A. Sabella, S. Bennetts, D. G. Lancaster",
+"t": "High-power, narrow-bandwidth, broadly tunable Tm\u00b3\u207a, Ho\u00b3\u207a-co-doped aluminosilicate glass fibre laser",
+"v": "Electron. Lett. 46, 1617",
+"u": "https://doi.org/10.1049/el.2010.2809"
+},
+{
+"y": 2011,
+"a": "N. Simakov*, A. Hemming, S. Bennetts, J. Haub",
+"t": "Efficient, polarised, gain-switched operation of a Tm-doped fibre laser",
+"v": "Opt. Express 19, 14949",
+"u": "https://doi.org/10.1364/OE.19.014949"
+},
+{
+"y": 2010,
+"a": "A. Hemming*, J. Richards, S. Bennetts, A. Davidson, N. Carmody, P. Davies, L. Corena, D. Lancaster",
+"t": "A high-power hybrid mid-IR laser source",
+"v": "Opt. Commun. 283, 4041",
+"u": "https://doi.org/10.1016/j.optcom.2010.05.078"
+},
+{
+"y": 2009,
+"a": "K. S. Wu*, D. Ottaway, J. Munch, D. G. Lancaster, S. Bennetts, S. D. Jackson",
+"t": "Gain-switched holmium-doped fibre laser",
+"v": "Opt. Express 17, 20872",
+"u": "https://doi.org/10.1364/OE.17.020872"
+},
+{
+"y": 2008,
+"a": "N. Jovanovic*, G. D. Marshall, A. Fuerbach, G. E. Town, S. Bennetts, D. G. Lancaster, M. J. Withford",
+"t": "Highly narrow linewidth, CW, all-fiber oscillator with a switchable linear polarization",
+"v": "IEEE Photon. Technol. Lett. 20, 809",
+"u": "https://doi.org/10.1109/LPT.2008.921111"
+},
+{
+"y": 2007,
+"a": "S. D. Jackson*, A. Sabella, A. Hemming, S. Bennetts, D. G. Lancaster*",
+"t": "High-power 83 W holmium-doped silica fiber laser operating with high beam quality",
+"v": "Opt. Lett. 32, 241\u2013243",
+"u": "https://doi.org/10.1364/OL.32.000241"
+}
+];
+
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+
+  [...document.querySelectorAll('a[href$="index.html"]')].forEach(a=> a.addEventListener('click', ev=>{
+    if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0) return;
+    ev.preventDefault();
+    try{ sessionStorage.setItem('ybWarpBack','1'); }catch(e){}
+    if(reduced){ location.href=a.href; return; }
+    document.body.classList.remove('enter'); document.body.classList.add('leave');
+    setTimeout(()=> location.href=a.href, 540);
+  }));
+
+  (function(){
+    const cv=document.getElementById('stars'); if(!cv) return;
+    const ctx=cv.getContext('2d'); if(!ctx) return;
+    let W,H,DPR,st=[];
+    function make(){ DPR=Math.min(devicePixelRatio||1,2); W=innerWidth;H=innerHeight;
+      cv.width=W*DPR;cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      st=Array.from({length:120},()=>({x:Math.random()*W,y:Math.random()*H,s:.4+Math.random()*1.1,a:.06+Math.random()*.28,ph:Math.random()*7})); }
+    make(); addEventListener('resize',make);
+    (function d(t){ ctx.clearRect(0,0,W,H);
+      for(const s of st){ const tw=reduced?1:(.6+.4*Math.sin(t/1100+s.ph));
+        ctx.globalAlpha=s.a*tw; ctx.fillStyle='rgba(255,235,237,1)';
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.s,0,7); ctx.fill(); }
+      ctx.globalAlpha=1; if(!reduced) requestAnimationFrame(d); })(0);
+  })();
+
+  const shelf = document.getElementById('shelf');
+  const papers = window.YB_PAPERS;
+  const JC = window.YB_JOURNAL_COLORS;
+  const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const books = papers.map((p,i)=>{
+    const pair = JC[p.journal] || JC._default;
+    const el = document.createElement('a');
+    el.className='book'; el.href=p.doi; el.target='_blank'; el.rel='noopener';
+    el.style.setProperty('--c1',pair[0]); el.style.setProperty('--c2',pair[1]);
+    el.innerHTML =
+      '<div class="cover"><div class="sheen"></div><div class="c-inner">'+
+      '<div class="journal">'+esc(p.journal)+'</div><div class="rule"></div>'+
+      '<div class="title">'+esc(p.title)+'</div><div class="spacer"></div>'+
+      '<div class="authors">'+esc(p.authors)+'</div><div class="year">'+p.year+'</div>'+
+      '</div></div><div class="reflect"></div><div class="doi">Open paper \u2197</div>';
+    shelf.appendChild(el);
+    return el;
+  });
+
+  let focus=0, target=0;
+  const N = books.length;
+  const isMobile = matchMedia('(max-width:760px)').matches;
+  const GAP = isMobile ? 62 : 92;
+  const SPREAD = isMobile ? 150 : 230;
+
+  function layout(){
+    for(let i=0;i<N;i++){
+      const d=i-focus, ad=Math.abs(d), sign=Math.sign(d)||1;
+      let x,z,ry,sc,op,zi;
+      if(ad<1){ x=d*SPREAD; z=220*(1-ad); ry=d*-48; sc=1-.06*ad; op=1; zi=100-Math.round(ad*10); }
+      else{ x=sign*SPREAD+(d-sign)*GAP; z=-ad*40; ry=sign*-48;
+        sc=.84-Math.min(ad-1,4)*.03; op=ad>5?0:1-(ad-1)*0.12; zi=100-Math.round(ad*10); }
+      const b=books[i];
+      b.style.transform='translate3d('+x.toFixed(1)+'px,0,'+z.toFixed(1)+'px) rotateY('+ry.toFixed(1)+'deg) scale('+sc.toFixed(3)+')';
+      b.style.opacity=op.toFixed(2); b.style.zIndex=zi;
+      b.classList.toggle('active', i===Math.round(focus));
+      b.style.pointerEvents = op>0.05 ? 'auto':'none';
+    }
+    const cur=papers[Math.round(focus)];
+    if(cur){
+      document.getElementById('count').textContent=(Math.round(focus)+1)+' / '+N;
+      document.getElementById('nowTitle').innerHTML=
+        '<div class="nt">'+esc(cur.title)+'</div><div class="nm">'+esc(cur.authors)+' \u00b7 '+
+        esc(cur.journal)+' '+cur.year+' \u00b7 <a href="'+cur.doi+'" target="_blank" rel="noopener">Open paper \u2197</a></div>';
+    }
+  }
+  function animate(){
+    focus += (target-focus)*(reduced?1:0.16);
+    if(Math.abs(target-focus)<0.001) focus=target;
+    layout();
+    if(Math.abs(target-focus)>=0.001) requestAnimationFrame(animate);
+  }
+  function go(i){ target=Math.max(0,Math.min(N-1,i)); requestAnimationFrame(animate); }
+
+  books.forEach((b,i)=> b.addEventListener('click', ev=>{
+    if(i!==Math.round(focus)){ ev.preventDefault(); go(i); }
+  }));
+  document.getElementById('prev').addEventListener('click', ()=> go(Math.round(target)-1));
+  document.getElementById('next').addEventListener('click', ()=> go(Math.round(target)+1));
+  addEventListener('keydown', e=>{
+    if(e.key==='ArrowLeft') go(Math.round(target)-1);
+    if(e.key==='ArrowRight') go(Math.round(target)+1);
+  });
+
+  const wrap=document.getElementById('shelfWrap');
+  let wheelLock=0;
+  wrap.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const now=performance.now();
+    if(now-wheelLock<120) return;
+    wheelLock=now;
+    go(Math.round(target)+((e.deltaY>0||e.deltaX>0)?1:-1));
+  }, {passive:false});
+
+  let dragging=false,startX=0,startFocus=0,moved=false;
+  const perCard=(isMobile?90:150);
+  wrap.addEventListener('pointerdown', e=>{
+    dragging=true; moved=false; startX=e.clientX; startFocus=focus;
+    wrap.classList.add('dragging'); wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const dx=e.clientX-startX;
+    if(Math.abs(dx)>4) moved=true;
+    focus=Math.max(-0.4,Math.min(N-0.6,startFocus-dx/perCard));
+    target=Math.max(0,Math.min(N-1,Math.round(focus)));
+    layout();
+  });
+  function endDrag(){ if(!dragging) return; dragging=false; wrap.classList.remove('dragging'); go(Math.round(focus)); }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+  wrap.addEventListener('click', e=>{ if(moved){ e.preventDefault(); e.stopPropagation(); moved=false; } }, true);
+
+
+  // ---------- the full reading list ----------
+  (function(){
+    const box=document.getElementById('pubList'); if(!box || !window.YB_ALL) return;
+    const hi = t => esc(t)
+      .replace(/C\.-C\. Chen/g,'<b>C.-C. Chen</b>')
+      .replace(/S\. Bennetts/g,'<b>S. Bennetts</b>');
+    let html='';
+    for(const it of window.YB_ALL){
+      if(it.sec && it.sec!=='Recent') html+='<div class="lsub">'+esc(it.sec)+'</div>';
+      const ax = it.x ? ' <a href="'+it.x+'" target="_blank" rel="noopener">arXiv</a>' : '';
+      html+='<div class="pub">'
+        +'<div class="py">'+it.y+'</div>'
+        +'<div><div class="pt"><a href="'+it.u+'" target="_blank" rel="noopener">'+esc(it.t)+'</a></div>'
+        +'<div class="pa">'+hi(it.a)+'</div>'
+        +'<div class="pv">'+esc(it.v)+ax+'</div></div>'
+        +'</div>';
+    }
+    box.innerHTML=html;
+    const n=document.getElementById('pubTotal');
+    if(n) n.textContent=window.YB_ALL.length+' PAPERS';
+  })();
+
+  addEventListener('resize', layout);
+  go(0); layout();
+})();
+</script>
+</body>
+</html>

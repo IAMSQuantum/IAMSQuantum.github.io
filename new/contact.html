@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — IAMS Yb Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.78);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.45;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 55%, rgba(246,182,183,.05), transparent 60%)}
+.aurora::after{content:""; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay}
+a{color:inherit}
+body{transform-origin:50% 42%}
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.1)} to{opacity:1; transform:scale(1)}}
+body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
+@keyframes pageOut{to{opacity:0; transform:scale(.05)}}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:14px clamp(20px,5vw,60px);
+  background:rgba(4,5,12,.78); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+
+/* ---------- layout ---------- */
+main{position:relative; z-index:2; flex:1; width:min(1100px,92vw); margin:0 auto; padding:130px 0 80px}
+h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(38px,7vw,64px);
+  letter-spacing:.2em; text-transform:uppercase; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.35), 0 0 60px rgba(62,130,142,.25)}
+.sub{margin-top:14px; max-width:64ch; font-size:14px; line-height:1.85; color:#C9BCD9}
+
+.cols{display:grid; grid-template-columns:1fr 1.15fr; gap:22px; margin-top:44px; align-items:start}
+
+/* ---------- PI cards ---------- */
+.pi{display:flex; gap:16px; padding:18px; border-radius:16px;
+  border:1px solid var(--line); background:var(--panel-bg); backdrop-filter:blur(8px);
+  transition:border-color .25s, box-shadow .25s}
+.pi+.pi{margin-top:16px}
+.pi:hover{border-color:color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 26px color-mix(in srgb, var(--c,#A6C9B6) 15%, transparent)}
+.pi .ph{width:86px; height:86px; flex:none; border-radius:12px; overflow:hidden;
+  border:1px solid var(--line); background:#0A1410}
+.pi .ph img{width:100%; height:100%; object-fit:cover; display:block}
+.pi .ph .ini{width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+  font-family:'Exo 2',sans-serif; font-weight:100; font-size:26px; color:var(--c,var(--mint))}
+.pi h2{font-family:'Exo 2',sans-serif; font-weight:300; font-size:17px; letter-spacing:.05em; color:#FFF6F4}
+.pi .role{margin-top:2px; font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--c,var(--mint))}
+.pi .rows{margin-top:8px; font-size:11.5px; line-height:1.9; color:var(--ink-dim)}
+.pi .rows b{color:var(--ink); font-weight:400}
+.pi .rows a{color:var(--mint); text-decoration:none; word-break:break-all}
+.pi .rows a:hover{color:var(--frozen)}
+
+.addr{margin-top:16px; padding:18px; border-radius:16px; border:1px solid var(--line);
+  background:var(--panel-bg); font-size:12px; line-height:1.9; color:var(--ink-dim)}
+.addr b{display:block; font-family:'Exo 2',sans-serif; font-weight:300; font-size:14px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--frozen); margin-bottom:6px}
+/* ---------- full-page map background ---------- */
+.mapbg{position:fixed; inset:-60px; z-index:0; pointer-events:none; overflow:hidden}
+.mapbg iframe{width:100%; height:100%; border:0; display:block;
+  filter:grayscale(1) invert(.9) hue-rotate(190deg) brightness(.95) contrast(1.05);
+  transform:scale(1.06)}
+.mapveil{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 85% 75% at 35% 40%, rgba(4,5,12,.15), rgba(4,5,12,.55) 80%),
+    linear-gradient(180deg, rgba(4,5,12,.6), rgba(4,5,12,.15) 28%, rgba(4,5,12,.4))}
+
+/* ---------- contact form ---------- */
+.formbox{padding:26px; border-radius:18px; border:1px solid var(--line);
+  background:var(--panel-bg); backdrop-filter:blur(10px)}
+.formbox h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:20px;
+  letter-spacing:.24em; text-transform:uppercase; color:#FFF6F4;
+  text-shadow:0 0 14px rgba(255,235,237,.28)}
+.formbox .hint{margin-top:8px; font-size:11px; line-height:1.7; color:var(--ink-dim)}
+.f-row{margin-top:18px}
+.f-row label{display:block; font-size:10px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--ink-dim); margin-bottom:8px}
+.f-row input,.f-row select,.f-row textarea{
+  width:100%; font-family:inherit; font-size:13px; color:var(--ink);
+  background:rgba(4,5,12,.55); border:1px solid var(--line); border-radius:12px;
+  padding:12px 14px; outline:none; transition:border-color .25s, box-shadow .25s}
+.f-row textarea{min-height:130px; resize:vertical; line-height:1.7}
+.f-row input:focus,.f-row select:focus,.f-row textarea:focus{
+  border-color:rgba(166,201,182,.6); box-shadow:0 0 18px rgba(166,201,182,.18)}
+.f-row select{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A395B8' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center}
+.f-row select option{background:#0A0C16; color:var(--ink)}
+.f-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 14px}
+.send{margin-top:22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.send button{
+  font-family:inherit; cursor:pointer; font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:#04050C; background:var(--mint); border:0; border-radius:999px; padding:13px 32px;
+  box-shadow:0 0 24px rgba(166,201,182,.45); transition:transform .2s, box-shadow .2s}
+.send button:hover{transform:translateY(-2px); box-shadow:0 0 34px rgba(166,201,182,.6)}
+.send .alt{font-size:10.5px; color:var(--ink-dim); line-height:1.6}
+.send .alt a{color:var(--mint); text-decoration:none; cursor:pointer}
+.send .alt a:hover{color:var(--frozen)}
+.ok{margin-top:14px; font-size:11.5px; color:var(--mint); min-height:1.4em;
+  text-shadow:0 0 10px rgba(166,201,182,.5)}
+
+footer{position:relative; z-index:2; border-top:1px solid var(--line);
+  padding:18px clamp(20px,5vw,60px) 24px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:12px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+footer a{text-decoration:none; transition:color .2s}
+footer a:hover{color:var(--frozen)}
+
+@media (max-width:920px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  main{padding-top:170px}
+  .cols{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter,body.leave{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="mapbg" aria-hidden="true">
+  <iframe title="Location map background" tabindex="-1" loading="eager"
+    src="https://maps.google.com/maps?q=25.0185861,121.535692&z=16&t=m&output=embed"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+<div class="mapveil" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html" class="now" aria-current="page">Contact</a>
+    <a href="contact_zh.html" class="zh">繁體中文</a>
+      <a href="../classic/contact.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Contact<span style="color:var(--mint); text-shadow:0 0 30px rgba(166,201,182,.8)">.</span></h1>
+  <p class="sub">Curious about a project, internship, or position? Write to us — short questions welcome.
+     We usually reply within a few days.</p>
+
+  <div class="cols">
+    <!-- ---------- left: people / address / map ---------- -->
+    <div>
+      <div class="pi" style="--c:var(--mint)">
+        <div class="ph"><img src="../team/chunchia.jpg" alt="Dr. Chun-Chia Chen"
+             onerror="this.outerHTML='&lt;span class=&quot;ini&quot;&gt;CC&lt;/span&gt;'"></div>
+        <div>
+          <h2>Dr. Chun-Chia Chen 陳俊嘉</h2>
+          <div class="role">Principal Investigator</div>
+          <div class="rows">
+            <b>Office</b> 308 · <b>Lab</b> 110<br>
+            <b>Tel</b> +886-2-2366-8215<br>
+            <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">chunchia.chen@g.iams.sinica.edu.tw</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pi" style="--c:var(--mint)">
+        <div class="ph"><img src="../team/Shayne Bennetts.jpg" alt="Dr. Shayne Bennetts"
+             onerror="this.outerHTML='&lt;span class=&quot;ini&quot;&gt;SB&lt;/span&gt;'"></div>
+        <div>
+          <h2>Dr. Shayne Bennetts 肖恩</h2>
+          <div class="role">Principal Investigator</div>
+          <div class="rows">
+            <b>Office</b> 307 · <b>Lab</b> 110<br>
+            <b>Tel</b> +886-2-2366-8215<br>
+            <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">s.p.bennetts@g.iams.sinica.edu.tw</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="addr">
+        <b>Lab Address</b>
+        Institute of Atomic and Molecular Sciences, Academia Sinica<br>
+        No. 1, Section 4, Roosevelt Road, Da'an District,<br>
+        Taipei City, Taiwan 10617 · Tel +886-2-2366-8236<br>
+        <a href="https://maps.google.com/?q=Institute+of+Atomic+and+Molecular+Sciences,+Academia+Sinica"
+           target="_blank" rel="noopener"
+           style="color:var(--mint); text-decoration:none">Open in Google Maps ↗</a>
+      </div>
+
+
+    </div>
+
+    <!-- ---------- right: contact form ---------- -->
+    <div class="formbox">
+      <h2>Write to Us</h2>
+      <p class="hint">Fill in the form and press send — your email app will open with everything pre-filled.
+         Just hit send there.</p>
+
+      <form id="cform" novalidate>
+        <div class="f-grid">
+          <div class="f-row">
+            <label for="f-name">Your Name</label>
+            <input id="f-name" type="text" autocomplete="name" placeholder="Ada Lovelace" required>
+          </div>
+          <div class="f-row">
+            <label for="f-email">Your Email</label>
+            <input id="f-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+
+        <div class="f-grid">
+          <div class="f-row">
+            <label for="f-to">Send To</label>
+            <select id="f-to">
+              <option value="both" selected>Both PIs</option>
+              <option value="chunchia.chen@g.iams.sinica.edu.tw">Dr. Chun-Chia Chen</option>
+              <option value="s.p.bennetts@g.iams.sinica.edu.tw">Dr. Shayne Bennetts</option>
+            </select>
+          </div>
+          <div class="f-row">
+            <label for="f-topic">I'm Interested In</label>
+            <select id="f-topic">
+              <option>General question</option>
+              <option>Undergraduate project</option>
+              <option>Masters project</option>
+              <option>PhD position</option>
+              <option>Internship</option>
+              <option>Postdoc / Research position</option>
+              <option>Collaboration / Visit</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="f-row">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" placeholder="Hi, I'm a physics student at … and I'd love to learn more about …" required></textarea>
+        </div>
+
+        <div class="send">
+          <button type="submit">Send Message ↗</button>
+          <span class="alt">or <a id="copyMail">copy the email text</a><br>to paste anywhere</span>
+        </div>
+        <div class="ok" id="okmsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">IAMS ↗</a>
+  </nav>
+  <div>Institute of Atomic and Molecular Sciences, Academia Sinica · Tel +886-2-2366-8236 · No. 1, Roosevelt Rd. Sec. 4, Taipei</div>
+</footer>
+
+<script>
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+
+  [...document.querySelectorAll('a[href$="index.html"]')].forEach(a=> a.addEventListener('click', ev=>{
+    if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0) return;
+    ev.preventDefault();
+    try{ sessionStorage.setItem('ybWarpBack','1'); }catch(e){}
+    if(reduced){ location.href=a.href; return; }
+    document.body.classList.remove('enter'); document.body.classList.add('leave');
+    setTimeout(()=> location.href=a.href, 540);
+  }));
+
+  /* ============================================================
+     聯絡表單 — 目前模式: mailto(打開訪客的信箱軟體, 內容已填好)
+     ── 若想升級成「頁面內直接送出」(訪客不用開信箱軟體):
+        1. 到 https://formsubmit.co 不用註冊
+        2. 把下面 FORM_ENDPOINT 改成:
+           'https://formsubmit.co/ajax/chunchia.chen@g.iams.sinica.edu.tw'
+        3. 第一次有人送出時, 該信箱會收到一封確認信, 點擊確認即可啟用
+     ============================================================ */
+  const FORM_ENDPOINT = '';   // 留空 = 使用 mailto 模式
+
+  const EMAILS = {
+    both: ['chunchia.chen@g.iams.sinica.edu.tw','s.p.bennetts@g.iams.sinica.edu.tw'],
+  };
+  const $=id=>document.getElementById(id);
+  const ok=$('okmsg');
+
+  function gather(){
+    const name=$('f-name').value.trim(), email=$('f-email').value.trim(),
+          topic=$('f-topic').value, msg=$('f-msg').value.trim(),
+          toSel=$('f-to').value;
+    const to = toSel==='both' ? EMAILS.both : [toSel];
+    const cc = toSel==='both' ? EMAILS.both[1] : '';
+    const subject = '[Lab 110] '+topic+' — '+(name||'Website enquiry');
+    const body = 'Hi,\n\n'+msg+'\n\n— '+name+'\n'+email;
+    return {name,email,topic,msg,to,cc,subject,body};
+  }
+  function valid(d){
+    if(!d.name){ ok.textContent='Please fill in your name.'; return false; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){ ok.textContent='Please enter a valid email.'; return false; }
+    if(!d.msg){ ok.textContent='Please write a short message.'; return false; }
+    return true;
+  }
+
+  $('cform').addEventListener('submit', async e=>{
+    e.preventDefault(); ok.textContent='';
+    const d=gather(); if(!valid(d)) return;
+
+    if(FORM_ENDPOINT){
+      // ---- 頁面內直接送出模式 (FormSubmit) ----
+      try{
+        ok.textContent='Sending…';
+        const res=await fetch(FORM_ENDPOINT,{method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({name:d.name, email:d.email, _subject:d.subject, topic:d.topic, message:d.msg})});
+        ok.textContent = res.ok ? 'Sent! We\u2019ll get back to you soon. ✓'
+                                : 'Could not send — please email us directly.';
+      }catch(err){ ok.textContent='Could not send — please email us directly.'; }
+      return;
+    }
+    // ---- mailto 模式 ----
+    const url='mailto:'+encodeURIComponent(d.to[0])
+      +'?'+(d.cc?('cc='+encodeURIComponent(d.cc)+'&'):'')
+      +'subject='+encodeURIComponent(d.subject)
+      +'&body='+encodeURIComponent(d.body);
+    location.href=url;
+    ok.textContent='Your email app should open now — just press send there. ✓';
+  });
+
+  // 複製信件內容(信箱軟體打不開時的備援)
+  $('copyMail').addEventListener('click', async ()=>{
+    const d=gather(); if(!valid(d)) return;
+    const text='To: '+d.to.join(', ')+'\nSubject: '+d.subject+'\n\n'+d.body;
+    try{ await navigator.clipboard.writeText(text);
+      ok.textContent='Copied! Paste it into any email client. ✓';
+    }catch(e){ ok.textContent='Copy failed — please select and copy manually.'; }
+  });
+})();
+</script>
+</body>
+</html>

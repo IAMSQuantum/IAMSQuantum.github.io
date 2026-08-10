@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IAMS Yb Lab — Quantum technology with ultracold ytterbium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lavender: #FFEBED;   /* Lavender Blush */
+  --blush:    #F6B6B7;   /* Powder Blush   */
+  --mint:     #A6C9B6;   /* Muted Teal     */
+  --teal:     #3E828E;   /* Pacific Cyan   */
+  --amethyst: #27153D;   /* Dark Amethyst  */
+  --frozen:   #FFEBED;
+  --sapphire: #A6C9B6;
+  --cyan:     #3E828E;
+  --bg:       #04050C;
+  --ink:      #F7EEF2;
+  --ink-dim:  #A395B8;
+  --line:     rgba(255,235,237,.16);
+  --panel-bg: rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace;
+  min-height:100%;
+  display:flex; flex-direction:column;
+  overflow-x:hidden;
+}
+
+.aurora{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 10%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 20%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 95%, rgba(62,130,142,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 60%, rgba(246,182,183,.05), transparent 60%);
+}
+.aurora::after{
+  content:""; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+
+/* ---------- header ---------- */
+header{
+  position:absolute; z-index:6;
+  top:0; left:0; right:0;
+  padding:44px clamp(20px,5vw,60px) 0;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+  pointer-events:none;
+}
+header > div{pointer-events:auto}
+.eyebrow{
+  font-size:10.5px; letter-spacing:.26em; color:var(--ink-dim); text-transform:uppercase;
+}
+h1{
+  font-family:'Exo 2',sans-serif;
+  font-weight:200;
+  font-size:clamp(30px,4.6vw,58px);
+  text-transform:uppercase;
+  letter-spacing:.42em;
+  line-height:1.12;
+  margin-top:14px;
+  color:#FFF6F4;
+  text-shadow:
+    0 0 14px rgba(255,235,237,.40),
+    0 0 44px rgba(62,130,142,.28),
+    0 0 100px rgba(246,182,183,.18);
+  position:relative;
+  white-space:nowrap;
+}
+.config{margin-top:12px; font-family:'Space Mono',monospace; font-size:13.5px; color:var(--ink-dim); letter-spacing:.14em}
+.config sup{font-size:8.5px}
+.lang{
+  position:absolute; top:26px; right:clamp(20px,5vw,60px);
+  pointer-events:auto;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:13px; text-decoration:none; white-space:nowrap;
+  border:1px solid var(--line); border-radius:999px;
+  padding:8px 16px; color:var(--ink-dim);
+  backdrop-filter:blur(4px);
+  transition:color .25s, border-color .25s, box-shadow .25s;
+}
+.lang:hover{color:var(--frozen); border-color:rgba(62,130,142,.5); box-shadow:0 0 18px rgba(62,130,142,.18)}
+
+
+/* ---------- runaway atom + MOT trap (lives on the title line) ---------- */
+.runway{
+  position:absolute; z-index:2;
+  top:0; bottom:0;
+  left:50%; margin-left:-50vw;             /* pin to the viewport... */
+  width:100vw;                             /* ...edge to edge */
+  pointer-events:none;
+}
+.runner{
+  position:absolute; top:50%; left:0;
+  width:38px; height:38px;
+  margin:-19px 0 0 -19px;
+  pointer-events:auto;
+  cursor:crosshair;
+  will-change:transform;
+}
+.runner .tail{
+  position:absolute; top:50%; right:50%;
+  width:120px; height:1px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg, transparent, rgba(255,235,237,.75));
+  opacity:.8; pointer-events:none;
+  transition:opacity .25s;
+}
+.runner.trapped .tail{opacity:0}
+.runner .core{
+  position:absolute; top:50%; left:50%;
+  width:9px; height:9px; border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 35% 30%, #fff, var(--frozen) 55%, var(--cyan) 90%);
+  box-shadow:0 0 10px rgba(255,235,237,.9), 0 0 26px rgba(62,130,142,.5);
+}
+.runner .halo{
+  position:absolute; inset:8px; border-radius:50%;
+  border:1px solid rgba(255,235,237,.35);
+  transform:rotate(20deg) scaleY(.5);
+}
+/* six-beam MOT: 3 crossed beam axes, 556 nm green */
+.runner .beam{
+  position:absolute; top:50%; left:50%;
+  width:min(230px,30vw); height:6px;
+  transform:translate(-50%,-50%) rotate(var(--rb)) scaleX(.2);
+  background:linear-gradient(90deg,
+    transparent, rgba(178,34,34,.22) 18%, rgba(205,48,38,.42) 50%,
+    rgba(178,34,34,.22) 82%, transparent);
+  filter:blur(1.6px);
+  border-radius:4px;
+  opacity:0;
+  transition:opacity .3s ease, transform .35s cubic-bezier(.2,.9,.3,1.2);
+  pointer-events:none;
+}
+.runner .mot-label{
+  position:absolute; top:calc(100% + 12px); left:50%;
+  transform:translateX(-50%);
+  font-family:'Space Mono',monospace;
+  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:#E8604C; text-shadow:0 0 12px rgba(205,48,38,.45);
+  white-space:nowrap; opacity:0; transition:opacity .3s ease;
+  pointer-events:none;
+}
+.runner.trapped .beam{
+  opacity:1;
+  transform:translate(-50%,-50%) rotate(var(--rb)) scaleX(1);
+  animation:beamPulse 1.6s ease-in-out infinite;
+}
+.runner.trapped .mot-label{opacity:1}
+.runner.trapped .core{
+  background:radial-gradient(circle at 35% 30%, #FFE3DC, #E8604C 50%, #A62317 90%);
+  box-shadow:0 0 12px rgba(205,48,38,.8), 0 0 34px rgba(178,34,34,.45);
+  animation:coldJitter .12s steps(2) infinite;
+}
+@keyframes beamPulse{0%,100%{filter:blur(1.6px) brightness(1)} 50%{filter:blur(2px) brightness(1.2)}}
+@keyframes coldJitter{
+  0%{transform:translate(-50%,-50%)}
+  50%{transform:translate(calc(-50% + .7px), calc(-50% - .6px))}
+  100%{transform:translate(calc(-50% - .6px), calc(-50% + .7px))}
+}
+@media (prefers-reduced-motion:reduce){
+  .runner.trapped .core{animation:none}
+  .runner.trapped .beam{animation:none}
+}
+
+/* ---------- stage ---------- */
+.stage{
+  position:relative; z-index:2;
+  height:100vh; min-height:640px;
+}
+#atom{position:absolute; inset:0; width:100%; height:100%; display:block}
+
+/* electron menu chips — styled like data tooltips */
+.e{
+  position:absolute; top:0; left:0; z-index:4;
+  text-decoration:none;
+  will-change:transform, opacity;
+}
+.e .node{
+  position:absolute; left:0; top:50%;
+  width:13px; height:13px; border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 35% 30%, #fff, var(--c) 60%);
+  box-shadow:0 0 10px var(--c), 0 0 30px color-mix(in srgb, var(--c) 55%, transparent);
+  transition:transform .25s;
+}
+.e .chip{
+  display:block; margin-left:14px;
+  white-space:nowrap;
+}
+.e .t1{
+  font-family:'Space Mono',monospace;
+  font-size:13.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:color-mix(in srgb, var(--c) 82%, #fff);
+  text-shadow:0 0 12px color-mix(in srgb, var(--c) 60%, transparent),
+              0 1px 8px rgba(0,0,0,.5);
+  transition:text-shadow .25s;
+}
+.e:hover .node{transform:translate(-50%,-50%) scale(1.5)}
+.e:hover .t1{text-shadow:0 0 18px var(--c), 0 0 40px color-mix(in srgb, var(--c) 55%, transparent), 0 1px 8px rgba(0,0,0,.5)}
+.e:focus-visible{outline:2px solid var(--cyan); outline-offset:4px; border-radius:10px}
+
+/* ---------- dashboard overlays ---------- */
+
+
+
+
+/* ---------- zoom transition into an electron ---------- */
+.stage.zooming{
+  transition:transform .72s cubic-bezier(.7,0,.4,1);
+  will-change:transform;
+}
+body.warping header, body.warping footer, body.warping .mobile-nav{
+  transition:opacity .4s ease; opacity:0;
+}
+#warp{
+  position:fixed; z-index:40;
+  width:24px; height:24px; border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:radial-gradient(circle, #fff 0%, var(--wc,#A6C9B6) 34%, var(--bg) 78%);
+  pointer-events:none;
+  transition:transform .72s cubic-bezier(.7,0,.4,1), opacity .3s ease;
+  opacity:0;
+}
+#warp.go{opacity:1}
+.stage.unwarp{
+  transition:transform .8s cubic-bezier(.25,.9,.3,1);
+  will-change:transform;
+}
+body.arriving header, body.arriving footer, body.arriving .mobile-nav{opacity:0}
+body header, body footer, body .mobile-nav{transition:opacity .5s ease .35s}
+@media (prefers-reduced-motion:reduce){
+  .stage.zooming,.stage.unwarp{transition:none}
+  #warp{transition:opacity .2s ease}
+}
+
+/* ---------- mobile fallback ---------- */
+.mobile-nav{
+  display:none; position:relative; z-index:6;
+  grid-template-columns:1fr 1fr; gap:10px;
+  padding:8px clamp(20px,5vw,60px) 6px;
+}
+.mobile-nav a{
+  font-size:13px; text-decoration:none; color:var(--ink);
+  border:1px solid var(--line); border-radius:12px;
+  padding:12px 14px; display:flex; align-items:center; gap:10px;
+  background:rgba(6,8,18,.55); backdrop-filter:blur(4px);
+}
+.mobile-nav .dot{
+  width:8px; height:8px; border-radius:50%; background:var(--c);
+  box-shadow:0 0 8px var(--c);
+}
+
+
+
+
+/* ---------- short screens: stack the title above the atom, scroll to see it all ---------- */
+@media (max-height: 840px){
+  header{
+    position:relative;
+    padding:26px clamp(20px,5vw,60px) 8px;
+    pointer-events:auto;
+  }
+  .stage{height:96vh; min-height:560px}
+  .scrollhint{display:flex}
+}
+.scrollhint{
+  display:none;
+  position:fixed; z-index:22;
+  left:50%; bottom:12px; transform:translateX(-50%);
+  flex-direction:column; align-items:center; gap:2px;
+  font-family:'Space Mono',monospace;
+  font-size:9px; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--ink-dim);
+  pointer-events:none;
+  opacity:.85;
+  transition:opacity .4s ease;
+}
+.scrollhint svg{width:16px; height:16px; animation:hintBob 1.6s ease-in-out infinite}
+.scrollhint.gone{opacity:0}
+@keyframes hintBob{0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){ .scrollhint svg{animation:none} }
+
+/* ---------- vignette + corner frame ---------- */
+.vignette{
+  position:fixed; inset:0; z-index:3; pointer-events:none;
+  background:radial-gradient(ellipse 72% 62% at 50% 48%, transparent 58%, rgba(0,0,0,.34) 82%, rgba(0,0,0,.62) 100%);
+}
+.rail{
+  position:fixed; z-index:4; top:50%;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  transform:translateY(-50%);
+  font-family:'Space Mono',monospace;
+  pointer-events:none;
+  opacity:.5;
+}
+.rail.l{left:clamp(14px,2.6vw,34px)}
+.rail.r{right:clamp(14px,2.6vw,34px)}
+.rail .line{width:1px; height:clamp(60px,12vh,120px); background:linear-gradient(180deg, transparent, rgba(255,235,237,.45), transparent)}
+.rail .tick{
+  font-size:10px; letter-spacing:.3em; color:var(--ink-dim);
+  writing-mode:vertical-rl; text-orientation:mixed;
+  white-space:nowrap;
+}
+@media (max-width:860px){ .rail{display:none} }
+
+/* ---------- corner music player (icon mode) ---------- */
+.player{
+  position:fixed; z-index:30;
+  right:18px; bottom:18px;
+}
+.pbtn{
+  position:relative;
+  width:46px; height:46px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; cursor:pointer;
+  color:var(--ink);
+  background:var(--panel-bg);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--line);
+  box-shadow:0 8px 30px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.08);
+  transition:border-color .25s, box-shadow .25s, transform .2s;
+}
+.pbtn:hover{transform:scale(1.06); border-color:rgba(166,201,182,.5)}
+.player.playing .pbtn{
+  border-color:rgba(166,201,182,.65);
+  box-shadow:0 0 18px rgba(166,201,182,.35), 0 8px 30px rgba(0,0,0,.5);
+}
+.player.playing .pbtn::before{
+  content:""; position:absolute; inset:-5px;
+  border-radius:50%;
+  border:1px solid transparent;
+  background:conic-gradient(from 0deg, transparent 0 70%, rgba(166,201,182,.9) 85%, transparent 100%) border-box;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  animation:spinRing 3.2s linear infinite;
+}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.player .yt{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
+@media (prefers-reduced-motion:reduce){ .player.playing .pbtn::before{animation:none} }
+
+/* ---------- footer ---------- */
+footer{
+  position:relative; z-index:6;
+  border-top:1px solid var(--line);
+  margin-top:10px;
+  padding:16px calc(clamp(20px,5vw,60px) + 68px) 22px clamp(20px,5vw,60px);
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 24px;
+  font-size:11.5px; color:var(--ink-dim);
+}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 44px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.14em; transition:color .25s}
+footer nav a:hover{color:var(--frozen)}
+
+@media (max-width:640px){
+  .e .chip{display:none}
+  .mobile-nav{display:grid}
+  .stage{height:100svh; min-height:520px}
+  h1{letter-spacing:.28em; font-size:clamp(24px,7vw,34px)}
+}
+@media (prefers-reduced-motion:reduce){
+}
+</style>
+</head>
+<body>
+<a href="../classic/index.html" title="Switch to the classic version of this website" style="position:fixed; left:18px; bottom:18px; z-index:60; font-family:'Space Mono','Noto Sans TC',monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; text-decoration:none; color:#A6C9B6; border:1px solid rgba(166,201,182,.45); border-radius:999px; padding:9px 16px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); box-shadow:0 0 14px rgba(166,201,182,.18);">Classic site</a>
+<div class="aurora"></div>
+
+<header>
+  <div>
+    <div class="eyebrow">Institute of Atomic and Molecular Sciences · Academia Sinica</div>
+    <h1>IAMS Yb Lab<span class="runway" aria-hidden="true"><span class="runner" id="runner"><span class="beam" style="--rb:0deg"></span><span class="beam" style="--rb:60deg"></span><span class="beam" style="--rb:120deg"></span><span class="tail"></span><span class="halo"></span><span class="core"></span><span class="mot-label">Nice catch — you trapped the atom!</span></span></span></h1>
+    <div class="config">quantum technology with ultracold ytterbium</div>
+  </div>
+  <a class="lang" href="index_zh.html">繁體中文</a>
+
+</header>
+
+<div class="stage" id="stage">
+  <canvas id="atom"></canvas>
+
+  <!-- electron menu chips -->
+  <a class="e" data-i="1" style="--c:#FFEBED"   href="contact.html"><span class="node"></span><span class="chip"><span class="t1">Contact</span></span></a>
+  <a class="e" data-i="2" style="--c:#A6C9B6"     href="research.html"><span class="node"></span><span class="chip"><span class="t1">Research</span></span></a>
+  <a class="e" data-i="3" style="--c:#F6B6B7"     href="team.html"><span class="node"></span><span class="chip"><span class="t1">Team</span></span></a>
+  <a class="e" data-i="4" style="--c:#FFEBED"     href="publications-papers.html"><span class="node"></span><span class="chip"><span class="t1">Publications</span></span></a>
+  <a class="e" data-i="5" style="--c:#3E828E" href="projects.html"><span class="node"></span><span class="chip"><span class="t1">Projects</span></span></a>
+  <a class="e" data-i="6" style="--c:#A6C9B6" href="gallery.html"><span class="node"></span><span class="chip"><span class="t1">Gallery</span></span></a>
+  <a class="e" data-i="7" style="--c:#F6B6B7" href="join.html"><span class="node"></span><span class="chip"><span class="t1">Join Us</span></span></a>
+
+</div>
+<div id="warp" aria-hidden="true"></div>
+
+<div class="vignette" aria-hidden="true"></div>
+
+<div class="scrollhint" id="scrollhint" aria-hidden="true">
+  <span>Scroll</span>
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 6 L8 11 L13 6"/></svg>
+</div>
+
+<!-- quiet side rails: the lab's wavelengths on the left, identity on the right -->
+<div class="rail l" aria-hidden="true">
+  <span class="line"></span>
+  <span class="tick">Quantum Metrology</span>
+  <span class="line"></span>
+</div>
+<div class="rail r" aria-hidden="true">
+  <span class="line"></span>
+  <span class="tick">Hybrid Atom&#8211;Nanophotonics</span>
+  <span class="line"></span>
+</div>
+
+
+<!-- corner music player -->
+<div class="player" id="player">
+  <div class="yt" id="pvideo" aria-hidden="true"></div>
+  <button class="pbtn" id="pplay" aria-label="Toggle background music" title="Background music">🎵</button>
+</div>
+
+
+<nav class="mobile-nav" aria-label="Menu">
+  <a href="index.html" style="--c:var(--frozen)"><span class="dot"></span>Home</a>
+  <a href="research.html" style="--c:#A6C9B6"><span class="dot"></span>Research</a>
+  <a href="team.html" style="--c:#F6B6B7"><span class="dot"></span>Team</a>
+  <a href="publications-papers.html" style="--c:#FFEBED"><span class="dot"></span>Publications</a>
+  <a href="projects.html" style="--c:#3E828E"><span class="dot"></span>Projects</a>
+  <a href="gallery.html" style="--c:#A6C9B6"><span class="dot"></span>Gallery</a>
+  <a href="join.html" style="--c:#F6B6B7"><span class="dot"></span>Join Us</a>
+  <a href="contact.html" style="--c:#FFEBED"><span class="dot"></span>Contact</a>
+</nav>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">IAMS ↗</a>
+  </nav>
+  <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
+</footer>
+
+<script>
+(() => {
+  const canvas = document.getElementById('atom');
+  const stage  = document.getElementById('stage');
+  const ctx    = canvas.getContext('2d');
+  const links  = [...document.querySelectorAll('.e')];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = matchMedia('(max-width: 640px)').matches;
+
+  const COL = { frozen:'255,235,237', cyan:'166,201,182', sapphire:'246,182,183' };
+
+  let W=0,H=0,DPR=1,CX=0,CY=0,S=0;
+  function resize(){
+    DPR = Math.min(devicePixelRatio||1, 2);
+    W = stage.clientWidth; H = stage.clientHeight;
+    canvas.width = W*DPR; canvas.height = H*DPR;
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    CX = W/2; CY = H/2 + H*0.05;
+    S  = Math.min(W*0.62, H*0.58);
+  }
+  resize(); addEventListener('resize', resize);
+
+  // ---------- 3D ----------
+  const FOV = 3.2;
+  const rotYp = (p,a)=>{const c=Math.cos(a),s=Math.sin(a);return [c*p[0]+s*p[2], p[1], -s*p[0]+c*p[2]];};
+  const rotXp = (p,a)=>{const c=Math.cos(a),s=Math.sin(a);return [p[0], c*p[1]-s*p[2], s*p[1]+c*p[2]];};
+  let yaw=0, pitch=0, tYaw=0, tPitch=0;
+  const V = (p,a)=> rotXp(rotYp(p, a+yaw), pitch);      // camera = scene rotation + mouse parallax
+  const project = p => { const s=FOV/(FOV-p[2]); return {x:CX+p[0]*S*s, y:CY+p[1]*S*s, s, z:p[2]}; };
+  function basis(ax, az){
+    // screen-facing ellipse, rotated in-plane by az, then tipped in depth by ax
+    let u=[1,0,0], v=[0,1,0];
+    const rz=q=>[Math.cos(az)*q[0]-Math.sin(az)*q[1], Math.sin(az)*q[0]+Math.cos(az)*q[1], q[2]];
+    const rx=q=>[q[0], Math.cos(ax)*q[1]-Math.sin(ax)*q[2], Math.sin(ax)*q[1]+Math.cos(ax)*q[2]];
+    return {u:rx(rz(u)), v:rx(rz(v))};
+  }
+  const ECC = .42;                    // classic atom-icon ellipse squash
+  const orbitPoint=(o,th)=>{
+    const {u,v}=o.b, a=o.r, b=o.r*ECC;
+    return [a*Math.cos(th)*u[0]+b*Math.sin(th)*v[0],
+            a*Math.cos(th)*u[1]+b*Math.sin(th)*v[1],
+            a*Math.cos(th)*u[2]+b*Math.sin(th)*v[2]];
+  };
+
+  // ---------- Yb, Z = 70 : the real shells ----------
+  // K L M N O P = 2, 8, 18, 32, 8, 2  (70 electrons, no more, no less)
+  const shells = [
+    {n:2,  r:.30, tilt:[ 24,   0], th: .4, w: .42, c:'frozen'  },
+    {n:8,  r:.44, tilt:[ 30,  90], th:1.7, w:-.30, c:'frozen'  },
+    {n:18, r:.58, tilt:[ 22,  30], th: .9, w: .22, c:'cyan'    },
+    {n:32, r:.72, tilt:[ 34, 120], th:2.8, w:-.15, c:'cyan'    },
+    {n:8,  r:.84, tilt:[ 26,  60], th: .2, w: .11, c:'sapphire'},  // O shell -> the 8 menu electrons
+    {n:2,  r:.96, tilt:[ 30, 150], th:3.6, w:-.08, c:'sapphire'},  // 6s2 valence pair
+  ];
+  const D2R = Math.PI/180;
+  shells.forEach(sh => sh.b = basis(sh.tilt[0]*D2R, sh.tilt[1]*D2R));
+  const MENU = 4;                      // the O shell carries the menu
+
+  // ---------- glow sprites ----------
+  function sprite(rgb){
+    const c = document.createElement('canvas'); c.width=c.height=32;
+    const g = c.getContext('2d');
+    const gr = g.createRadialGradient(16,16,0,16,16,16);
+    gr.addColorStop(0, 'rgba(255,255,255,.95)');
+    gr.addColorStop(.25, `rgba(${rgb},.85)`);
+    gr.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle=gr; g.fillRect(0,0,32,32);
+    return c;
+  }
+  const SP = { frozen:sprite(COL.frozen), cyan:sprite(COL.cyan), sapphire:sprite(COL.sapphire) };
+
+  // ---------- nucleus: exactly 174 nucleons (70 p + 104 n, Yb-174) ----------
+  const NUC=[];
+  for(let i=0;i<174;i++){
+    const r=.085*Math.cbrt(Math.random());        // uniform ball -> stippled look
+    const t=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
+    NUC.push([r*Math.sin(ph)*Math.cos(t), r*Math.sin(ph)*Math.sin(t), r*Math.cos(ph), .55+Math.random()*.45]);
+  }
+  // faint background starfield (decor only, clearly not electrons)
+  const DUST = Array.from({length:isMobile?50:100}, ()=>({
+    p:[(Math.random()*2-1)*1.3,(Math.random()*2-1)*1.3,(Math.random()*2-1)*1.3],
+    a:.04+Math.random()*.14, s:.5+Math.random()*1.0, ph:Math.random()*Math.PI*2
+  }));
+
+  // ---------- controls ----------
+  let G=0, speed=1, hoverMul=1, userRate=0.8, last=performance.now();
+  const target = ()=> userRate*hoverMul;
+
+  addEventListener('pointermove', e=>{
+    // engage the parallax camera only when the cursor is near the nucleus
+    const r  = stage.getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height/2 + r.height*0.05;
+    const d  = Math.hypot(e.clientX-cx, e.clientY-cy);
+    const Rin  = Math.min(r.width, r.height)*0.16;   // fully engaged inside this
+    const Rout = Math.min(r.width, r.height)*0.34;   // fades out to zero here
+    const w = Math.max(0, Math.min(1, (Rout-d)/(Rout-Rin)));
+    tYaw   = (e.clientX/innerWidth  - .5) * .34 * w;
+    tPitch = (e.clientY/innerHeight - .5) * .22 * w;
+    hoverMul = d < S*0.96 ? .12 : 1;                 // slow only inside the outermost orbit
+  });
+  document.documentElement.addEventListener('pointerleave', ()=>{ hoverMul=1; tYaw=0; tPitch=0; });
+
+
+  // ---------- render ----------
+  function draw(now){
+    const dt=Math.min((now-last)/1000,.05); last=now;
+    speed += (target()-speed)*Math.min(1, dt*5);
+    yaw   += (tYaw-yaw)*Math.min(1, dt*2.5);
+    pitch += (tPitch-pitch)*Math.min(1, dt*2.5);
+    G += dt*speed*.12;
+    shells.forEach(sh=> sh.th += dt*speed*sh.w);
+
+    ctx.clearRect(0,0,W,H);
+
+    // shell rings, depth-faded
+    const SEG=80;
+    for(const sh of shells){
+      ctx.lineWidth=1; let prev=null;
+      for(let i=0;i<=SEG;i++){
+        const p=project(V(orbitPoint(sh,i/SEG*Math.PI*2),G));
+        if(prev){
+          const a=.10+.22*(((p.z+prev.z)/2/sh.r)+1)/2;
+          ctx.strokeStyle=`rgba(${COL.frozen},${a.toFixed(3)})`;
+          ctx.beginPath(); ctx.moveTo(prev.x,prev.y); ctx.lineTo(p.x,p.y); ctx.stroke();
+        }
+        prev=p;
+      }
+    }
+
+    ctx.globalCompositeOperation='lighter';
+
+    // starfield
+    for(const d of DUST){
+      const p=project(V(d.p,G*.6));
+      const tw=.6+.4*Math.sin(now/900+d.ph);
+      ctx.globalAlpha=d.a*tw;
+      const s=d.s*3*p.s;
+      ctx.drawImage(SP.frozen, p.x-s/2, p.y-s/2, s, s);
+    }
+
+    // 70 electrons on their shells
+    for(let si=0; si<shells.length; si++){
+      const sh=shells[si];
+      for(let k=0;k<sh.n;k++){
+        if(si===MENU && k<links.length) continue;    // slots occupied by menu chips
+        const th=sh.th + k*Math.PI*2/sh.n;
+        const p=project(V(orbitPoint(sh,th),G));
+        const depth=((p.z/sh.r)+1)/2;
+        const s=(4.5+5.5*depth)*p.s;
+        ctx.globalAlpha=.35+.6*depth;
+        ctx.drawImage(SP[sh.c], p.x-s/2, p.y-s/2, s, s);
+      }
+    }
+
+    // 174 nucleons — stippled ball, like the classic sketch
+    const hg=ctx.createRadialGradient(CX,CY,0, CX,CY, S*.16);
+    hg.addColorStop(0, `rgba(${COL.frozen},.14)`);
+    hg.addColorStop(.6,`rgba(${COL.cyan},.05)`);
+    hg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalAlpha=1; ctx.fillStyle=hg;
+    ctx.fillRect(CX-S*.17, CY-S*.17, S*.34, S*.34);
+    for(const q of NUC){
+      const p=project(V(q,G*1.8));
+      const depth=((p.z/.085)+1)/2;
+      ctx.globalAlpha=q[3]*(.35+.6*depth);
+      ctx.fillStyle=`rgba(${COL.frozen},1)`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, (0.9+0.8*depth)*p.s, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='source-over';
+
+    // the 8 O-shell electrons = the menu
+    const msh=shells[MENU];
+    for(let i=0;i<links.length;i++){
+      const th=msh.th + i*Math.PI*2/msh.n;
+      const p=project(V(orbitPoint(msh,th),G));
+      const front=p.z>0;
+      const sc=.82+.3*((p.z/msh.r)+1)/2;
+      const el=links[i];
+      el.style.transform=`translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(0,-50%) scale(${sc.toFixed(3)})`;
+      el.style.opacity=(front?1:.88).toFixed(2);
+      el.style.zIndex=front?5:2;
+    }
+
+    if(!reduced) requestAnimationFrame(draw);
+  }
+  if(reduced) draw(performance.now());
+  else requestAnimationFrame(draw);
+
+  // ---------- runaway atom + MOT trap ----------
+  const runner = document.getElementById('runner');
+  const runway = runner ? runner.parentElement : null;
+  if(runner){
+    let rx = -30, ry = 0, trapped = false, lastR = performance.now();
+    const V = 95;                        // px/s — a hot atom crossing the title
+    function moveRunner(now){
+      const dt = Math.min((now-lastR)/1000, .05); lastR = now;
+      if(!trapped){
+        const Wr = runway.clientWidth;
+        rx += V*dt;
+        ry = Math.sin(now/300)*3 + Math.sin(now/110)*1.2;  // slight thermal wiggle
+        if(rx > Wr + 30) rx = -30;                          // next atom from the oven
+        runner.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px)`;
+      }
+      requestAnimationFrame(moveRunner);
+    }
+    if(!reduced) requestAnimationFrame(moveRunner);
+    else { runner.style.transform = `translate(${(runway.clientWidth*.72)}px,0)`; }
+
+    runner.addEventListener('pointerenter', ()=>{ trapped = true;  runner.classList.add('trapped'); });
+    runner.addEventListener('pointerleave', ()=>{ trapped = false; runner.classList.remove('trapped'); });
+  }
+
+  // ---------- click an electron -> zoom into it, then travel ----------
+  const warp = document.getElementById('warp');
+  links.forEach(a => a.addEventListener('click', ev => {
+    if(ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button!==0) return;  // let new-tab clicks through
+    ev.preventDefault();
+    const href = a.href;
+    const r = a.getBoundingClientRect();
+    const px = r.left + 8, py = r.top + r.height/2;      // the electron node
+    const col = getComputedStyle(a).getPropertyValue('--c').trim() || '#A6C9B6';
+
+    userRate = 0; hoverMul = 0;                          // freeze the atom
+    document.body.classList.add('warping');
+
+    // zoom the whole stage toward the clicked electron
+    stage.classList.add('zooming');
+    stage.style.transformOrigin = `${px}px ${py}px`;
+
+    // expanding light of that electron's colour
+    const need = 2*Math.hypot(Math.max(px, innerWidth-px), Math.max(py, innerHeight-py))/24;
+    warp.style.left = px+'px'; warp.style.top = py+'px';
+    warp.style.setProperty('--wc', col);
+    warp.classList.add('go');
+
+    requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+      stage.style.transform = 'scale(6)';
+      warp.style.transform = `translate(-50%,-50%) scale(${need.toFixed(1)})`;
+    });});
+
+    setTimeout(()=> location.href = href, reduced ? 80 : 700);
+  }));
+
+  // ---------- coming back from an inner page: zoom back out of the electron ----------
+  try{
+    if(sessionStorage.getItem('ybWarpBack')==='1'){
+      sessionStorage.removeItem('ybWarpBack');
+      if(!reduced){
+        document.body.classList.add('arriving');
+        stage.style.transformOrigin='50% 50%';
+        stage.style.transform='scale(5.5)';
+        requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+          stage.classList.add('unwarp');
+          stage.style.transform='scale(1)';
+          document.body.classList.remove('arriving');
+          setTimeout(()=>{ stage.classList.remove('unwarp'); stage.style.transform=''; }, 900);
+        });});
+      }
+    }
+  }catch(e){}
+
+
+  // ---------- corner music player (YouTube, icon mode, autoplay) ----------
+  const player = document.getElementById('player');
+  const pplay  = document.getElementById('pplay');
+  const pvideo = document.getElementById('pvideo');
+  let yt = null, playing = false;
+  const YT_SRC = 'https://www.youtube.com/embed/7GlsxNI4LVI?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=7GlsxNI4LVI';
+  const cmd = (f,a)=> yt && yt.contentWindow.postMessage(JSON.stringify({event:'command', func:f, args:a||[]}), '*');
+  let ytReady=false;
+  function makeYT(){
+    yt = document.createElement('iframe');
+    yt.src = YT_SRC;
+    yt.title = 'Background music';
+    yt.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    yt.referrerPolicy = 'strict-origin-when-cross-origin';
+    yt.addEventListener('load', ()=>{ ytReady=true;
+      // 通知 YT iframe 開始監聽 postMessage 指令
+      yt.contentWindow.postMessage(JSON.stringify({event:'listening', id:'bgm'}), '*');
+    });
+    pvideo.appendChild(yt);
+    playing = true;
+    player.classList.add('playing');
+  }
+  makeYT();                       // 立即以「靜音」狀態自動播放(瀏覽器允許)
+  // 瀏覽器禁止有聲自動播放。策略:
+  //   1) 滑鼠一移動就「嘗試」解除靜音(寬鬆的瀏覽器會成功)
+  //   2) 第一次點擊/按鍵/捲動/觸控時再保底解除(所有瀏覽器都承認的手勢)
+  const tryUnmute=()=>{ const un=()=>{ cmd('unMute'); cmd('setVolume',[60]); cmd('playVideo'); };
+                        ytReady ? un() : setTimeout(un, 600); };
+  let unmuted=false;
+  let lastTry=0;
+  const mm=()=>{                                                          // 嘗試性: 節流持續重試直到出聲
+    if(unmuted) return;
+    const n=Date.now(); if(n-lastTry<1200) return;
+    lastTry=n; tryUnmute();
+  };
+  addEventListener('mousemove', mm, {passive:true});
+  function kick(){
+    if(unmuted) return;
+    unmuted=true;
+    tryUnmute();                                                          // 保底, 一定成功
+    ['pointerdown','keydown','wheel','touchstart','scroll'].forEach(t=> removeEventListener(t, kick));
+    removeEventListener('mousemove', mm);
+  }
+  ['pointerdown','keydown','wheel','touchstart','scroll'].forEach(t=>
+    addEventListener(t, kick, {passive:true}));
+  pplay.addEventListener('click', ev=>{
+    ev.stopPropagation();
+    playing = !playing;
+    if(playing){ cmd('unMute'); cmd('setVolume',[60]); cmd('playVideo'); unmuted=true; }
+    else cmd('pauseVideo');
+    player.classList.toggle('playing', playing);
+  });
+
+  // scroll hint (short screens): fade once scrolling starts
+  const shint = document.getElementById('scrollhint');
+  if(shint){
+    addEventListener('scroll', ()=> shint.classList.toggle('gone', scrollY>30), {passive:true});
+  }
+
+  // if the page is restored from the back/forward cache, undo any frozen warp state
+  addEventListener('pageshow', ev=>{
+    if(ev.persisted){
+      document.body.classList.remove('warping','arriving');
+      stage.classList.remove('zooming','unwarp');
+      stage.style.transform=''; 
+      warp.classList.remove('go');
+      warp.style.transform='translate(-50%,-50%) scale(0)';
+      userRate=0.8; hoverMul=1;
+    }
+  });
+
+
+})();
+</script>
+</body>
+</html>

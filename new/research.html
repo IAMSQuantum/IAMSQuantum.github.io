@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — IAMS Yb Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 55%, rgba(246,182,183,.05), transparent 60%)}
+.aurora::after{content:""; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay}
+a{color:inherit}
+body{transform-origin:50% 42%}
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.1)} to{opacity:1; transform:scale(1)}}
+body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
+@keyframes pageOut{to{opacity:0; transform:scale(.05)}}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:14px clamp(20px,5vw,60px);
+  background:rgba(4,5,12,.78); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+
+/* ---------- poster header ---------- */
+main{position:relative; z-index:2; flex:1; width:min(1140px,94vw); margin:0 auto; padding:120px 0 80px}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--blush); box-shadow:0 0 14px rgba(246,182,183,.7)}
+.phead h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.1em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(62,130,142,.25)}
+.phead h1 b{font-weight:300; color:var(--mint); text-shadow:0 0 24px rgba(166,201,182,.6)}
+.phead .authors{margin-top:12px; font-size:12px; letter-spacing:.12em; color:var(--ink)}
+.phead .affil{margin-top:6px; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim)}
+
+/* ---------- poster sections ---------- */
+.psec{margin-top:34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px);
+  padding:clamp(20px,3.4vw,34px); position:relative}
+.psec::before{content:""; position:absolute; top:-1px; left:24px; height:3px; width:90px;
+  background:var(--sc,var(--mint)); box-shadow:0 0 14px color-mix(in srgb, var(--sc,#A6C9B6) 70%, transparent)}
+.psec .sh{display:flex; align-items:center; gap:14px; margin-bottom:20px}
+.psec .sh .n{font-size:11px; letter-spacing:.26em; color:var(--sc,var(--mint));
+  text-shadow:0 0 12px color-mix(in srgb, var(--sc,#A6C9B6) 55%, transparent); white-space:nowrap}
+.psec .sh h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,3vw,26px);
+  letter-spacing:.22em; text-transform:uppercase; color:#FFF6F4}
+.psec .sh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--sc,#A6C9B6) 45%, transparent), transparent)}
+
+.psec p{font-size:13px; line-height:1.9; color:#C2B6D4}
+.psec p+p{margin-top:12px}
+.psec p b{color:var(--frozen); font-weight:400; text-shadow:0 0 10px rgba(255,235,237,.25)}
+.psec p a{color:var(--mint); text-decoration:none; border-bottom:1px dashed rgba(166,201,182,.45)}
+.psec p a:hover{color:var(--frozen)}
+
+.mot{display:grid; grid-template-columns:1.35fr 1fr; gap:26px; align-items:start}
+figure.fig{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(4,5,12,.5)}
+figure.fig+figure.fig{margin-top:16px}
+figure.fig img{display:block; width:100%; height:auto}
+figure.fig figcaption{padding:10px 14px; font-size:10.5px; line-height:1.7; color:var(--ink-dim);
+  border-top:1px dashed var(--line)}
+figure.fig .missfig{padding:26px 14px; text-align:center; font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-dim)}
+
+/* ---------- hub diagram (從 Yb 出發) ---------- */
+.hubwrap{margin-top:6px}
+.hubwrap svg{display:block; width:100%; height:auto}
+.hub-orbits{transform-origin:210px 300px; animation:hubspin 22s linear infinite}
+@keyframes hubspin{to{transform:rotate(360deg)}}
+.hub-e{transform-origin:210px 300px; animation:hubspin 9s linear infinite}
+.hub-e2{transform-origin:210px 300px; animation:hubspin 14s linear infinite reverse}
+.flow{stroke-dasharray:5 7; animation:flowmove 1.6s linear infinite}
+@keyframes flowmove{to{stroke-dashoffset:-24}}
+.sat{cursor:pointer}
+.sat rect{transition:filter .25s}
+.sat:hover rect{filter:drop-shadow(0 0 18px color-mix(in srgb, var(--satc,#A6C9B6) 60%, transparent))}
+.sat:hover .go{fill:var(--frozen)}
+@media (prefers-reduced-motion:reduce){
+  .hub-orbits,.hub-e,.hub-e2,.flow{animation:none}
+}
+
+/* ---------- question cards ---------- */
+.qgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px}
+.q{padding:20px; border-radius:14px; border:1px solid var(--line); background:rgba(4,5,12,.5);
+  transition:border-color .25s, box-shadow .25s}
+.q:hover{border-color:color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 26px color-mix(in srgb, var(--c,#A6C9B6) 15%, transparent)}
+.q .qn{font-family:'Exo 2',sans-serif; font-weight:100; font-size:30px; color:var(--c,var(--mint));
+  text-shadow:0 0 16px color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent)}
+.q p{margin-top:10px; font-size:12.5px; line-height:1.8; color:#C2B6D4}
+
+/* ---------- milestone ---------- */
+.mile{display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center}
+.mile .yr{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(40px,7vw,64px);
+  color:var(--blush); text-shadow:0 0 26px rgba(246,182,183,.55); line-height:1}
+.mile p{font-size:13px; line-height:1.9; color:#C2B6D4}
+
+/* CTA + footer */
+.cta{margin-top:34px; text-align:center; padding:38px 20px; border-radius:18px;
+  border:1px solid var(--line);
+  background:radial-gradient(600px 300px at 50% 0%, rgba(62,130,142,.14), transparent 70%), var(--panel-bg)}
+.cta h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,2.6vw,24px);
+  letter-spacing:.24em; text-transform:uppercase; color:#FFF6F4; text-shadow:0 0 16px rgba(255,235,237,.3)}
+.cta .btns{margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+.cta a{display:inline-block; text-decoration:none; font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; border-radius:999px; padding:12px 28px; transition:transform .2s, box-shadow .2s}
+.cta a.b1{color:#04050C; background:var(--mint); box-shadow:0 0 22px rgba(166,201,182,.45)}
+.cta a.b2{color:var(--ink); border:1px solid var(--line)}
+.cta a:hover{transform:translateY(-2px)}
+footer{position:relative; z-index:2; border-top:1px solid var(--line);
+  padding:18px clamp(20px,5vw,60px) 24px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:12px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+footer a{text-decoration:none; transition:color .2s}
+footer a:hover{color:var(--frozen)}
+
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease}
+.reveal.in{opacity:1; transform:translateY(0)}
+
+@media (max-width:920px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  main{padding-top:165px}
+  .mot{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter,body.leave{animation:none}
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research.html" class="now" aria-current="page">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="research_zh.html" class="zh">繁體中文</a>
+      <a href="../classic/research.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ poster header ============ -->
+  <div class="phead reveal">
+    <h1>From <b>Ytterbium Cold Atoms</b><br>to Continuous Quantum Technologies</h1>
+    <div class="authors">Quantum Metrology Lab · Hybrid Atom-Nanophotonics Lab</div>
+    <div class="affil">Institute of Atomic and Molecular Sciences · Academia Sinica · Taipei</div>
+  </div>
+
+  <!-- ============ 1. Motivation ============ -->
+  <section class="psec reveal" style="--sc:var(--mint)">
+    <div class="sh"><span class="n">01</span><h2>Motivation</h2></div>
+    <div class="mot">
+      <div>
+        <p>The advent of optical atomic clocks with fractional frequency uncertainties below <b>10⁻¹⁸</b> has
+           revolutionized frequency metrology — accumulating one second of error over the age of the universe —
+           and simultaneously opened new avenues in quantum sensing and quantum information science.</p>
+        <p>Among the leading platforms are <b>alkaline-earth(-like) (AEL) atoms</b> such as strontium and
+           ytterbium. Their two-electron valence structure gives rise to a uniquely rich spectrum of optical
+           transitions, from broad MHz-level lines to <b>ultranarrow mHz clock transitions</b>, allowing
+           unprecedented control over atomic states — both internal and motional.</p>
+        <p>Crucially, the long-lived metastable states behind these clock transitions have not only enabled the
+           most stable clocks to date, but also revealed a <b>multidimensional qubit space</b> — ground-state
+           nuclear spin qubits, optical qubits, metastable hyperfine and nuclear spin states. AEL atoms are thus
+           exceptional candidates for next-generation quantum technologies unifying <b>precision metrology</b>,
+           <b>quantum simulation</b>, and <b>scalable quantum computing</b>.</p>
+      </div>
+      <div>
+        <figure class="fig">
+          <img src="../images/Research01_SSBEC.png" alt="The first continuous Bose-Einstein condensate"
+               onerror="this.outerHTML='&lt;div class=&quot;missfig&quot;&gt;image: Research01_SSBEC.png&lt;/div&gt;'">
+          <figcaption>The first continuous Bose–Einstein condensate — Nature (2022).</figcaption>
+        </figure>
+        <figure class="fig">
+          <img src="../images/Research02_Yb electronic states.png" alt="Yb energy level diagram"
+               onerror="this.outerHTML='&lt;div class=&quot;missfig&quot;&gt;image: Research02_Yb electronic states.png&lt;/div&gt;'">
+          <figcaption>Energy-level diagram highlighting the optical transitions used in AEL atoms.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. Everything starts from Yb ============ -->
+  <section class="psec reveal" style="--sc:var(--frozen)">
+    <div class="sh"><span class="n">02</span><h2>Everything Starts From Yb</h2></div>
+    <div class="hubwrap" role="img" aria-label="Diagram: a continuous Yb cold-atom source feeding three research directions">
+      <svg viewBox="0 0 1040 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFEBED" stop-opacity=".16"/>
+            <stop offset="100%" stop-color="#FFEBED" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- connector flows -->
+        <path class="flow" d="M330 260 C 460 160, 520 130, 640 118" fill="none" stroke="#A6C9B6" stroke-width="1.6" opacity=".8"/>
+        <path class="flow" d="M340 300 C 470 300, 520 300, 640 300" fill="none" stroke="#F6B6B7" stroke-width="1.6" opacity=".8"/>
+        <path class="flow" d="M330 340 C 460 440, 520 470, 640 482" fill="none" stroke="#3E828E" stroke-width="1.6" opacity=".9"/>
+
+        <!-- hub -->
+        <circle cx="210" cy="300" r="150" fill="url(#hubGlow)"/>
+        <circle cx="210" cy="300" r="122" fill="rgba(4,5,12,.55)" stroke="#FFEBED" stroke-opacity=".55" stroke-width="1.2"/>
+        <circle cx="210" cy="300" r="122" fill="none" stroke="#FFEBED" stroke-opacity=".18" stroke-width="6"/>
+        <g class="hub-orbits" stroke="#FFEBED" stroke-opacity=".6" fill="none" stroke-width="1">
+          <ellipse cx="210" cy="300" rx="92" ry="34"/>
+          <ellipse cx="210" cy="300" rx="92" ry="34" transform="rotate(60 210 300)"/>
+          <ellipse cx="210" cy="300" rx="92" ry="34" transform="rotate(-60 210 300)"/>
+        </g>
+        <circle cx="210" cy="300" r="9" fill="#FFEBED"/>
+        <circle cx="210" cy="300" r="16" fill="none" stroke="#FFEBED" stroke-opacity=".5"/>
+        <g class="hub-e"><circle cx="302" cy="300" r="5" fill="#A6C9B6"/></g>
+        <g class="hub-e2"><circle cx="164" cy="222" r="5" fill="#F6B6B7"/></g>
+        <text x="210" y="452" text-anchor="middle" fill="#FFF6F4"
+              font-family="Exo 2" font-weight="200" font-size="21" letter-spacing="4">CONTINUOUS Yb</text>
+        <text x="210" y="476" text-anchor="middle" fill="#A395B8"
+              font-family="Space Mono" font-size="11" letter-spacing="3">COLD-ATOM SOURCE</text>
+
+        <!-- satellites -->
+        <a class="sat" style="--satc:#A6C9B6" href="../classic/Research-cw-clock.html" aria-label="CW Optical Clock">
+          <rect x="640" y="58" width="360" height="120" rx="16"
+                fill="rgba(6,8,18,.7)" stroke="#A6C9B6" stroke-opacity=".55" stroke-width="1.2"/>
+          <text x="668" y="96" fill="#A6C9B6" font-family="Space Mono" font-size="10" letter-spacing="3">DIRECTION A</text>
+          <text x="668" y="126" fill="#FFF6F4" font-family="Exo 2" font-weight="300" font-size="21">CW Optical Clock</text>
+          <text x="668" y="152" fill="#A395B8" font-family="Space Mono" font-size="10.5">Continuous interrogation · τ⁻¹ stability</text>
+          <text class="go" x="962" y="126" fill="#A6C9B6" font-family="Space Mono" font-size="16">↳</text>
+        </a>
+        <a class="sat" style="--satc:#F6B6B7" href="../classic/Research-Laser-cooling-to-Quantum-Degeneracy.html" aria-label="Laser cooling to quantum degeneracy">
+          <rect x="640" y="240" width="360" height="120" rx="16"
+                fill="rgba(6,8,18,.7)" stroke="#F6B6B7" stroke-opacity=".55" stroke-width="1.2"/>
+          <text x="668" y="278" fill="#F6B6B7" font-family="Space Mono" font-size="10" letter-spacing="3">DIRECTION B</text>
+          <text x="668" y="308" fill="#FFF6F4" font-family="Exo 2" font-weight="300" font-size="21">Laser Cooling → Degeneracy</text>
+          <text x="668" y="334" fill="#A395B8" font-family="Space Mono" font-size="10.5">High-flux near-degenerate beams · CW BEC</text>
+          <text class="go" x="962" y="308" fill="#F6B6B7" font-family="Space Mono" font-size="16">↳</text>
+        </a>
+        <a class="sat" style="--satc:#3E828E" href="../classic/Research-Atom-Nanophotonics.html" aria-label="Atom nanophotonics">
+          <rect x="640" y="422" width="360" height="120" rx="16"
+                fill="rgba(6,8,18,.7)" stroke="#3E828E" stroke-opacity=".7" stroke-width="1.2"/>
+          <text x="668" y="460" fill="#5FB0BD" font-family="Space Mono" font-size="10" letter-spacing="3">DIRECTION C</text>
+          <text x="668" y="490" fill="#FFF6F4" font-family="Exo 2" font-weight="300" font-size="21">Atom – Nanophotonics</text>
+          <text x="668" y="516" fill="#A395B8" font-family="Space Mono" font-size="10.5">Engineered light–matter interfaces · networks</text>
+          <text class="go" x="962" y="490" fill="#5FB0BD" font-family="Space Mono" font-size="16">↳</text>
+        </a>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ 3. Milestone ============ -->
+  <section class="psec reveal" style="--sc:var(--blush)">
+    <div class="sh"><span class="n">03</span><h2>The 2022 Milestone</h2></div>
+    <div class="mile">
+      <div class="yr">2022</div>
+      <p>During their PhDs, the two PIs of our group published the world's first <b>matter-wave analog of a
+         continuous laser</b> — a true continuous-wave <b>atom laser</b> — by developing techniques to maintain
+         a high-flux, near-quantum-degenerate source of AEL atoms (Sr). This marked a major milestone in
+         continuous ultracold atom generation and
+         <a href="https://doi.org/10.1038/s41586-022-04731-z" target="_blank" rel="noopener">opened a new experimental paradigm</a>
+         [Nature (2022)]. A compelling question naturally arises: how does this continuous source architecture
+         reshape the landscape of quantum technology?</p>
+    </div>
+  </section>
+
+  <!-- ============ 4. Guiding questions ============ -->
+  <section class="psec reveal" style="--sc:var(--teal)">
+    <div class="sh"><span class="n">04</span><h2>Guiding Questions</h2></div>
+    <div class="qgrid">
+      <div class="q" style="--c:var(--mint)">
+        <div class="qn">Q1</div>
+        <p>Can we <b>advance atomic clocks</b> by replacing pulsed operation with <b>continuous interrogation of
+           optical qubits</b> — potentially <a href="https://iopscience.iop.org/article/10.35848/1882-0786/ac0e16"
+           target="_blank" rel="noopener">enabling τ⁻¹ scaling in stability</a>, or realizing
+           <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.102.163601" target="_blank"
+           rel="noopener">continuous superradiance on a mHz clock transition</a>?</p>
+      </div>
+      <div class="q" style="--c:var(--blush)">
+        <div class="qn">Q2</div>
+        <p>Can we link neutral-atom processing nodes, forming <b>quantum networks</b>?</p>
+      </div>
+      <div class="q" style="--c:var(--teal)">
+        <div class="qn">Q3</div>
+        <p>Can the <b>ultranarrow clock transitions</b> be harnessed not just for spectroscopy, but as precision
+           tools to <b>engineer entangled and many-body quantum states</b>?</p>
+      </div>
+      <div class="q" style="--c:var(--frozen)">
+        <div class="qn">Q4</div>
+        <p>Can we build a continuous, <b>scalable quantum processor</b> using long-lived metastable states — and
+           how do we initialize, operate, and maintain such a system with high fidelity over time?</p>
+      </div>
+    </div>
+    <p style="margin-top:20px">These guiding questions shape our ongoing work. Our goal is to develop the core
+       control tools and system architectures needed to turn continuous AEL sources into the backbone of future
+       quantum sensors, simulators, and computing platforms.</p>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <div class="cta reveal">
+    <h2>Dig Deeper</h2>
+    <div class="btns">
+      <a class="b1" href="projects.html">Current Projects</a>
+      <a class="b2" href="publications-papers.html">Publications</a>
+      <a class="b2" href="join.html">Join the Lab</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">IAMS ↗</a>
+  </nav>
+  <div>Institute of Atomic and Molecular Sciences, Academia Sinica · Tel +886-2-2366-8236 · No. 1, Roosevelt Rd. Sec. 4, Taipei</div>
+</footer>
+
+<script>
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+
+  [...document.querySelectorAll('a[href$="index.html"]')].forEach(a=> a.addEventListener('click', ev=>{
+    if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0) return;
+    ev.preventDefault();
+    try{ sessionStorage.setItem('ybWarpBack','1'); }catch(e){}
+    if(reduced){ location.href=a.href; return; }
+    document.body.classList.remove('enter'); document.body.classList.add('leave');
+    setTimeout(()=> location.href=a.href, 540);
+  }));
+
+  const revs=[...document.querySelectorAll('.reveal')];
+  if('IntersectionObserver' in window && !reduced){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{rootMargin:'-40px'});
+    revs.forEach(r=> io.observe(r));
+  }else revs.forEach(r=> r.classList.add('in'));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加入我們 — 中研院鐿原子實驗室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 55%, rgba(246,182,183,.05), transparent 60%)}
+.aurora::after{content:""; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay}
+a{color:inherit}
+body{transform-origin:50% 42%}
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.1)} to{opacity:1; transform:scale(1)}}
+body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
+@keyframes pageOut{to{opacity:0; transform:scale(.05)}}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:14px clamp(20px,5vw,60px);
+  background:rgba(4,5,12,.78); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+
+/* ---------- poster hero ---------- */
+.poster{position:relative; z-index:2; min-height:100svh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:110px clamp(20px,6vw,80px) 90px}
+.poster h1{font-family:'Exo 2',sans-serif; font-weight:100; text-transform:uppercase;
+  font-size:clamp(84px,19vw,230px); line-height:.92; letter-spacing:.01em; color:#FFF6F4;
+  text-shadow:0 0 30px rgba(255,235,237,.25), 0 0 110px rgba(62,130,142,.28)}
+.poster h1 .dot{color:var(--mint); text-shadow:0 0 34px rgba(166,201,182,.8)}
+.poster h1 .l{display:block; opacity:0; transform:translateY(40px);
+  animation:lineUp 1s cubic-bezier(.2,.8,.3,1) forwards}
+.poster h1 .l:nth-child(2){animation-delay:.18s}
+@keyframes lineUp{to{opacity:1; transform:translateY(0)}}
+.poster .strap{margin-top:clamp(30px,6vh,60px); padding-top:18px; border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  opacity:0; animation:lineUp 1s ease .5s forwards}
+.poster .strap .b1{font-size:clamp(11px,1.6vw,13px); letter-spacing:.3em; text-transform:uppercase; color:var(--ink)}
+.poster .strap .b2{display:flex; align-items:center; gap:10px;
+  font-size:10.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--ink-dim)}
+.poster .strap .b2 svg{width:15px; height:15px; animation:bob 1.7s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)}}
+
+/* ---------- showcase sections ---------- */
+.show{position:relative; z-index:2; min-height:100svh;
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(36px,6vw,96px); padding:0 clamp(16px,4vw,48px)}
+.show .giant{position:absolute; top:-.52em; left:2vw; z-index:4; pointer-events:none;
+  font-family:'Exo 2',sans-serif; font-weight:100; text-transform:uppercase;
+  font-size:clamp(54px,10vw,150px); line-height:1; letter-spacing:.01em; white-space:nowrap;
+  color:#FFF6F4; text-shadow:0 0 26px rgba(255,235,237,.22), 0 0 90px rgba(62,130,142,.22);
+  will-change:transform}
+.show .giant em{font-style:normal; color:var(--sc,var(--mint));
+  text-shadow:0 0 30px color-mix(in srgb, var(--sc,#A6C9B6) 70%, transparent)}
+.show .vis{width:clamp(220px,32vw,390px); flex:none; color:var(--sc,var(--mint));
+  filter:drop-shadow(0 0 26px color-mix(in srgb, var(--sc,#A6C9B6) 40%, transparent));
+  will-change:transform}
+.show .vis svg{width:100%; height:auto; fill:none; stroke:currentColor;
+  stroke-width:.8; stroke-linecap:round; stroke-linejoin:round}
+.show .meta{position:relative; max-width:360px; z-index:5}
+.show .meta .k{font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--sc,var(--mint));
+  text-shadow:0 0 12px color-mix(in srgb, var(--sc,#A6C9B6) 50%, transparent)}
+.show .meta h2{margin-top:10px; font-family:'Exo 2',sans-serif; font-weight:300;
+  font-size:clamp(24px,3.4vw,34px); letter-spacing:.08em; color:#FFF6F4;
+  text-shadow:0 0 16px rgba(255,235,237,.25)}
+.show .meta ul{list-style:none; margin-top:14px}
+.show .meta li{font-size:14px; line-height:2.1; color:#C2B6D4; letter-spacing:.05em}
+.show .meta li::before{content:"·"; color:var(--sc,var(--mint)); margin-right:10px;
+  text-shadow:0 0 8px color-mix(in srgb, var(--sc,#A6C9B6) 70%, transparent)}
+.show .meta .go{display:inline-flex; align-items:center; justify-content:center;
+  margin-top:20px; width:54px; height:54px; border-radius:14px; font-size:20px;
+  border:1px solid var(--line); background:var(--panel-bg); backdrop-filter:blur(8px);
+  color:var(--ink); font-size:18px; cursor:pointer;
+  transition:border-color .25s, box-shadow .25s, transform .2s}
+.show .meta .go:hover{transform:translateY(-2px);
+  border-color:color-mix(in srgb, var(--sc,#A6C9B6) 60%, transparent);
+  box-shadow:0 0 22px color-mix(in srgb, var(--sc,#A6C9B6) 25%, transparent)}
+
+/* rotating badge + eye */
+.badge{position:absolute; left:clamp(12px,3vw,46px); top:54%; z-index:6;
+  width:clamp(120px,14vw,160px); height:clamp(120px,14vw,160px);
+  cursor:pointer; background:none; border:0; color:var(--ink); font-family:inherit}
+.badge .ring{position:absolute; inset:0; animation:spin 16s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge .ring svg{width:100%; height:100%}
+.badge .ring text{font-family:'Space Mono',monospace; font-size:8.4px; letter-spacing:.32em;
+  fill:var(--ink-dim); text-transform:uppercase}
+.badge .eye{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+.badge .eye svg{width:56%; height:56%; fill:none; stroke:var(--frozen); stroke-width:1;
+  filter:drop-shadow(0 0 10px rgba(255,235,237,.4))}
+.badge .pupil{fill:var(--sc,var(--mint)); stroke:none;
+  filter:drop-shadow(0 0 6px color-mix(in srgb, var(--sc,#A6C9B6) 80%, transparent))}
+.badge:hover .ring text{fill:var(--frozen)}
+.badge:focus-visible{outline:1px dashed var(--mint); outline-offset:6px}
+
+/* ---------- overlays (詳細內容) ---------- */
+.ovl{position:fixed; inset:0; z-index:40; overflow-y:auto;
+  background:rgba(4,5,12,.93); backdrop-filter:blur(16px);
+  opacity:0; pointer-events:none; transition:opacity .35s ease}
+.ovl.open{opacity:1; pointer-events:auto}
+.ovl .wrap{width:min(1100px,92vw); margin:0 auto; padding:120px 0 90px;
+  transform:translateY(24px); transition:transform .45s cubic-bezier(.2,.8,.3,1)}
+.ovl.open .wrap{transform:translateY(0)}
+.ovl .oh{display:flex; align-items:baseline; gap:16px; margin-bottom:26px}
+.ovl .oh .k{font-size:11px; letter-spacing:.3em; color:var(--oc,var(--mint));
+  text-shadow:0 0 12px color-mix(in srgb, var(--oc,#A6C9B6) 50%, transparent)}
+.ovl .oh h2{font-family:'Exo 2',sans-serif; font-weight:200;
+  font-size:clamp(24px,4vw,38px); letter-spacing:.2em; text-transform:uppercase; color:#FFF6F4}
+.ovl .x{position:fixed; top:84px; right:clamp(20px,5vw,60px); z-index:41;
+  width:46px; height:46px; border-radius:50%; cursor:pointer;
+  border:1px solid var(--line); background:var(--panel-bg); backdrop-filter:blur(8px);
+  color:var(--ink); font-size:16px; font-family:inherit;
+  transition:border-color .25s, transform .2s}
+.ovl .x:hover{transform:rotate(90deg); border-color:rgba(255,235,237,.4)}
+
+/* ---------- cards inside overlays ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+.op{position:relative; padding:22px 22px 20px; border-radius:14px;
+  border:1px solid var(--line); background:rgba(4,5,12,.55);
+  transition:border-color .25s ease, box-shadow .25s ease}
+.op:hover{border-color:color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 30px color-mix(in srgb, var(--c,#A6C9B6) 16%, transparent)}
+.op .ico{position:absolute; top:16px; right:16px; width:48px; height:48px;
+  color:var(--c,var(--mint)); opacity:.42; pointer-events:none;
+  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent));
+  transition:opacity .3s, transform .3s}
+.op:hover .ico{opacity:.9; transform:translateY(-2px) rotate(-3deg)}
+.op .ico svg{width:100%; height:100%; fill:none; stroke:currentColor;
+  stroke-width:1.1; stroke-linecap:round; stroke-linejoin:round}
+.op .tag{display:inline-block; font-size:9.5px; letter-spacing:.24em; text-transform:uppercase;
+  color:#04050C; background:var(--c,var(--mint)); border-radius:999px; padding:5px 12px;
+  box-shadow:0 0 14px color-mix(in srgb, var(--c,#A6C9B6) 45%, transparent)}
+.op .tag.alt{color:var(--c,var(--mint)); background:transparent;
+  border:1px solid color-mix(in srgb, var(--c,#A6C9B6) 55%, transparent); box-shadow:none; margin-left:6px}
+.op h3{margin-top:14px; font-family:'Exo 2',sans-serif; font-weight:300; font-size:18px;
+  letter-spacing:.06em; color:#FFF6F4; padding-right:44px}
+.op p{margin-top:10px; font-size:12.5px; line-height:1.8; color:#B9AECB}
+.op p a{color:var(--mint); text-decoration:none; border-bottom:1px dashed rgba(166,201,182,.45)}
+.op p a:hover{color:var(--frozen)}
+.op .pay{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line);
+  font-size:11.5px; letter-spacing:.08em; color:var(--ink-dim)}
+.op .pay b{color:var(--c,var(--mint)); font-weight:700;
+  text-shadow:0 0 12px color-mix(in srgb, var(--c,#A6C9B6) 40%, transparent)}
+.op .pay .dl{display:block; margin-top:5px; color:var(--blush)}
+
+/* living blocks */
+.living{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px}
+.blurb{padding:20px; border-radius:14px; border:1px solid var(--line); background:rgba(4,5,12,.55)}
+.blurb h3{font-family:'Exo 2',sans-serif; font-weight:300; font-size:15px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--frozen)}
+.blurb h3 .bico{display:inline-block; width:17px; height:17px; margin-right:9px;
+  vertical-align:-3px; color:var(--mint); filter:drop-shadow(0 0 6px rgba(166,201,182,.6))}
+.blurb h3 .bico svg{width:100%; height:100%; fill:none; stroke:currentColor;
+  stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round}
+.blurb p{margin-top:10px; font-size:12.5px; line-height:1.8; color:#B9AECB}
+.blurb p a{color:var(--mint); text-decoration:none}
+.costs{margin-top:16px; padding:20px; border-radius:14px; border:1px solid var(--line); background:rgba(4,5,12,.55)}
+.costs h3{font-family:'Exo 2',sans-serif; font-weight:300; font-size:15px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--frozen)}
+.costs table{width:100%; margin-top:12px; border-collapse:collapse; font-size:12px}
+.costs td{padding:9px 4px; border-bottom:1px dashed var(--line); color:#B9AECB; line-height:1.6}
+.costs td:last-child{text-align:right; white-space:nowrap; color:var(--mint)}
+.costs .note{margin-top:12px; font-size:11px; color:var(--ink-dim); line-height:1.7}
+
+/* CTA + footer */
+.cta{position:relative; z-index:2; width:min(1100px,92vw); margin:0 auto 70px;
+  text-align:center; padding:44px 20px; border-radius:20px; border:1px solid var(--line);
+  background:radial-gradient(600px 300px at 50% 0%, rgba(62,130,142,.14), transparent 70%), var(--panel-bg)}
+.cta h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(20px,3vw,28px);
+  letter-spacing:.26em; text-transform:uppercase; color:#FFF6F4; text-shadow:0 0 16px rgba(255,235,237,.3)}
+.cta p{margin-top:12px; font-size:13px; color:var(--ink-dim)}
+.cta a.btn{display:inline-block; margin-top:22px; text-decoration:none;
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:#04050C; background:var(--mint); border-radius:999px; padding:13px 34px;
+  box-shadow:0 0 24px rgba(166,201,182,.45); transition:transform .2s, box-shadow .2s}
+.cta a.btn:hover{transform:translateY(-2px); box-shadow:0 0 34px rgba(166,201,182,.6)}
+footer{position:relative; z-index:2; border-top:1px solid var(--line);
+  padding:18px clamp(20px,5vw,60px) 24px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:12px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+footer a{text-decoration:none; transition:color .2s}
+footer a:hover{color:var(--frozen)}
+
+@media (max-width:1200px){
+  .badge{width:112px; height:112px}
+}
+@media (max-width:860px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  .poster{padding-top:170px}
+  .show{flex-direction:column; justify-content:center; gap:26px; padding:90px 20px}
+  .show .meta{text-align:center; max-width:none}
+  .badge{position:static; margin-top:6px}
+  .ovl .x{top:auto; bottom:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter,body.leave{animation:none}
+  .poster h1 .l,.poster .strap{animation:none; opacity:1; transform:none}
+  .poster .strap .b2 svg{animation:none}
+  .badge .ring{animation:none}
+  .ovl,.ovl .wrap{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research.html">研究</a>
+    <a href="team.html">團隊</a>
+    <a href="publications-papers.html">著作</a>
+    <a href="projects.html">專案</a>
+    <a href="gallery.html">相簿</a>
+    <a href="join_zh.html" class="now" aria-current="page">加入我們</a>
+    <a href="contact.html">聯絡</a>
+    <a href="join.html" class="zh">English</a>
+      <a href="../classic/join_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+  </nav>
+</header>
+
+<!-- ============ poster ============ -->
+<section class="poster" aria-label="加入我們">
+  <h1><span class="l">加入</span><span class="l">我們<span class="dot">.</span></span></h1>
+  <div class="strap">
+    <span class="b1">成為實驗室的一員</span>
+    <span class="b2">向下捲動
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 6 L8 11 L13 6"/></svg>
+    </span>
+  </div>
+</section>
+
+<!-- ============ 01 DEGREES ============ -->
+<section class="show" style="--sc:var(--mint)" data-dir="1">
+  <div class="giant">學位 <em>—</em> 01</div>
+  <div class="vis" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="10"/>
+      <ellipse cx="100" cy="100" rx="78" ry="30"/>
+      <ellipse cx="100" cy="100" rx="78" ry="30" transform="rotate(60 100 100)"/>
+      <ellipse cx="100" cy="100" rx="78" ry="30" transform="rotate(-60 100 100)"/>
+      <circle cx="100" cy="70" r="4"/><circle cx="168" cy="118" r="4"/><circle cx="35" cy="122" r="4"/>
+    </svg>
+  </div>
+  <button class="badge" data-open="ovl-degrees" aria-label="檢視學位課程">
+    <span class="ring" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><path id="cp1" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text><textPath href="#cp1">查看詳情 · 查看詳情 · 查看詳情 · 查看詳情 ·</textPath></text>
+      </svg>
+    </span>
+    <span class="eye" aria-hidden="true">
+      <svg viewBox="0 0 60 40">
+        <path d="M4 20 Q30 -4 56 20 Q30 44 4 20 Z"/>
+        <circle class="pupil" cx="30" cy="20" r="7"/>
+      </svg>
+    </span>
+  </button>
+  <div class="meta">
+    <div class="k">01 · 與我們一起做研究</div>
+    <h2>學位課程</h2>
+    <ul>
+      <li>大學部專題</li>
+      <li>碩士專題</li>
+      <li>博士生(TIGP)</li>
+      <li>助學金 每月 6–20k 新台幣</li>
+    </ul>
+    <button class="go" data-open="ovl-degrees" aria-label="開啟學位課程">↳</button>
+  </div>
+</section>
+
+<!-- ============ 02 INTERNSHIPS ============ -->
+<section class="show" style="--sc:var(--blush)" data-dir="-1">
+  <div class="giant">實習 <em>—</em> 02</div>
+  <div class="vis" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="62"/>
+      <path d="M38 100h124M100 38c22 18 33 38 33 62s-11 44-33 62c-22-18-33-38-33-62s11-44 33-62z"/>
+      <ellipse cx="100" cy="100" rx="92" ry="34" transform="rotate(-18 100 100)" stroke-dasharray="3 5"/>
+      <path d="M178 62l-14 5 5 6 9-11z"/>
+    </svg>
+  </div>
+  <button class="badge" data-open="ovl-internships" aria-label="檢視實習機會">
+    <span class="ring" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><path id="cp2" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text><textPath href="#cp2">查看詳情 · 查看詳情 · 查看詳情 · 查看詳情 ·</textPath></text>
+      </svg>
+    </span>
+    <span class="eye" aria-hidden="true">
+      <svg viewBox="0 0 60 40">
+        <path d="M4 20 Q30 -4 56 20 Q30 44 4 20 Z"/>
+        <circle class="pupil" cx="30" cy="20" r="7"/>
+      </svg>
+    </span>
+  </button>
+  <div class="meta">
+    <div class="k">02 · 1–3 個月</div>
+    <h2>實習</h2>
+    <ul>
+      <li>原分所暑期實習(台灣)</li>
+      <li>國科會 IIPP — 推薦</li>
+      <li>TIGP 國際實習</li>
+      <li>原分所國際實習</li>
+    </ul>
+    <button class="go" data-open="ovl-internships" aria-label="開啟實習機會">↳</button>
+  </div>
+</section>
+
+<!-- ============ 03 JOBS ============ -->
+<section class="show" style="--sc:var(--teal)" data-dir="1">
+  <div class="giant">職缺 <em>—</em> 03</div>
+  <div class="vis" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <path d="M14 100h34l14-42 22 84 22-70 14 28h66"/>
+      <circle cx="100" cy="100" r="86" stroke-dasharray="3 6"/>
+      <circle cx="48" cy="100" r="3"/><circle cx="152" cy="100" r="3"/>
+    </svg>
+  </div>
+  <button class="badge" data-open="ovl-jobs" aria-label="檢視研究職缺">
+    <span class="ring" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><path id="cp3" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text><textPath href="#cp3">查看詳情 · 查看詳情 · 查看詳情 · 查看詳情 ·</textPath></text>
+      </svg>
+    </span>
+    <span class="eye" aria-hidden="true">
+      <svg viewBox="0 0 60 40">
+        <path d="M4 20 Q30 -4 56 20 Q30 44 4 20 Z"/>
+        <circle class="pupil" cx="30" cy="20" r="7"/>
+      </svg>
+    </span>
+  </button>
+  <div class="meta">
+    <div class="k">03 · 全職</div>
+    <h2>研究職缺</h2>
+    <ul>
+      <li>原分所新進學者獎助</li>
+      <li>博士後 / 研究科學家</li>
+      <li>研發替代役</li>
+      <li>研究助理 — 徵才中</li>
+    </ul>
+    <button class="go" data-open="ovl-jobs" aria-label="開啟研究職缺">↳</button>
+  </div>
+</section>
+
+<!-- ============ 04 VISITING + TAIPEI ============ -->
+<section class="show" style="--sc:var(--frozen)" data-dir="-1">
+  <div class="giant">台北 <em>—</em> 04</div>
+  <div class="vis" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <path d="M92 178V70l8-14 8 14v108"/>
+      <path d="M84 96h32M84 118h32M84 140h32M84 162h32"/>
+      <path d="M100 56V38M96 42h8"/>
+      <path d="M20 178h160"/>
+      <path d="M40 178v-44h18v44M148 178v-58h16v58M62 178v-28h12v28"/>
+      <circle cx="152" cy="42" r="10" stroke-dasharray="2 4"/>
+    </svg>
+  </div>
+  <button class="badge" data-open="ovl-living" aria-label="檢視在台北的生活">
+    <span class="ring" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><path id="cp4" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text><textPath href="#cp4">查看詳情 · 查看詳情 · 查看詳情 · 查看詳情 ·</textPath></text>
+      </svg>
+    </span>
+    <span class="eye" aria-hidden="true">
+      <svg viewBox="0 0 60 40">
+        <path d="M4 20 Q30 -4 56 20 Q30 44 4 20 Z"/>
+        <circle class="pupil" cx="30" cy="20" r="7"/>
+      </svg>
+    </span>
+  </button>
+  <div class="meta">
+    <div class="k">04 · 訪問與生活</div>
+    <h2>生活與訪問學者</h2>
+    <ul>
+      <li>訪問學者休假研究</li>
+      <li>台北生活成本</li>
+      <li>台灣學生免費宿舍</li>
+      <li>文化 · 自然 · 安全</li>
+    </ul>
+    <button class="go" data-open="ovl-living" aria-label="開啟在台北的生活">↳</button>
+  </div>
+</section>
+
+<!-- ============ CTA + footer ============ -->
+<div class="cta">
+  <h2>準備好一起打造真實的實驗了嗎?</h2>
+  <p>不論短期或長期、本地或國際 — 告訴我們你對什麼感到好奇。</p>
+  <a class="btn" href="contact.html">聯絡我們</a>
+</div>
+
+<footer>
+  <nav aria-label="文字選單">
+    <a href="index.html">首頁</a>
+    <a href="research.html">研究</a>
+    <a href="team.html">團隊</a>
+    <a href="publications-papers.html">著作</a>
+    <a href="projects.html">專案</a>
+    <a href="gallery.html">相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact.html">聯絡</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">IAMS ↗</a>
+  </nav>
+  <div>中央研究院原子與分子科學研究所 · 電話 +886-2-2366-8236 · 台北市羅斯福路四段一號</div>
+</footer>
+
+<!-- ============ OVERLAYS ============ -->
+<div class="ovl" id="ovl-degrees" style="--oc:var(--mint)" role="dialog" aria-modal="true" aria-label="學位課程">
+  <button class="x" aria-label="關閉">✕</button>
+  <div class="wrap">
+    <div class="oh"><span class="k">01</span><h2>學位課程</h2></div>
+    <div class="grid">
+      <article class="op" style="--c:var(--mint)" id="undergrad">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 3h5M10.5 3v5.2L5.6 17a2.6 2.6 0 0 0 2.3 4h8.2a2.6 2.6 0 0 0 2.3-4l-4.9-8.8V3"/><path d="M7.8 14.5h8.4"/><circle cx="10.6" cy="17.6" r=".5"/><circle cx="13.6" cy="18.8" r=".5"/></svg></span>
+        <span class="tag">大學部</span>
+        <h3>大學部專題</h3>
+        <p>不需先備經驗 — 過去加入的學生來自機器人、光學、電機與機械工程,以及物理和化學等領域。
+           專題會依你的興趣量身規劃,與團隊密切合作,理想上能發表論文並在研討會上發表成果。
+           參見我們的<a href="projects.html">專案</a>。</p>
+        <div class="pay">助學金 <b>每月 6–12k 新台幣</b> · 提供住宿協助</div>
+      </article>
+      <article class="op" style="--c:var(--mint)" id="masters">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4 2.5 8.6 12 13.2l9.5-4.6L12 4z"/><path d="M6.2 10.7v4.6c0 1.5 2.6 2.9 5.8 2.9s5.8-1.4 5.8-2.9v-4.6"/><path d="M21.5 8.6v5.4"/><circle cx="21.5" cy="15" r=".6"/></svg></span>
+        <span class="tag">碩士</span>
+        <h3>碩士專題</h3>
+        <p>涵蓋我們所有主要<a href="projects.html">研究方向</a>。從與團隊並肩開始,接著獨當一面負責專題、
+           帶領學弟妹、在國際期刊發表,並與歐洲、北美和日本的合作團隊共事。我們建議先從較小的實習或大學部專題入門。</p>
+        <div class="pay">助學金 <b>每月 10–20k 新台幣</b> · 提供住宿協助</div>
+      </article>
+      <article class="op" style="--c:var(--mint)" id="phd">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8c2.8 1.7 4.4 4.8 4.4 8.4 0 1.9-.4 3.7-1.1 5.2H8.7a12 12 0 0 1-1.1-5.2c0-3.6 1.6-6.7 4.4-8.4z"/><circle cx="12" cy="9.6" r="1.7"/><path d="M8.7 13.4 6 16.4v3l3.3-1.9M15.3 13.4l2.7 3v3l-3.3-1.9"/><path d="M12 17.5v3.7"/></svg></span>
+        <span class="tag">博士</span>
+        <h3>博士生</h3>
+        <p>負責一項大型專題與研究方向中的重要環節 — 目標是達到世界級成果,可望發表於 Nature、Science、PRL 或 PRX。
+           我們強烈建議先完成一段實驗 AMO(原子、分子與光學)碩士研究或實習。
+           <a href="https://tigp.sinica.edu.tw/" target="_blank" rel="noopener">TIGP(台灣國際研究生學程)</a>提供完整的博士支持。</p>
+        <div class="pay">TIGP 支持方案 <b>+ 視經驗提供更多</b></div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="ovl" id="ovl-internships" style="--oc:var(--blush)" role="dialog" aria-modal="true" aria-label="實習">
+  <button class="x" aria-label="關閉">✕</button>
+  <div class="wrap">
+    <div class="oh"><span class="k">02</span><h2>實習</h2></div>
+    <div class="grid">
+      <article class="op" style="--c:var(--blush)" id="iams-intern">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></svg></span>
+        <span class="tag">2 個月</span>
+        <h3>原分所暑期實習</h3>
+        <p>提供全台學生在原分所頂尖設施中進行前沿研究的機會,不需 AMO 經驗。
+           <a href="https://www.iams.sinica.edu.tw/ssr/" target="_blank" rel="noopener">課程詳情</a>。</p>
+        <div class="pay">助學金 <b>每月 20k 新台幣</b>(稅前)<span class="dl">申請於四月截止</span></div>
+      </article>
+      <article class="op" style="--c:var(--blush)" id="iipp">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.6 2.3 3.9 5.2 3.9 8.6s-1.3 6.3-3.9 8.6c-2.6-2.3-3.9-5.2-3.9-8.6s1.3-6.3 3.9-8.6z"/></svg></span>
+        <span class="tag">1–3 個月</span><span class="tag alt">推薦</span>
+        <h3>國科會國際實習(IIPP)</h3>
+        <p>這是一項國家級計畫,開放全球學生來台擔任研究人員最長 3 個月,通常在 6 至 12 月之間。名額有限且競爭激烈 — 請及早申請。
+           <a href="https://iipp.tw/" target="_blank" rel="noopener">IIPP 官網</a>。</p>
+        <div class="pay">助學金 <b>每日 1k 新台幣</b> · 額外補助可能比照其他計畫<span class="dl">名額有限,額滿為止</span></div>
+      </article>
+      <article class="op" style="--c:var(--blush)" id="tigp-intern">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 3.5 3 10.8l6.2 2.4L21 3.5zM21 3.5l-4.3 15.8-4.5-6.1M9.2 13.2v5.6l3-3.5"/></svg></span>
+        <span class="tag">2 個月 · 暑期</span>
+        <h3>TIGP 國際實習</h3>
+        <p>提供全球學生在原分所進行為期兩個月的密集研究。
+           <a href="https://tigp.sinica.edu.tw/" target="_blank" rel="noopener">TIGP 官網</a>。</p>
+        <div class="pay">助學金 <b>每月 30k 新台幣</b>(稅前)+ 交通補助<span class="dl">申請於一月截止</span></div>
+      </article>
+      <article class="op" style="--c:var(--blush)" id="iams-international">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="m15.4 8.6-2 5-5 2 2-5 5-2z"/><circle cx="12" cy="12" r=".6"/></svg></span>
+        <span class="tag">2 個月</span>
+        <h3>原分所國際實習</h3>
+        <p>支持未涵蓋於其他實習計畫的國際學生。
+           <a href="https://www.iams.sinica.edu.tw/iip/" target="_blank" rel="noopener">課程詳情</a>。</p>
+        <div class="pay">助學金 <b>每月 30k 新台幣</b>(稅前)+ 交通補助<span class="dl">請於開始前至少 2 個月申請</span></div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="ovl" id="ovl-jobs" style="--oc:var(--teal)" role="dialog" aria-modal="true" aria-label="研究職缺">
+  <button class="x" aria-label="關閉">✕</button>
+  <div class="wrap">
+    <div class="oh"><span class="k">03</span><h2>研究職缺</h2></div>
+    <div class="grid">
+      <article class="op" style="--c:var(--teal)" id="fellowship">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9.4" r="5.4"/><path d="m9.6 13.9-2 6.3 4.4-2.4 4.4 2.4-2-6.3"/><path d="m12 6.6.9 1.8 2 .3-1.4 1.4.3 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3.9-1.8z"/></svg></span>
+        <span class="tag">獎助</span>
+        <h3>原分所新進學者獎助</h3>
+        <p>這是一項為由博士後邁向教授階段的研究人員設立的重要獎助 — 你可提出並主導自己的研究計畫,由一間主辦實驗室提供支持。
+           <a href="http://www.iams.sinica.edu.tw/upload/Guidelines_for_IAMS_Junior_Fellowships.pdf" target="_blank" rel="noopener">申請辦法</a> ·
+           <a href="https://www.iams.sinica.edu.tw/en/?link=new&amp;id=406" target="_blank" rel="noopener">原分所資訊</a>。</p>
+        <div class="pay"><span class="dl">每年八月開放申請</span></div>
+      </article>
+      <article class="op" style="--c:var(--teal)" id="postdoc">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.8 12h3.4l1.8-5.4 2.6 10.8 2.6-9 1.8 3.6h6.2"/><circle cx="12" cy="12" r="10" opacity=".35"/></svg></span>
+        <span class="tag">博士後</span>
+        <h3>博士後研究員 / 研究科學家</h3>
+        <p>在團隊中扮演引導研究的關鍵角色。適合具博士學位、經驗豐富的 AMO 實驗學者;
+           也非常歡迎有意合作的理論學者。請<a href="contact.html">寄送</a>你的履歷與著作清單 — 經費與簽證需時 3 個月以上。</p>
+        <div class="pay">薪酬 <b>每月 60–84k 新台幣</b>,視經驗而定</div>
+      </article>
+      <article class="op" style="--c:var(--teal)" id="rnd-service">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 5.8v5.4c0 4.5 3 7.9 7 9.8 4-1.9 7-5.3 7-9.8V5.8L12 3z"/><path d="m9 11.8 2.2 2.2 3.8-4.4"/></svg></span>
+        <span class="tag">替代役</span>
+        <h3>研發替代役</h3>
+        <p>以全職研究人員身分,在我們的<a href="projects.html">研究專案</a>中完成兵役。
+           詳情請<a href="contact.html">聯絡我們</a>。</p>
+        <div class="pay">全職研究人員職位</div>
+      </article>
+      <article class="op" style="--c:var(--teal)" id="ra">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.5 6.2a4 4 0 0 1 5-1.3l-2.9 2.9.7 2.1 2.1.7 2.9-2.9a4 4 0 0 1-5.6 5.1L8.5 21a2 2 0 1 1-2.8-2.8l8.2-8.2a4 4 0 0 1 .6-3.8z"/></svg></span>
+        <span class="tag">徵才中</span>
+        <h3>研究助理</h3>
+        <p>需具備扎實的實驗物理或工程背景;曾在本實驗室或相關 AMO 實驗室有經驗者尤佳。
+           <a href="https://www.iams.sinica.edu.tw/tw/?link=recru&amp;joid=4" target="_blank" rel="noopener">原分所徵才頁面</a>。</p>
+        <div class="pay">薪資 <b>每月 38–56k 新台幣</b>,依學經歷而定</div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="ovl" id="ovl-living" style="--oc:var(--frozen)" role="dialog" aria-modal="true" aria-label="在台北的生活">
+  <button class="x" aria-label="關閉">✕</button>
+  <div class="wrap">
+    <div class="oh"><span class="k">04</span><h2>生活與訪問學者</h2></div>
+    <div class="grid" style="margin-bottom:16px">
+      <article class="op" style="--c:var(--frozen)" id="visitingfellow">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V5.6A1.6 1.6 0 0 1 10.6 4h2.8A1.6 1.6 0 0 1 15 5.6V8M8.6 8v12M15.4 8v12"/></svg></span>
+        <span class="tag">短期 / 長期</span>
+        <h3>訪問學者</h3>
+        <p>我們誠摯邀請資深學者考慮來本實驗室進行短期或長期的休假研究。
+           歡迎<a href="contact.html">聯絡我們</a>洽談合作機會。</p>
+      </article>
+      <article class="op" style="--c:var(--frozen)" id="accommodation">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg></span>
+        <span class="tag">台灣學生</span>
+        <h3>住宿協助</h3>
+        <p>為來自全台其他大學、來台北進行短期實驗的學生提供獨立且免費的宿舍 —
+           讓你善用原分所豐沛的資源,免去行政上的繁瑣。</p>
+      </article>
+    </div>
+    <div class="living">
+      <div class="blurb">
+        <h3><span class="bico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 7V4M14 7V4M10 20v-3M14 20v-3M7 10H4M7 14H4M20 10h-3M20 14h-3"/></svg></span>先進經濟體</h3>
+        <p>全球科技領導者,也是世界晶片產業的核心 — 這裡是全球最安全、最自由的居住地之一,並擁有名列前茅的
+           <a href="https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita" target="_blank" rel="noopener">人均 GDP(購買力平價)</a>。
+           稅負低、全民健保高效、生活二十四小時便利。</p>
+      </div>
+      <div class="blurb">
+        <h3><span class="bico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4c0-1 8-1 8 0M8.5 4.5C6.8 6 6 8.4 6 11c0 4 2 7 6 9 4-2 6-5 6-9 0-2.6-.8-5-2.5-6.5"/><path d="M9 9h6M9 13h6M12 4v16"/></svg></span>文化</h3>
+        <p>距離實驗室僅數分鐘路程:數百間精緻又平價的餐廳 — 從台灣經典小吃到世界各地的料理應有盡有。
+           這裡也是學習華語的最佳地點之一。</p>
+      </div>
+      <div class="blurb">
+        <h3><span class="bico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 19 6-10 4 6.5L16 12l5 7H3z"/><circle cx="17.5" cy="6" r="2"/></svg></span>自然之美</h3>
+        <p>「福爾摩沙」— 意為美麗之島。雨林、崎嶇山巒與海灘都在不遠處,更擁有
+           <a href="https://en.wikipedia.org/wiki/100_Peaks_of_Taiwan" target="_blank" rel="noopener">逾百座</a>
+           海拔 3000 公尺以上的高峰。</p>
+      </div>
+    </div>
+    <div class="costs">
+      <h3>平均生活成本</h3>
+      <table>
+        <tr><td>公寓(100 平方公尺)</td><td>每月 15–25k 新台幣</td></tr>
+        <tr><td>單人套房(12 平方公尺),共用衛浴與廚房</td><td>約 10k 新台幣/月</td></tr>
+        <tr><td>短期附服務獨立套房(12 平方公尺)</td><td>約 20k 新台幣/月</td></tr>
+        <tr><td>飲食 — 外食,單人</td><td>約 10k 新台幣/月</td></tr>
+        <tr><td>飲食 — 自炊,小家庭</td><td>約 12k 新台幣/月</td></tr>
+        <tr><td>交通</td><td>約 2k 新台幣/月</td></tr>
+        <tr><td>全民健保(居留簽證滿 6 個月)</td><td>約 1k 新台幣/月</td></tr>
+        <tr><td>4G 上網吃到飽 + 通話</td><td>約 500 新台幣/月</td></tr>
+      </table>
+      <p class="note">氣候:約 18°C(冬)至約 35°C(夏)· 濕度約 70–80%</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+
+  [...document.querySelectorAll('a[href$="index.html"]')].forEach(a=> a.addEventListener('click', ev=>{
+    if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0) return;
+    ev.preventDefault();
+    try{ sessionStorage.setItem('ybWarpBack','1'); }catch(e){}
+    if(reduced){ location.href=a.href; return; }
+    document.body.classList.remove('enter'); document.body.classList.add('leave');
+    setTimeout(()=> location.href=a.href, 540);
+  }));
+
+  // ---- scroll parallax: giant text slides, visual drifts ----
+  const shows=[...document.querySelectorAll('.show')].map(sec=>({
+    sec,
+    giant: sec.querySelector('.giant'),
+    vis:   sec.querySelector('.vis'),
+    dir:  +(sec.dataset.dir||1),
+  }));
+  let ticking=false;
+  const ease=t=>1-Math.pow(1-t,3);
+  function parallax(){
+    ticking=false;
+    const vh=innerHeight;
+    shows.forEach(o=>{
+      const r=o.sec.getBoundingClientRect();
+      if(r.bottom<-100||r.top>vh+100) return;
+      // t: 區塊頂端從畫面底進來(0) → 抵達畫面頂(1),之後定住
+      const t=ease(Math.min(1, Math.max(0, (vh-r.top)/vh)));
+      const gx=(1-t)*26*o.dir;                 // 快速滑入,到位時 gx=0 → 標題完整可讀
+      o.giant.style.transform=`translateX(${gx.toFixed(2)}vw)`;
+      const q=(vh/2-r.top)/r.height;           // 插畫維持緩慢漂移
+      o.vis.style.transform=`translateY(${((q-0.5)*60).toFixed(1)}px) rotate(${((q-0.5)*4*o.dir).toFixed(2)}deg)`;
+    });
+  }
+  function onScroll(){ if(!ticking && !reduced){ ticking=true; requestAnimationFrame(parallax); } }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll);
+  if(!reduced) parallax();
+
+  // ---- eyes follow cursor ----
+  const pupils=[...document.querySelectorAll('.badge .pupil')];
+  if(!reduced && matchMedia('(pointer:fine)').matches){
+    addEventListener('pointermove', e=>{
+      pupils.forEach(pu=>{
+        const svg=pu.ownerSVGElement, r=svg.getBoundingClientRect();
+        const cx=r.left+r.width/2, cy=r.top+r.height/2;
+        const dx=e.clientX-cx, dy=e.clientY-cy, d=Math.hypot(dx,dy)||1;
+        const m=Math.min(d,60)/60*6;          // max 6 units
+        pu.setAttribute('cx',(30+dx/d*m).toFixed(1));
+        pu.setAttribute('cy',(20+dy/d*m*0.7).toFixed(1));
+      });
+    }, {passive:true});
+  }
+
+  // ---- overlays ----
+  const ovls=[...document.querySelectorAll('.ovl')];
+  let lastFocus=null;
+  function openOvl(id){
+    const o=document.getElementById(id); if(!o) return;
+    lastFocus=document.activeElement;
+    o.classList.add('open'); document.body.style.overflow='hidden';
+    o.querySelector('.x').focus();
+  }
+  function closeAll(){
+    ovls.forEach(o=> o.classList.remove('open'));
+    document.body.style.overflow='';
+    if(lastFocus) lastFocus.focus();
+  }
+  [...document.querySelectorAll('[data-open]')].forEach(b=>
+    b.addEventListener('click', ()=> openOvl(b.dataset.open)));
+  ovls.forEach(o=>{
+    o.querySelector('.x').addEventListener('click', closeAll);
+    o.addEventListener('click', e=>{ if(e.target===o) closeAll(); });
+  });
+  addEventListener('keydown', e=>{ if(e.key==='Escape') closeAll(); });
+
+  // 從別頁帶 #anchor 進來 → 直接開啟對應 overlay
+  const anchorMap={};
+  ovls.forEach(o=> o.querySelectorAll('[id]').forEach(el=>{ anchorMap['#'+el.id]=o.id; }));
+  function fromHash(){
+    const t=anchorMap[location.hash];
+    if(t) openOvl(t);
+  }
+  addEventListener('hashchange', fromHash); fromHash();
+})();
+</script>
+</body>
+</html>
