@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>論文著作 — IAMS 鐿原子實驗室</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
@@ -107,6 +109,19 @@ main{position:relative; z-index:1; flex:1; width:100%; display:flex; flex-direct
 .now-title .nm a:hover{color:var(--lavender)}
 .hint{text-align:center; font-size:9.5px; letter-spacing:.24em; text-transform:uppercase;
   color:var(--ink-dim); opacity:.6; padding-bottom:14px}
+/* ---------- thesis book cards ---------- */
+.tbooks{display:flex; flex-wrap:wrap; gap:32px 26px; justify-content:center; padding:14px 0 6px}
+.tbook{position:relative; width:158px; text-decoration:none; text-align:center}
+.tbook img{display:block; width:100%; border-radius:4px 9px 9px 4px; border:1px solid var(--line);
+  box-shadow:-12px 14px 30px rgba(0,0,0,.55); transition:transform .28s, box-shadow .28s}
+.tbook:hover img{transform:translateY(-7px); box-shadow:-14px 20px 38px rgba(0,0,0,.6), 0 0 22px rgba(166,201,182,.28)}
+.tbook .tb-type{position:absolute; top:9px; left:-7px; z-index:2; padding:3px 10px; border-radius:3px;
+  font-size:9.5px; font-weight:700; letter-spacing:.18em; color:#04050C;
+  background:var(--tc,var(--mint)); box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.tbook .tb-name{display:block; margin-top:12px; font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:400;
+  font-size:13.5px; color:#EFE9F0; letter-spacing:.02em}
+.tbook .tb-info{display:block; margin-top:4px; font-size:9.5px; line-height:1.6; letter-spacing:.06em;
+  color:var(--ink-dim)}
 footer{position:relative; z-index:1; border-top:1px solid var(--line);
   padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
   justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim)}
@@ -215,6 +230,7 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
       <a href="https://scholar.google.com/citations?user=lgdXa2MAAAAJ&hl=en" target="_blank" rel="noopener">Chun-Chia Chen</a> ·
       <a href="https://scholar.google.com/citations?user=2YctvyYAAAAJ&hl=en" target="_blank" rel="noopener">Shayne Bennetts</a>
     </p>
+    <p class="scholar"><a href="#theses">跳至學位論文 &#8595;</a></p>
   </section>
 
   <div class="shelf-label">精選論文</div>
@@ -236,27 +252,45 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <div id="pubList"></div>
   </section>
 
-  <section class="list-wrap" aria-label="學位論文">
-    <div class="lsec-head"><h2>學位論文</h2><span class="ln">PDF</span></div>
-    <div id="thesisList">
+  <section class="list-wrap" aria-label="學位論文" id="theses">
+    <div class="lsec-head"><h2>學位論文</h2><span class="ln">碩士 &amp; 博士</span></div>
+    <div class="tbooks">
 
-      <div class="pub" style="align-items:start"><div class="py">2026</div><div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap">
-        <a href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf" target="_blank" rel="noopener" style="flex:none; border:none"><img src="../Theses/HaoRong_Yang_MSc_thesis_cover.jpg" alt="論文封面" style="display:block; width:86px; border-radius:4px 7px 7px 4px; border:1px solid var(--line); box-shadow:-6px 8px 18px rgba(0,0,0,.45)"></a>
-        <div style="flex:1 1 260px">
-        <div class="pt"><a href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf" target="_blank" rel="noopener">楊皓蓉 — 碩士論文:High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium</a></div>
-        <div class="pv"><a href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf" target="_blank" rel="noopener">PDF</a></div></div></div></div>
-      <div class="pub"><div class="py">2022</div><div>
-        <div class="pt"><a href="../Theses/Chun-Chia_Chen_PhD_thesis.pdf" target="_blank" rel="noopener">Chun-Chia Chen — 博士論文</a></div>
-        <div class="pv"><a href="../Theses/Chun-Chia_Chen_PhD_thesis.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
-      <div class="pub"><div class="py">2019</div><div>
-        <div class="pt"><a href="../Theses/Shayne_Bennetts_PhD_thesis.pdf" target="_blank" rel="noopener">Shayne Bennetts — 博士論文</a></div>
-        <div class="pv"><a href="../Theses/Shayne_Bennetts_PhD_thesis.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
-      <div class="pub"><div class="py">—</div><div>
-        <div class="pt"><a href="../Theses/Sheng_Zhou_PhD_thesis.pdf" target="_blank" rel="noopener">Sheng Zhou — 博士論文</a></div>
-        <div class="pv"><a href="../Theses/Sheng_Zhou_PhD_thesis.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
-      <div class="pub"><div class="py">—</div><div>
-        <div class="pt"><a href="../Theses/Simon_Stellmer_PhD_thesis.pdf" target="_blank" rel="noopener">Simon Stellmer — 博士論文</a></div>
-        <div class="pv"><a href="../Theses/Simon_Stellmer_PhD_thesis.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+      <a class="tbook" href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf" target="_blank" rel="noopener">
+        <span class="tb-type" style="--tc:#F6B6B7">碩士 MSc</span>
+        <img src="../Theses/HaoRong_Yang_MSc_thesis_cover.jpg" alt="碩士論文封面:High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium">
+        <span class="tb-name">楊皓蓉 Hao&#8209;Rong Yang</span>
+        <span class="tb-info">原分所 · 2026 年 7 月</span>
+      </a>
+
+      <a class="tbook" href="https://www.strontiumbec.com/StrontiumLab/Theses/Sheng_Zhou_PhD_thesis_high_res.pdf" target="_blank" rel="noopener">
+        <span class="tb-type">博士 PhD</span>
+        <img src="../Theses/Sheng_Zhou_PhD_thesis_cover.jpg" alt="博士論文封面:Towards a continuous active optical clock based on superradiant lasing using strontium">
+        <span class="tb-name">周晟 Sheng Zhou</span>
+        <span class="tb-info">阿姆斯特丹大學 · 2024 年 12 月<br>Prof. Florian Schreck</span>
+      </a>
+
+      <a class="tbook" href="../Theses/Shayne_Bennetts_PhD_thesis.pdf" target="_blank" rel="noopener">
+        <span class="tb-type">博士 PhD</span>
+        <img src="../Theses/Shayne_Bennetts_PhD_thesis_cover.jpg" alt="博士論文封面:1000 times closer to a continuous atom laser">
+        <span class="tb-name">肖恩 Shayne Bennetts</span>
+        <span class="tb-info">阿姆斯特丹大學 · 2019 年 10 月<br>Prof. Florian Schreck</span>
+      </a>
+
+      <a class="tbook" href="../Theses/Chun-Chia_Chen_PhD_thesis.pdf" target="_blank" rel="noopener">
+        <span class="tb-type">博士 PhD</span>
+        <img src="../Theses/ChunChia_Chen_PhD_thesis_cover.jpg" alt="博士論文封面:An atomic marble run to unity phase-space density">
+        <span class="tb-name">陳俊嘉 Chun&#8209;Chia Chen</span>
+        <span class="tb-info">阿姆斯特丹大學 · 2019 年 4 月<br>Prof. Florian Schreck</span>
+      </a>
+
+      <a class="tbook" href="https://www.ultracold.at/theses/2013-stellmer.pdf" target="_blank" rel="noopener">
+        <span class="tb-type">博士 PhD</span>
+        <img src="../Theses/Simon_Stellmer_PhD_thesis_cover.jpg" alt="博士論文封面:Degenerate quantum gases of strontium">
+        <span class="tb-name">Simon Stellmer</span>
+        <span class="tb-info">因斯布魯克大學 · 2012 年 10 月<br>Prof. Rudi Grimm</span>
+      </a>
+
     </div>
   </section>
 </main>
@@ -274,7 +308,7 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">原分所 ↗</a>
   </nav>
   <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
-  <span>網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao‑Rong Yang &#8599;</a></span>
+  <span>新版網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao‑Rong Yang &#8599;</a> 與 Claude</span>
 </footer>
 
 <script>

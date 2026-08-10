@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CW Optical Clock — IAMS Yb Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 55%, rgba(246,182,183,.05), transparent 60%)}
+a{color:inherit}
+body{transform-origin:50% 42%}
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.1)} to{opacity:1; transform:scale(1)}}
+.topbar{position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:14px clamp(20px,5vw,60px);
+  background:rgba(4,5,12,.78); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:120px 0 80px}
+.crumb{margin:0 0 16px; font-size:11px; letter-spacing:.18em; text-transform:uppercase}
+.crumb a{color:var(--ink-dim); text-decoration:none}
+.crumb a:hover{color:var(--mint)}
+.crumb span{color:var(--mint)}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--blush); box-shadow:0 0 14px rgba(246,182,183,.7)}
+.phead .dir{font-size:10.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--mint); margin-bottom:12px}
+.phead h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.1em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(62,130,142,.25)}
+.phead h1 b{font-weight:300; color:var(--mint); text-shadow:0 0 24px rgba(166,201,182,.6)}
+.phead .sub{margin-top:12px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim)}
+.psec{margin-top:34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px);
+  padding:clamp(20px,3.4vw,34px); position:relative}
+.psec::before{content:""; position:absolute; top:-1px; left:24px; height:3px; width:90px;
+  background:var(--sc,var(--mint)); box-shadow:0 0 14px color-mix(in srgb, var(--sc,#A6C9B6) 70%, transparent)}
+.psec .sh{display:flex; align-items:center; gap:14px; margin-bottom:20px}
+.psec .sh .n{font-size:11px; letter-spacing:.26em; color:var(--sc,var(--mint)); white-space:nowrap}
+.psec .sh h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,3vw,26px);
+  letter-spacing:.22em; text-transform:uppercase; color:#FFF6F4}
+.psec .sh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--sc,#A6C9B6) 45%, transparent), transparent)}
+.psec p{font-size:13px; line-height:1.9; color:#C2B6D4}
+.psec p+p{margin-top:12px}
+.psec p b{color:var(--frozen); font-weight:400; text-shadow:0 0 10px rgba(255,235,237,.25)}
+.psec p a{color:var(--mint); text-decoration:none; border-bottom:1px dashed rgba(166,201,182,.45)}
+.psec p a:hover{color:var(--frozen)}
+.mot{display:grid; grid-template-columns:1.35fr 1fr; gap:26px; align-items:start}
+figure.fig{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(4,5,12,.5)}
+figure.fig+figure.fig{margin-top:16px}
+figure.fig img{display:block; width:100%; height:auto}
+figure.fig figcaption{padding:10px 14px; font-size:10.5px; line-height:1.7; color:var(--ink-dim);
+  border-top:1px dashed var(--line)}
+.cta{margin-top:34px; text-align:center; padding:38px 20px; border-radius:18px;
+  border:1px solid var(--line);
+  background:radial-gradient(600px 300px at 50% 0%, rgba(62,130,142,.14), transparent 70%), var(--panel-bg)}
+.cta h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,2.6vw,24px);
+  letter-spacing:.24em; text-transform:uppercase; color:#FFF6F4}
+.cta .btns{margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+.cta a{display:inline-block; text-decoration:none; font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; border-radius:999px; padding:12px 28px; transition:transform .2s, box-shadow .2s}
+.cta a.b1{color:#04050C; background:var(--mint); box-shadow:0 0 22px rgba(166,201,182,.45)}
+.cta a.b2{color:var(--ink); border:1px solid var(--line)}
+.cta a:hover{transform:translateY(-2px)}
+footer{position:relative; z-index:2; border-top:1px solid var(--line);
+  padding:18px clamp(20px,5vw,60px) 24px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:12px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+footer a{text-decoration:none; transition:color .2s}
+footer a:hover{color:var(--frozen)}
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease}
+.reveal.in{opacity:1; transform:translateY(0)}
+@media (max-width:920px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  main{padding-top:165px}
+  .mot{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter{animation:none}
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research.html" class="now">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="research-cw-clock_zh.html" class="zh">繁體中文</a>
+      <a href="../classic/Research-cw-clock.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news.html">News</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+<a class="ma-banner" href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="display:block; width:min(940px,92vw); margin:0 auto 28px; padding:18px 22px; text-align:center; border-radius:14px; text-decoration:none; position:relative; z-index:5; background:linear-gradient(135deg,#27153D,#2C4F63); border:1px solid rgba(166,201,182,.4); box-shadow:0 0 26px rgba(62,130,142,.35);">
+  <span style="display:block; font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#A6C9B6; font-family:'Space Mono',monospace;">New Tool</span>
+  <span style="display:block; font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300; font-size:clamp(17px,2.6vw,22px); color:#FFF6F4; margin:7px 0 12px; letter-spacing:.04em;">Try <b style="color:#A6C9B6; font-weight:400;">MissAlign</b> — a new tool for optical design</span>
+  <span style="display:inline-block; background:#FFEBED; color:#1A0F2E; font-weight:700; font-size:12px; letter-spacing:.08em; padding:8px 20px; border-radius:999px; font-family:'Space Mono',monospace;">Launch MissAlign &#8594;</span>
+</a>
+  <p class="crumb reveal"><a href="research.html">Research</a> &nbsp;›&nbsp; <span>CW Optical Clock</span></p>
+
+  <div class="phead reveal">
+    <div class="dir">Direction A · Quantum Metrology Lab</div>
+    <h1>CW <b>Optical Clock</b></h1>
+    <div class="sub">Continuous interrogation · &tau;&#8315;&#185; stability</div>
+  </div>
+
+  <section class="psec reveal" style="--sc:var(--mint)">
+    <div class="sh"><span class="n">01</span><h2>Why Continuous?</h2></div>
+    <p>The best optical clocks today operate in <b>pulsed cycles</b>: cold atoms are prepared, the ultranarrow
+       clock transition is interrogated for a fraction of a second, the result is read out — and everything is
+       thrown away to start again. The dead time between interrogations does more than waste atoms: it lets the
+       phase of the interrogation laser drift unobserved, aliasing laser noise into the measurement (the
+       <b>Dick effect</b>) and capping the stability of even the most heroic machines.</p>
+    <p>A clock that never stops watching its atoms sidesteps this limit. With <b>continuous interrogation of
+       optical qubits</b>, the local oscillator is phase-locked to the atoms at all times — potentially
+       <a href="https://iopscience.iop.org/article/10.35848/1882-0786/ac0e16" target="_blank" rel="noopener">enabling
+       &tau;&#8315;&#185; scaling in stability</a> rather than the &tau;&#8315;&sup1;&#8725;&sup2; averaging of cycled clocks.</p>
+  </section>
+
+  <section class="psec reveal" style="--sc:var(--blush)">
+    <div class="sh"><span class="n">02</span><h2>Two Routes to a Running Clock</h2></div>
+    <div class="mot">
+      <div>
+        <p><b>Passive route — continuous interrogation.</b> A steady stream of ultracold ytterbium atoms flows
+           through an interrogation region where a clock laser continuously probes the
+           <b>&sup1;S&#8320; &rarr; &sup3;P&#8320;</b> transition. Because fresh atoms constantly replace the old,
+           the measurement never blinks.</p>
+        <p><b>Active route — a superradiant clock laser.</b> Turn the atoms themselves into the oscillator: in the
+           bad-cavity regime, atoms on a mHz-wide clock transition can collectively emit
+           <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.102.163601" target="_blank"
+           rel="noopener">continuous superradiant light</a> whose frequency is set by the atoms, not by a
+           fragile reference cavity. A continuous source of cold atoms is exactly the missing ingredient
+           such an <b>active optical clock</b> needs.</p>
+        <p>Both routes converge on the same requirement — the continuous, high-flux, ultracold ytterbium beam
+           our lab is building.</p>
+      </div>
+      <div>
+        <figure class="fig">
+          <img src="../images/Pathfinder.jpg" alt="The Pathfinder ytterbium apparatus in Lab 110"
+               onerror="this.outerHTML='&lt;div style=&quot;padding:26px 14px; text-align:center; font-size:10.5px; color:#A395B8&quot;&gt;image: Pathfinder.jpg&lt;/div&gt;'">
+          <figcaption>Pathfinder — our first-generation continuous ytterbium machine in Lab 110.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="psec reveal" style="--sc:var(--teal)">
+    <div class="sh"><span class="n">03</span><h2>What We Are Building</h2></div>
+    <p>Our <b>Pathfinder</b> apparatus generates a continuous, laser-cooled beam of Yb as the front end of a
+       running clock. Alongside it we are developing the spectroscopy tools to prepare, steer and read out atoms
+       in the long-lived metastable states — see our work on
+       <a href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf"
+       target="_blank" rel="noopener">high-resolution spectroscopy of metastable-state transitions</a> — and the
+       cavity and laser systems for continuous clock interrogation.</p>
+    <p>The long-term goal: an optical frequency reference that is <b>always on</b> — for metrology, for
+       relativistic geodesy, and as a phase-coherent backbone for quantum networks.</p>
+  </section>
+
+  <div class="cta reveal">
+    <h2>Dig Deeper</h2>
+    <div class="btns">
+      <a class="b1" href="research.html">Research Overview</a>
+      <a class="b2" href="research-laser-cooling.html">Laser Cooling &rarr; Degeneracy</a>
+      <a class="b2" href="research-atom-nanophotonics.html">Light&ndash;Matter Interfaces</a>
+      <a class="b2" href="join.html">Join the Lab</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">IAMS ↗</a>
+  </nav>
+  <div>Institute of Atomic and Molecular Sciences, Academia Sinica · Tel +886-2-2366-8236 · No. 1, Roosevelt Rd. Sec. 4, Taipei</div>
+  <span>New website by <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">Hao&#8209;Rong Yang &#8599;</a> and Claude</span>
+</footer>
+
+<script>
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+  const revs=[...document.querySelectorAll('.reveal')];
+  if('IntersectionObserver' in window && !reduced){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{rootMargin:'-40px'});
+    revs.forEach(r=> io.observe(r));
+  }else revs.forEach(r=> r.classList.add('in'));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光與物質介面 — IAMS 鐿原子實驗室</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --cyan2:#5FB0BD;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.14), transparent 60%),
+    radial-gradient(700px 500px at 70% 55%, rgba(246,182,183,.05), transparent 60%)}
+a{color:inherit}
+body{transform-origin:50% 42%}
+body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes pageIn{from{opacity:0; transform:scale(1.1)} to{opacity:1; transform:scale(1)}}
+.topbar{position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:14px clamp(20px,5vw,60px);
+  background:rgba(4,5,12,.78); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:120px 0 80px}
+.crumb{margin:0 0 16px; font-size:11px; letter-spacing:.18em; text-transform:uppercase}
+.crumb a{color:var(--ink-dim); text-decoration:none}
+.crumb a:hover{color:var(--mint)}
+.crumb span{color:var(--cyan2)}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--teal); box-shadow:0 0 14px rgba(62,130,142,.8)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
+.phead .dir{font-size:10.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--cyan2); margin-bottom:12px}
+.phead h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.1em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(62,130,142,.35)}
+.phead h1 b{font-weight:300; color:var(--cyan2); text-shadow:0 0 24px rgba(95,176,189,.6)}
+.phead .sub{margin-top:12px; font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--frozen);
+  text-shadow:0 0 12px rgba(255,235,237,.3)}
+.psec{margin-top:34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px);
+  padding:clamp(20px,3.4vw,34px); position:relative}
+.psec::before{content:""; position:absolute; top:-1px; left:24px; height:3px; width:90px;
+  background:var(--sc,var(--mint)); box-shadow:0 0 14px color-mix(in srgb, var(--sc,#A6C9B6) 70%, transparent)}
+.psec .sh{display:flex; align-items:center; gap:14px; margin-bottom:20px}
+.psec .sh .n{font-size:11px; letter-spacing:.26em; color:var(--sc,var(--mint)); white-space:nowrap}
+.psec .sh h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,3vw,26px);
+  letter-spacing:.22em; text-transform:uppercase; color:#FFF6F4}
+.psec .sh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--sc,#A6C9B6) 45%, transparent), transparent)}
+.psec p{font-size:13px; line-height:1.9; color:#C2B6D4}
+.psec p+p{margin-top:12px}
+.psec p b{color:var(--frozen); font-weight:400; text-shadow:0 0 10px rgba(255,235,237,.25)}
+.psec p a{color:var(--mint); text-decoration:none; border-bottom:1px dashed rgba(166,201,182,.45)}
+.psec p a:hover{color:var(--frozen)}
+.mot{display:grid; grid-template-columns:1.35fr 1fr; gap:26px; align-items:start}
+figure.fig{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(4,5,12,.5)}
+figure.fig+figure.fig{margin-top:16px}
+figure.fig img{display:block; width:100%; height:auto}
+figure.fig figcaption{padding:10px 14px; font-size:10.5px; line-height:1.7; color:var(--ink-dim);
+  border-top:1px dashed var(--line)}
+.cta{margin-top:34px; text-align:center; padding:38px 20px; border-radius:18px;
+  border:1px solid var(--line);
+  background:radial-gradient(600px 300px at 50% 0%, rgba(62,130,142,.18), transparent 70%), var(--panel-bg)}
+.cta h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(18px,2.6vw,24px);
+  letter-spacing:.24em; text-transform:uppercase; color:#FFF6F4}
+.cta .btns{margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+.cta a{display:inline-block; text-decoration:none; font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; border-radius:999px; padding:12px 28px; transition:transform .2s, box-shadow .2s}
+.cta a.b1{color:#04050C; background:var(--cyan2); box-shadow:0 0 22px rgba(95,176,189,.45)}
+.cta a.b2{color:var(--ink); border:1px solid var(--line)}
+.cta a:hover{transform:translateY(-2px)}
+footer{position:relative; z-index:2; border-top:1px solid var(--line);
+  padding:18px clamp(20px,5vw,60px) 24px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:12px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+footer a{text-decoration:none; transition:color .2s}
+footer a:hover{color:var(--frozen)}
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease}
+.reveal.in{opacity:1; transform:translateY(0)}
+@media (max-width:920px){
+  .topbar{flex-direction:column; align-items:flex-start; gap:10px}
+  .nav{justify-content:flex-start}
+  main{padding-top:165px}
+  .mot{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  body.enter{animation:none}
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research_zh.html" class="now">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="research-atom-nanophotonics.html" class="zh">English</a>
+      <a href="../classic/Research-Atom-Nanophotonics_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+<a class="ma-banner" href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="display:block; width:min(940px,92vw); margin:0 auto 28px; padding:18px 22px; text-align:center; border-radius:14px; text-decoration:none; position:relative; z-index:5; background:linear-gradient(135deg,#27153D,#2C4F63); border:1px solid rgba(166,201,182,.4); box-shadow:0 0 26px rgba(62,130,142,.35);">
+  <span style="display:block; font-size:10px; letter-spacing:.3em; color:#A6C9B6; font-family:'Noto Sans TC',sans-serif;">全新工具</span>
+  <span style="display:block; font-family:'Noto Sans TC','Exo 2',sans-serif; font-weight:400; font-size:clamp(17px,2.6vw,22px); color:#FFF6F4; margin:7px 0 12px; letter-spacing:.06em;">試用 <b style="color:#A6C9B6; font-weight:500;">MissAlign</b> — 全新光學設計工具</span>
+  <span style="display:inline-block; background:#FFEBED; color:#1A0F2E; font-weight:700; font-size:13px; letter-spacing:.08em; padding:8px 20px; border-radius:999px; font-family:'Noto Sans TC',sans-serif;">開啟 MissAlign &#8594;</span>
+</a>
+  <p class="crumb reveal"><a href="research_zh.html">研究方向</a> &nbsp;›&nbsp; <span>原子與奈米光子學</span></p>
+
+  <div class="phead reveal">
+    <div class="dir">研究方向 C · 原子-奈米光子混合系統實驗室</div>
+    <h1>光與物質<b>介面</b></h1>
+    <div class="sub">網路化量子電腦 Networked Quantum Computers</div>
+  </div>
+
+  <section class="psec reveal" style="--sc:var(--teal)">
+    <div class="sh"><span class="n">01</span><h2>願景</h2></div>
+    <p>沒有任何一台量子處理器能包辦一切。未來會像古典網際網路一樣:<b>許多處理器,以光相連</b>。
+       對中性原子機器而言,這意味著需要一個介面,能把靜止的原子量子位元轉換成飛行的光子量子位元——
+       高效率、可重複,而且不破壞脆弱的量子態。</p>
+    <p>我們的目標是為<b>鐿</b>打造這個介面:設計奈米光子結構,讓單一原子與導波光強烈耦合,
+       使原子-光子糾纏成為隨手可得的資源——這是<b>量子網路</b>的基本鏈結,也是<b>網路化量子電腦</b>的骨幹。</p>
+  </section>
+
+  <section class="psec reveal" style="--sc:var(--mint)">
+    <div class="sh"><span class="n">02</span><h2>奈米光子介面</h2></div>
+    <div class="mot">
+      <div>
+        <p>當一根光纖被拉細到數百奈米——比它所導引的光波長還細——導波模有一大部分以漸逝場的形式行進在玻璃<b>之外</b>。
+           被囚禁在這種<b>奈米光纖</b>表面數百奈米處的原子,會與每一個經過的光子交互作用,
+           並以高機率把自己的輻射導入光纖。</p>
+        <p>在奈米光纖之外,<b>光子晶體波導與微腔</b>能把光壓縮到小於一個立方波長的體積,進一步提升單原子協同係數(cooperativity)。
+           這些晶片級結構就是強光-物質耦合的硬體——不需要笨重的鏡面腔。</p>
+        <p>鐿是理想的夥伴:鄰近電信波段的躍遷、長壽命亞穩態量子位元,以及時鐘等級的相干性,
+           讓一顆原子同時扮演<b>記憶體、處理器與光學發射器</b>。</p>
+      </div>
+      <div>
+        <figure class="fig">
+          <img src="../images/nanofiber.png" alt="奈米光纖光與物質介面"
+               onerror="this.outerHTML='&lt;div style=&quot;padding:26px 14px; text-align:center; font-size:10.5px; color:#A395B8&quot;&gt;image: nanofiber.png&lt;/div&gt;'">
+          <figcaption>奈米光纖:導波光滲出為漸逝場,與附近被囚禁的原子強烈耦合。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="psec reveal" style="--sc:var(--blush)">
+    <div class="sh"><span class="n">03</span><h2>邁向網路</h2></div>
+    <p>把這個介面與我們的<a href="research-laser-cooling_zh.html">連續超冷原子源</a>結合,效益將倍增:
+       介面上損失的原子被連續補充、糾纏產生可以<b>高速率地重複嘗試直到成功</b>、網路鏈路永不下線——
+       與我們的<a href="research-cw-clock_zh.html">連續光學鐘</a>共享同樣「永遠在線」的哲學。</p>
+    <p>長期而言,我們的目標是中性原子處理節點之間的光子鏈路:<b>分散式量子計算</b>、糾纏增強的感測陣列,
+       以及在量子層次上相連的時鐘網路。</p>
+  </section>
+
+  <div class="cta reveal">
+    <h2>延伸閱讀</h2>
+    <div class="btns">
+      <a class="b1" href="research_zh.html">研究總覽</a>
+      <a class="b2" href="research-cw-clock_zh.html">連續光學鐘</a>
+      <a class="b2" href="research-laser-cooling_zh.html">雷射冷卻 &rarr; 量子簡併</a>
+      <a class="b2" href="join_zh.html">加入我們</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">原分所 ↗</a>
+  </nav>
+  <div>中央研究院原子與分子科學研究所 · Tel +886-2-2366-8236 · 台北市羅斯福路四段一號</div>
+  <span>新版網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao&#8209;Rong Yang &#8599;</a> 與 Claude</span>
+</footer>
+
+<script>
+(()=>{
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('enter');
+  document.body.addEventListener('animationend', e=>{ if(e.animationName==='pageIn') document.body.classList.remove('enter'); });
+  const revs=[...document.querySelectorAll('.reveal')];
+  if('IntersectionObserver' in window && !reduced){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{rootMargin:'-40px'});
+    revs.forEach(r=> io.observe(r));
+  }else revs.forEach(r=> r.classList.add('in'));
+})();
+</script>
+</body>
+</html>
