@@ -78,11 +78,12 @@ h1{
 .config{margin-top:12px; font-family:'Space Mono',monospace; font-size:13.5px; color:var(--ink-dim); letter-spacing:.14em}
 .config sup{font-size:8.5px}
 /* ---------- MissAlign banner ---------- */
-.missalign{display:inline-flex; align-items:center; gap:12px; margin-top:18px;
-  padding:10px 20px; border-radius:999px; text-decoration:none;
-  font-family:'Space Mono','Noto Sans TC',monospace; font-size:12.5px; letter-spacing:.06em;
-  color:var(--ink); border:1px solid rgba(166,201,182,.55);
-  background:rgba(6,8,18,.6); backdrop-filter:blur(6px);
+.missalign{display:inline-flex; align-items:center; gap:14px; margin-top:18px;
+  padding:13px 26px; border-radius:14px; text-decoration:none;
+  font-family:'Space Mono','Noto Sans TC',monospace; font-size:14px; letter-spacing:.06em;
+  color:#FFF6F4; border:1px solid rgba(166,201,182,.55);
+  background:linear-gradient(135deg,rgba(39,21,61,.92),rgba(44,79,99,.92));
+  box-shadow:0 0 26px rgba(62,130,142,.4);
   animation:maPulse 2.8s ease-in-out infinite;}
 .missalign:hover{border-color:rgba(166,201,182,.95); box-shadow:0 0 30px rgba(166,201,182,.5)}
 .missalign .ma-tag{font-size:9px; font-weight:700; letter-spacing:.24em; padding:2px 9px; border-radius:999px;
@@ -387,7 +388,11 @@ footer nav a:hover{color:var(--frozen)}
 </style>
 </head>
 <body>
-<a href="../classic/index_zh.html" title="切換到舊版網站" style="position:fixed; left:18px; bottom:18px; z-index:60; font-family:'Space Mono','Noto Sans TC',monospace; font-size:12.5px; letter-spacing:.14em; text-decoration:none; color:#A6C9B6; border:1px solid rgba(166,201,182,.45); border-radius:999px; padding:9px 16px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); box-shadow:0 0 14px rgba(166,201,182,.18);">舊版網站</a>
+<div style="position:fixed; top:22px; left:clamp(16px,4vw,48px); z-index:60; display:flex; gap:8px; flex-wrap:wrap;">
+  <a href="../classic/index_zh.html" title="切換到舊版網站" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:12px; letter-spacing:.1em; text-decoration:none; color:#A6C9B6; border:1px solid rgba(166,201,182,.45); border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px);">舊版網站</a>
+  <a href="news_zh.html" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:12px; letter-spacing:.1em; text-decoration:none; color:#A395B8; border:1px solid rgba(255,235,237,.25); border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px);">最新消息</a>
+  <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:12px; letter-spacing:.1em; text-decoration:none; color:#A395B8; border:1px solid rgba(255,235,237,.25); border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px);">GitHub &#8599;</a>
+</div>
 <div class="aurora"></div>
 
 <header>
@@ -412,7 +417,9 @@ footer nav a:hover{color:var(--frozen)}
   <a class="e" data-i="5" style="--c:#3E828E" href="projects_zh.html"><span class="node"></span><span class="chip"><span class="t1">研究專案</span></span></a>
   <a class="e" data-i="6" style="--c:#A6C9B6" href="gallery_zh.html"><span class="node"></span><span class="chip"><span class="t1">實驗室相簿</span></span></a>
   <a class="e" data-i="7" style="--c:#F6B6B7" href="join_zh.html"><span class="node"></span><span class="chip"><span class="t1">加入我們</span></span></a>
-<a class="e" data-i="8" style="--c:#FFEBED" href="https://github.com/orgs/iams-yb-lab"><span class="node"></span><span class="chip"><span class="t1">GitHub</span></span></a>
+  <!-- 6s² valence pair — the atom's links to the outside world -->
+  <a class="e out" data-i="8" style="--c:#F0D77B" href="news_zh.html"><span class="node"></span><span class="chip"><span class="t1">最新消息</span></span></a>
+  <a class="e out" data-i="9" style="--c:#FFEBED" href="https://github.com/orgs/iams-yb-lab"><span class="node"></span><span class="chip"><span class="t1">GitHub</span></span></a>
 
 </div>
 <div id="warp" aria-hidden="true"></div>
@@ -480,7 +487,8 @@ footer nav a:hover{color:var(--frozen)}
   const canvas = document.getElementById('atom');
   const stage  = document.getElementById('stage');
   const ctx    = canvas.getContext('2d');
-  const links  = [...document.querySelectorAll('.e')];
+  const links  = [...document.querySelectorAll('.e:not(.out)')];   // O-shell site menu
+  const vlinks = [...document.querySelectorAll('.e.out')];          // 6s² valence pair: News + GitHub
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = matchMedia('(max-width: 640px)').matches;
 
@@ -533,6 +541,7 @@ footer nav a:hover{color:var(--frozen)}
   const D2R = Math.PI/180;
   shells.forEach(sh => sh.b = basis(sh.tilt[0]*D2R, sh.tilt[1]*D2R));
   const MENU = 4;                      // the O shell carries the menu
+  const VAL  = 5;                      // the 6s² valence pair carries News + GitHub
 
   // ---------- glow sprites ----------
   function sprite(rgb){
@@ -580,6 +589,18 @@ footer nav a:hover{color:var(--frozen)}
 
 
   // ---------- render ----------
+  function placeChips(sh, arr){
+    for(let i=0;i<arr.length;i++){
+      const th=sh.th + i*Math.PI*2/sh.n;
+      const p=project(V(orbitPoint(sh,th),G));
+      const front=p.z>0;
+      const sc=.82+.3*((p.z/sh.r)+1)/2;
+      const el=arr[i];
+      el.style.transform=`translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(0,-50%) scale(${sc.toFixed(3)})`;
+      el.style.opacity=(front?1:.88).toFixed(2);
+      el.style.zIndex=front?5:2;
+    }
+  }
   function draw(now){
     const dt=Math.min((now-last)/1000,.05); last=now;
     speed += (target()-speed)*Math.min(1, dt*5);
@@ -621,6 +642,7 @@ footer nav a:hover{color:var(--frozen)}
       const sh=shells[si];
       for(let k=0;k<sh.n;k++){
         if(si===MENU && k<links.length) continue;    // slots occupied by menu chips
+        if(si===VAL  && k<vlinks.length) continue;   // slots occupied by valence chips
         const th=sh.th + k*Math.PI*2/sh.n;
         const p=project(V(orbitPoint(sh,th),G));
         const depth=((p.z/sh.r)+1)/2;
@@ -647,18 +669,9 @@ footer nav a:hover{color:var(--frozen)}
     ctx.globalAlpha=1;
     ctx.globalCompositeOperation='source-over';
 
-    // the 8 O-shell electrons = the menu
-    const msh=shells[MENU];
-    for(let i=0;i<links.length;i++){
-      const th=msh.th + i*Math.PI*2/msh.n;
-      const p=project(V(orbitPoint(msh,th),G));
-      const front=p.z>0;
-      const sc=.82+.3*((p.z/msh.r)+1)/2;
-      const el=links[i];
-      el.style.transform=`translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(0,-50%) scale(${sc.toFixed(3)})`;
-      el.style.opacity=(front?1:.88).toFixed(2);
-      el.style.zIndex=front?5:2;
-    }
+    // chip electrons: O shell = site menu, 6s² valence pair = News + GitHub
+    placeChips(shells[MENU], links);
+    placeChips(shells[VAL],  vlinks);
 
     if(!reduced) requestAnimationFrame(draw);
   }
@@ -691,7 +704,7 @@ footer nav a:hover{color:var(--frozen)}
 
   // ---------- click an electron -> zoom into it, then travel ----------
   const warp = document.getElementById('warp');
-  links.forEach(a => a.addEventListener('click', ev => {
+  [...links, ...vlinks].forEach(a => a.addEventListener('click', ev => {
     if(ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button!==0) return;  // let new-tab clicks through
     ev.preventDefault();
     const href = a.href;
