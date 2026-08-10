@@ -210,7 +210,7 @@ main{position:relative; z-index:1; flex:1; width:min(1120px, 100%); margin:0 aut
 }
 .card h3{
   margin-top:14px;
-  font-family:'Exo 2',sans-serif; font-weight:300;
+  font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300;
   font-size:19px; letter-spacing:.06em; color:#FFF6F4;
 }
 .card .zh{
@@ -630,8 +630,8 @@ footer nav a:hover{color:var(--frozen)}
     html += '<span class="glare" aria-hidden="true"></span>'
           + '<span class="orb" aria-hidden="true"><span class="ring"></span><span class="path"><i></i></span></span>'
           + '<span class="role"'+roleStyle+'>'+esc(ROLE_ZH[p.role]||p.role||'')+'</span>'
-          + '<h3>'+esc(p.name)+'</h3>';
-    if(p.zh)  html += '<div class="zh">'+esc(p.zh)+'</div>';
+          + '<h3>'+esc(p.zh || p.name)+'</h3>';
+    if(p.zh)  html += '<div class="zh">'+esc(p.name)+'</div>';
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
     let meta = metaZH(p.meta) || '';
     if(p.email){
