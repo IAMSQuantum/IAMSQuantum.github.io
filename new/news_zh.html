@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最新消息 — 中研院鐿原子實驗室</title>
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --gold:#F0D77B;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column; overflow-x:hidden}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(62,130,142,.10), transparent 60%)}
+a{color:inherit}
+.topbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px clamp(20px,5vw,60px); background:rgba(4,5,12,.78);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.08em; color:var(--ink-dim); font-family:'Noto Sans TC',sans-serif;
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--mint); box-shadow:0 0 16px rgba(166,201,182,.4)}
+.nav a.en{border:1px solid var(--line); font-family:'Space Mono',monospace; letter-spacing:.12em; text-transform:uppercase}
+main{position:relative; z-index:2; flex:1; width:min(940px,94vw); margin:0 auto; padding:60px 0 80px}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--blush); box-shadow:0 0 14px rgba(246,182,183,.7)}
+.phead h1{font-family:'Noto Sans TC',sans-serif; font-weight:400; font-size:clamp(26px,4.6vw,42px);
+  letter-spacing:.3em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(62,130,142,.25)}
+.phead .sub{margin-top:10px; font-size:11px; letter-spacing:.22em; color:var(--ink-dim)}
+.psec{margin-top:34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px);
+  padding:clamp(20px,3.4vw,34px); position:relative}
+.psec::before{content:""; position:absolute; top:-1px; left:24px; height:3px; width:90px;
+  background:var(--sc,var(--mint)); box-shadow:0 0 14px rgba(166,201,182,.6)}
+.psec .sh{display:flex; align-items:center; gap:14px; margin-bottom:18px}
+.psec .sh h2{font-family:'Noto Sans TC',sans-serif; font-weight:500; font-size:clamp(17px,3vw,22px);
+  letter-spacing:.18em; color:#FFF6F4}
+.psec .sh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, rgba(166,201,182,.45), transparent)}
+.psec p{font-size:14px; line-height:2; color:#C2B6D4; font-family:'Noto Sans TC',sans-serif}
+.psec p+p{margin-top:12px}
+.psec b{color:var(--frozen); font-weight:700}
+.psec a{color:var(--mint); text-decoration:none; border-bottom:1px dashed rgba(166,201,182,.45)}
+.psec a:hover{color:var(--frozen)}
+.stamp{display:inline-block; margin-bottom:12px; padding:3px 12px; border-radius:999px;
+  font-size:10px; font-weight:700; letter-spacing:.18em;
+  color:#04140B; background:linear-gradient(90deg,#F6B6B7,#A6C9B6)}
+footer{position:relative; z-index:1; border-top:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim);
+  font-family:'Noto Sans TC',sans-serif}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
+footer nav a:hover{color:var(--frozen)}
+@media (max-width:760px){ .topbar{flex-direction:column; align-items:flex-start; gap:10px} .nav{justify-content:flex-start} }
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<header class="topbar">
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="主選單">
+    <a href="research_zh.html">研究</a>
+    <a href="team_zh.html">團隊</a>
+    <a href="publications_zh.html">著作</a>
+    <a href="projects_zh.html">專案</a>
+    <a href="gallery_zh.html">相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡</a>
+    <a href="news_zh.html" class="now" aria-current="page">最新消息</a>
+    <a href="news.html" class="en">English</a>
+    <a href="../classic/index_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">舊版網站</a>
+    <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener" class="en">GitHub &#8599;</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+  <section class="phead">
+    <h1>最新消息</h1>
+    <div class="sub">恭賀 · 學生報告 · 公告</div>
+  </section>
+
+  <section class="psec" style="--sc:var(--gold)">
+    <div class="sh"><h2>&#127891; 恭賀</h2></div>
+    <span class="stamp">2026 年 7 月</span>
+    <p><b>楊皓蓉 Hao&#8209;Rong Yang</b> 於 2026 年 7 月取得<b>碩士學位</b>,恭喜!
+       她的碩士論文
+       <a href="../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf"
+       target="_blank" rel="noopener"><i>High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium</i>(PDF)</a>
+       已收錄於<a href="publications_zh.html">著作典藏</a>。</p>
+  </section>
+
+  <section class="psec" style="--sc:var(--blush)">
+    <div class="sh"><h2>&#127908; 學生報告與演講</h2></div>
+    <p>我們將在此整理學生的演講與報告,敬請期待。</p>
+  </section>
+
+  <section class="psec" style="--sc:var(--mint)">
+    <div class="sh"><h2>&#128295; 關於本網站</h2></div>
+    <p>新版網站與光學設計工具 <b>MissAlign</b> 由<b>楊皓蓉 Hao&#8209;Rong Yang</b> 設計與製作。</p>
+    <p><a href="https://github.com/s20000125-alt" target="_blank" rel="noopener">她的 GitHub &#8599;</a> ·
+       <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener">試用 MissAlign &#8599;</a> ·
+       <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">實驗室 GitHub &#8599;</a></p>
+  </section>
+</main>
+
+<footer>
+  <nav aria-label="選單">
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究</a>
+    <a href="team_zh.html">團隊</a>
+    <a href="publications_zh.html">著作</a>
+    <a href="projects_zh.html">專案</a>
+    <a href="gallery_zh.html">相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡</a>
+    <a href="news_zh.html">最新消息</a>
+  </nav>
+  <span>中央研究院原子與分子科學研究所 · 台北市羅斯福路四段一號 · +886-2-2366-8236</span>
+  <span>網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao&#8209;Rong Yang &#8599;</a></span>
+</footer>
+</body>
+</html>

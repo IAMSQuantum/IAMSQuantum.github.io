@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team — IAMS Yb Lab</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
   --lavender: #FFEBED;
@@ -419,6 +417,9 @@ footer nav a:hover{color:var(--frozen)}
     <a href="contact.html">Contact</a>
     <a href="team_zh.html" class="zh">繁體中文</a>
       <a href="../classic/team.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news.html">News</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
@@ -446,6 +447,7 @@ footer nav a:hover{color:var(--frozen)}
     <a href="contact.html">Contact</a>
   </nav>
   <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
+  <span>Website by <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">Hao&#8209;Rong Yang &#8599;</a></span>
 </footer>
 
 <!-- the lab mascots, on patrol -->
@@ -536,25 +538,43 @@ footer nav a:hover{color:var(--frozen)}
      新增成員 = 在清單加一段 {...},  然後把照片丟進 team/ 資料夾。
   ============================================================ */
   const PEOPLE = [
-    { name:"Dr. Chun‑Chia Chen", zh:"陳俊嘉 博士", role:"Principal Investigator", color:"mint", photo:"",
+    { name:"Dr. Chun‑Chia Chen", zh:"陳俊嘉 博士", role:"Principal Investigator", color:"mint", photo:"chunchia.jpg",
       email:"chunchia.chen@g.iams.sinica.edu.tw", meta:"<b>Office</b> 308 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Dr. Shayne Bennetts", zh:"肖恩 博士", role:"Principal Investigator", color:"mint", photo:"Shayne Bennetts.jpg",
       email:"s.p.bennetts@g.iams.sinica.edu.tw", meta:"<b>Office</b> 307 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Talia Yu", zh:"于小姐", role:"Secretary", color:"frozen", photo:"",
       email:"tyu@as.edu.tw", meta:"<b>Office</b> 404<br><b>Tel</b> +886-2-2366-8923" },
-    { name:"Hao‑Rong Yang", zh:"楊皓蓉", role:"Masters Student", color:"sapphire", photo:"Roxanne.jpg",
+    { name:"Ting‑Peng Huang", zh:"黃定芃", role:"Masters Student", color:"sapphire", photo:"TingPeng.jpg",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Ting‑Peng Huang", zh:"黃定芃", role:"Undergraduate", color:"sapphire", photo:"TingPeng.jpg",
-      aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Jie‑En Chen", zh:"陳杰恩", role:"Undergraduate", color:"sapphire", photo:"Jie-En.jpg",
-      aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Wen‑Ting Wang", role:"Undergraduate", color:"sapphire", photo:"WenTing.jpg",
-      aff:"Waterloo · EE", affUrl:"https://uwaterloo.ca/electrical-computer-engineering/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
+    { name:"Jie‑En Chen", zh:"陳杰恩", role:"Research Assistant", color:"frozen", photo:"Jie-En.jpg",
+      aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215<br><b>Previously</b> Undergraduate Researcher 2025/26" },
+    { name:"Javier Barrero Salazar", role:"IAMS IIP Intern", color:"sapphire", photo:"", initials:"JB",
+      meta:"<b>Lab</b> 110" },
+    { name:"Gamal Shehata", role:"NSTC IIPP Researcher", color:"sapphire", photo:"",
+      aff:"Zewail City UST-Egypt · Opto Electronic Engineering", affUrl:"https://www.zewailcity.edu.eg/", meta:"<b>Lab</b> 110" },
+    { name:"Shengta Tsai", zh:"蔡昇達", role:"IAMS Summer Researcher 2026", color:"sapphire", photo:"Shengta Tsai.jpg",
+      aff:"NYCU · Physics", affUrl:"https://phys.nycu.edu.tw/en/", meta:"<b>Lab</b> 110" },
+    { name:"Hua‑Ying (Sophie) Chung", zh:"鍾華螢", role:"IAMS Summer Researcher 2026", color:"sapphire", photo:"Sophie_Chung.jpg",
+      aff:"NCU · Optics and Photonics", affUrl:"https://www.dop.ncu.edu.tw/en/", meta:"<b>Lab</b> 110" },
+    { name:"Yi‑Cheng Liu", zh:"劉奕成", role:"IAMS Summer Researcher 2026", color:"sapphire", photo:"", initials:"YL",
+      aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Lab</b> 110" },
+    { name:"Mike Hong", zh:"洪詠盛", role:"Summer Undergraduate Researcher 2026", color:"sapphire", photo:"",
+      aff:"U. Illinois Urbana-Champaign · Electrical Engineering", affUrl:"https://ece.illinois.edu/", meta:"<b>Lab</b> 110" },
+    { name:"Hung‑Chi Wang", role:"Summer Undergraduate Researcher 2026", color:"sapphire", photo:"", initials:"HW",
+      aff:"U. Toronto · Electronic Engineering", affUrl:"https://www.ece.utoronto.ca/", meta:"<b>Lab</b> 110" },
+    { name:"Jack Zheng", zh:"鄭介展", role:"Summer Undergraduate Researcher 2026", color:"sapphire", photo:"",
+      aff:"Taipei Tech · Electro-Optical Engineering", affUrl:"https://eo.ntut.edu.tw/index.php?Lang=en", meta:"<b>Lab</b> 110" },
+    { name:"Emon Wei", zh:"魏廷恩", role:"Summer Undergraduate Researcher 2026", color:"sapphire", photo:"",
+      aff:"Taipei Tech · Electro-Optical Engineering", affUrl:"https://eo.ntut.edu.tw/index.php?Lang=en", meta:"<b>Lab</b> 110" },
     { name:"Baxter", role:"Lab Mascot", color:"red1798", photo:"Baxter.jpg", initials:"B",
       meta:"<b>Office</b> Garden HQ · <b>Lab</b> 110" },
     { name:"Rudolph", role:"Lab Mascot", color:"red1798", photo:"Rudi.jpg", initials:"R",
       meta:"<b>Office</b> Garden HQ · <b>Lab</b> 110" },
 
+        { name:"Hao‑Rong Yang (MSc)", zh:"楊皓蓉", role:"Masters Student", color:"indigo", photo:"Roxanne.jpg", alumni:true,
+      meta:"<b>Graduated</b> July 2026<br><a href='../Theses/High-Resolution Spectroscopy of Metastable-State Transitions in Ytterbium.pdf' target='_blank' rel='noopener'>MSc Thesis &#8599;</a>" },
+    { name:"Wen‑Ting Wang", role:"Undergraduate", color:"indigo", photo:"WenTing.jpg", alumni:true,
+      aff:"Waterloo · EE", affUrl:"https://uwaterloo.ca/electrical-computer-engineering/" },
     { name:"Dr. Ting‑Wei Hsu", zh:"許庭維 博士", role:"Postdoc", color:"indigo", photo:"TingWeiHsu.jpg", alumni:true,
       meta:"<b>Now at</b> ETH · Jonathan Home group" },
     { name:"Yu‑Chen Lu", zh:"盧昱辰", role:"Research Assistant", color:"indigo", photo:"YuChen.jpg", alumni:true },

@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery — IAMS Yb Lab</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
   --frozen:   #FFEBED;
@@ -224,6 +222,9 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="contact.html">Contact</a>
     <a href="gallery_zh.html" class="zh">繁體中文</a>
       <a href="../classic/gallery.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news.html">News</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
@@ -286,63 +287,52 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
   }));
 
   /* ================================================================
-     PHOTO SOURCE — auto-reads the repo folder, no code edits needed.
+     PHOTO SOURCE — all photos live in this repository, in the
+     shared local "../gallery/" folder (same photos as the classic
+     site). Nothing is fetched from the network.
 
      HOW TO ADD PHOTOS:
-       1. Drop image files (.jpg .png .webp .gif .avif) into the
-          "../gallery/" folder of the GitHub repo and push. Done.
-       2. Files are sorted by filename → prefix with numbers to
-          control order:  01__... , 02__... , 10__...
-       3. OPTIONAL metadata in the filename, separated by "__":
-            NN__Caption__Tag__Location__Year__hero.jpg
-          e.g. 03__399 nm blue MOT__Physics__Lab 110__2025.jpg
-               05__Team at work__People__IAMS Taipei__2025__hero.jpg
-          Any part can be omitted from the right.
-          "hero" anywhere makes that photo extra large.
+       1. Copy the image file (.jpg .png .webp .gif .avif) into the
+          "../gallery/" folder.
+       2. Add one line to the PHOTOS_SRC list below, e.g.
+            {src:"../gallery/my-photo.jpg", cap:"Caption", tag:"Tag", yr:"2025"},
+          Add hero:true to make that photo extra large.
           Portrait / landscape is detected automatically.
-       4. A plain filename also works: "Optics table.jpg"
-          → caption "Optics table", default location/year.
      ================================================================ */
-  const REPO   = 's20000125-alt/IAMS_yb_lab';
-  const FOLDER = 'gallery';
   const DEFAULT_LOC = 'IAMS · Taipei';
-
-  // used only if the folder can't be read (offline / rate limit)
-  const FALLBACK = [
+  const PHOTOS_SRC = [
     {src:"../images/Pathfinder.jpg", cap:"Pathfinder apparatus", tag:"Hardware", loc:"Lab 110 · IAMS", yr:"2025", hero:true},
-    {src:"../images/nanofiber.png",  cap:"Nanofiber interface", tag:"Hardware", loc:"Lab 110 · IAMS", yr:"2025"},
-  ];
+    {src:"../gallery/1-01.jpg", cap:"Group photo 1", tag:"People"},
+    {src:"../gallery/1-02.jpg", cap:"Group photo 2", tag:"People"},
+    {src:"../gallery/1-03.jpg", cap:"Group photo 3", tag:"People"},
+    {src:"../gallery/1-04.jpg", cap:"Group photo 4", tag:"People"},
+    {src:"../gallery/2-01.jpg", cap:"Pathfinder lab 1", tag:"Hardware"},
+    {src:"../gallery/2-02.jpg", cap:"Pathfinder lab 2", tag:"Hardware"},
+    {src:"../gallery/2-03.jpg", cap:"Pathfinder lab 3", tag:"Hardware"},
+    {src:"../gallery/2-04.jpg", cap:"Pathfinder lab 4", tag:"Hardware"},
+    {src:"../gallery/3-01.jpg", cap:"Spectroscopy", tag:"Physics"},
+    {src:"../gallery/4-01.jpg", cap:"Lab infrastructure 1", tag:"Hardware"},
+    {src:"../gallery/4-02.jpg", cap:"Lab infrastructure 2", tag:"Hardware"},
+    {src:"../gallery/4-03.jpg", cap:"Lab infrastructure 3", tag:"Hardware"},
+    {src:"../gallery/4-04.jpg", cap:"Lab infrastructure 4", tag:"Hardware"},
+    {src:"../gallery/4-05.jpg", cap:"Lab infrastructure 5", tag:"Hardware"},
+    {src:"../gallery/4-06.jpg", cap:"Lab infrastructure 6", tag:"Hardware"},
+    {src:"../gallery/4-07.jpg", cap:"Lab infrastructure 7", tag:"Hardware"},
+    {src:"../gallery/4-08.jpg", cap:"Lab infrastructure 8", tag:"Hardware"},
+    {src:"../images/nanofiber.png", cap:"Nanofiber interface", tag:"Hardware", loc:"Lab 110 · IAMS", yr:"2025"},
+    {src:"../gallery/5-01.jpg", cap:"Taiwan 1", tag:"Places"},
+    {src:"../gallery/5-02.jpg", cap:"Taiwan 2", tag:"Places"},
+    {src:"../gallery/5-03.jpg", cap:"Taiwan 3", tag:"Places"},
+    {src:"../gallery/5-04.jpg", cap:"Taiwan 4", tag:"Places"},
+    {src:"../gallery/5-05.jpg", cap:"Taiwan 5", tag:"Places"}
+  ].map(p => ({tag:"", loc:DEFAULT_LOC, yr:"", ...p}));
+  const FALLBACK = PHOTOS_SRC;
 
   const ACCENTS = ['#A6C9B6', '#F6B6B7', '#3E828E', '#FFEBED'];
   const pad = n => String(n).padStart(2,'0');
 
-  function parseName(filename){
-    const base = filename.replace(/\.[^.]+$/, '');
-    let parts = base.split('__').map(s=>s.trim());
-    if(parts.length>1 && /^\d+$/.test(parts[0])) parts.shift();     // drop order prefix
-    const hero = parts.some(p=>p.toLowerCase()==='hero');
-    parts = parts.filter(p=>p.toLowerCase()!=='hero');
-    let [cap, tag, loc, yr] = parts;
-    cap = (cap||base).replace(/^\d+[-_ ]+/,'').replace(/[-_]+/g,' ').trim() || base;
-    return {cap, tag:tag||'', loc:loc||DEFAULT_LOC, yr:yr||'', hero};
-  }
-
   async function loadPhotos(){
-    const KEY='ybGalleryList', TTL=10*60*1000;
-    try{
-      const c = JSON.parse(sessionStorage.getItem(KEY));
-      if(c && Date.now()-c.t < TTL && Array.isArray(c.list) && c.list.length) return c.list;
-    }catch(e){}
-    const res = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+FOLDER);
-    if(!res.ok) throw new Error('folder listing failed: '+res.status);
-    const files = await res.json();
-    const list = files
-      .filter(f=> f.type==='file' && /\.(jpe?g|png|webp|gif|avif)$/i.test(f.name))
-      .sort((a,b)=> a.name.localeCompare(b.name, undefined, {numeric:true}))
-      .map(f=> ({src:f.download_url, ...parseName(f.name)}));
-    if(!list.length) throw new Error('folder is empty');
-    try{ sessionStorage.setItem(KEY, JSON.stringify({t:Date.now(), list})); }catch(e){}
-    return list;
+    return PHOTOS_SRC;
   }
 
   /* ---------- render ---------- */

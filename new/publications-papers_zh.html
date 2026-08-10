@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>論文著作 — IAMS 鐿原子實驗室</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
   --lavender:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --indigo:#3B3664;
@@ -148,6 +146,24 @@ footer nav a:hover{color:var(--lavender)}
 .pub .pv a:hover{color:var(--lavender)}
 @media (max-width:560px){ .pub{grid-template-columns:1fr} .pub .py{opacity:.7} }
 
+/* ---------- featured Nature paper ---------- */
+.book.featured .cover{box-shadow:-16px 18px 40px rgba(0,0,0,.55), 0 0 0 2px rgba(240,215,123,.65), 0 0 30px rgba(212,175,55,.4)}
+.nribbon{position:absolute; top:16px; right:-36px; z-index:4; transform:rotate(45deg);
+  width:140px; text-align:center; padding:4px 0;
+  font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.24em;
+  color:#1A1503; background:linear-gradient(90deg,#B8912F,#F0D77B,#B8912F);
+  box-shadow:0 2px 10px rgba(0,0,0,.45)}
+.nm .ngold{color:#F0D77B; text-shadow:0 0 10px rgba(240,215,123,.4); font-weight:700}
+.pub.feat{border:1px solid rgba(212,175,55,.45); border-radius:12px;
+  background:linear-gradient(150deg, rgba(212,175,55,.07), rgba(212,175,55,.02));
+  padding:16px 14px; margin:12px 0; border-bottom:1px solid rgba(212,175,55,.45);
+  box-shadow:0 0 24px rgba(212,175,55,.12)}
+.pub.feat .pv{color:#D9BC5A}
+.njchip{display:inline-block; vertical-align:2px; margin-right:10px; padding:2px 10px;
+  border-radius:999px; font-family:'Space Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.24em;
+  color:#1A1503; background:linear-gradient(90deg,#B8912F,#F0D77B,#B8912F);
+  box-shadow:0 0 12px rgba(212,175,55,.35)}
+@media (max-width:760px){ .nribbon{top:10px; right:-42px; font-size:8.5px} }
 body.enter{animation:pageIn .6s cubic-bezier(.2,.8,.3,1) both}
 @keyframes pageIn{from{opacity:0; transform:scale(1.08)} to{opacity:1; transform:scale(1)}}
 body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
@@ -180,6 +196,9 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="contact_zh.html">聯絡我們</a>
     <a href="publications_zh.html" class="zh">繁體中文</a>
       <a href="../classic/publications-papers_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
@@ -226,6 +245,7 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">原分所 ↗</a>
   </nav>
   <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
+  <span>網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao‑Rong Yang &#8599;</a></span>
 </footer>
 
 <script>
@@ -255,6 +275,7 @@ window.YB_PAPERS = [
  },
  {
   "title": "Continuous Bose\u2013Einstein condensation",
+  "featured": true,
   "journal": "Nature",
   "authors": "C.-C. Chen, R. Gonz\u00e1lez Escudero, J. Min\u00e1\u0159, B. Pasquiou, S. Bennetts, F. Schreck",
   "year": 2022,
@@ -356,6 +377,7 @@ window.YB_ALL = [
 "y": 2022,
 "a": "C.-C. Chen, R. Gonz\u00e1lez Escudero, J. Min\u00e1\u0159, B. Pasquiou, S. Bennetts, F. Schreck*",
 "t": "Continuous Bose\u2013Einstein condensation",
+"feat": true,
 "v": "Nature 606, 683\u2013687",
 "u": "https://doi.org/10.1038/s41586-022-04731-z",
 "x": "https://arxiv.org/abs/2012.07605"
@@ -592,16 +614,16 @@ window.YB_ALL = [
   })();
 
   const shelf = document.getElementById('shelf');
-  const papers = window.YB_PAPERS;
+  const papers = window.YB_PAPERS; papers.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
   const JC = window.YB_JOURNAL_COLORS;
   const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const books = papers.map((p,i)=>{
     const pair = JC[p.journal] || JC._default;
     const el = document.createElement('a');
-    el.className='book'; el.href=p.doi; el.target='_blank'; el.rel='noopener';
+    el.className='book'+(p.featured?' featured':''); el.href=p.doi; el.target='_blank'; el.rel='noopener';
     el.style.setProperty('--c1',pair[0]); el.style.setProperty('--c2',pair[1]);
     el.innerHTML =
-      '<div class="cover"><div class="sheen"></div><div class="c-inner">'+
+      '<div class="cover"><div class="sheen"></div>'+(p.featured?'<div class="nribbon">NATURE</div>':'')+'<div class="c-inner">'+
       '<div class="journal">'+esc(p.journal)+'</div><div class="rule"></div>'+
       '<div class="title">'+esc(p.title)+'</div><div class="spacer"></div>'+
       '<div class="authors">'+esc(p.authors)+'</div><div class="year">'+p.year+'</div>'+
@@ -634,7 +656,7 @@ window.YB_ALL = [
       document.getElementById('count').textContent=(Math.round(focus)+1)+' / '+N;
       document.getElementById('nowTitle').innerHTML=
         '<div class="nt">'+esc(cur.title)+'</div><div class="nm">'+esc(cur.authors)+' \u00b7 '+
-        esc(cur.journal)+' '+cur.year+' \u00b7 <a href="'+cur.doi+'" target="_blank" rel="noopener">Open paper \u2197</a></div>';
+        (cur.featured?'<span class="ngold">'+esc(cur.journal)+'</span>':esc(cur.journal))+' '+cur.year+' \u00b7 <a href="'+cur.doi+'" target="_blank" rel="noopener">Open paper \u2197</a></div>';
     }
   }
   function animate(){
@@ -695,9 +717,9 @@ window.YB_ALL = [
     for(const it of window.YB_ALL){
       if(it.sec && it.sec!=='Recent') html+='<div class="lsub">'+esc(it.sec)+'</div>';
       const ax = it.x ? ' <a href="'+it.x+'" target="_blank" rel="noopener">arXiv</a>' : '';
-      html+='<div class="pub">'
+      html+='<div class="pub'+(it.feat?' feat':'')+'">'
         +'<div class="py">'+it.y+'</div>'
-        +'<div><div class="pt"><a href="'+it.u+'" target="_blank" rel="noopener">'+esc(it.t)+'</a></div>'
+        +'<div><div class="pt">'+(it.feat?'<span class="njchip">NATURE</span>':'')+'<a href="'+it.u+'" target="_blank" rel="noopener">'+esc(it.t)+'</a></div>'
         +'<div class="pa">'+hi(it.a)+'</div>'
         +'<div class="pv">'+esc(it.v)+ax+'</div></div>'
         +'</div>';

@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>實驗室相簿 — IAMS 鐿原子實驗室</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
   --frozen:   #FFEBED;
@@ -224,6 +222,9 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="contact_zh.html">聯絡我們</a>
     <a href="gallery.html" class="zh">English</a>
       <a href="../classic/gallery_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
@@ -286,63 +287,50 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
   }));
 
   /* ================================================================
-     PHOTO SOURCE — auto-reads the repo folder, no code edits needed.
+     照片來源 — 所有照片皆存放於此儲存庫的本地 "../gallery/" 資料夾
+     （與舊版網站共用），不會從網路抓取任何內容。
 
-     HOW TO ADD PHOTOS:
-       1. Drop image files (.jpg .png .webp .gif .avif) into the
-          "../gallery/" folder of the GitHub repo and push. Done.
-       2. Files are sorted by filename → prefix with numbers to
-          control order:  01__... , 02__... , 10__...
-       3. OPTIONAL metadata in the filename, separated by "__":
-            NN__Caption__Tag__Location__Year__hero.jpg
-          e.g. 03__399 nm blue MOT__Physics__Lab 110__2025.jpg
-               05__Team at work__People__IAMS Taipei__2025__hero.jpg
-          Any part can be omitted from the right.
-          "hero" anywhere makes that photo extra large.
-          Portrait / landscape is detected automatically.
-       4. A plain filename also works: "Optics table.jpg"
-          → caption "Optics table", default location/year.
+     新增照片方式：
+       1. 將圖片檔（.jpg .png .webp .gif .avif）複製到 "../gallery/"。
+       2. 在下方 PHOTOS_SRC 清單加入一行，例如
+            {src:"../gallery/my-photo.jpg", cap:"說明", tag:"分類", yr:"2025"},
+          加上 hero:true 可讓該照片放大顯示。
+          直式／橫式會自動偵測。
      ================================================================ */
-  const REPO   = 's20000125-alt/IAMS_yb_lab';
-  const FOLDER = 'gallery';
-  const DEFAULT_LOC = 'IAMS · Taipei';
-
-  // used only if the folder can't be read (offline / rate limit)
-  const FALLBACK = [
-    {src:"../images/Pathfinder.jpg", cap:"Pathfinder apparatus", tag:"Hardware", loc:"Lab 110 · IAMS", yr:"2025", hero:true},
-    {src:"../images/nanofiber.png",  cap:"Nanofiber interface", tag:"Hardware", loc:"Lab 110 · IAMS", yr:"2025"},
-  ];
+  const DEFAULT_LOC = '原分所 · 台北';
+  const PHOTOS_SRC = [
+    {src:"../images/Pathfinder.jpg", cap:"Pathfinder 實驗裝置", tag:"硬體", loc:"Lab 110 · 原分所", yr:"2025", hero:true},
+    {src:"../gallery/1-01.jpg", cap:"團體合照 1", tag:"團隊"},
+    {src:"../gallery/1-02.jpg", cap:"團體合照 2", tag:"團隊"},
+    {src:"../gallery/1-03.jpg", cap:"團體合照 3", tag:"團隊"},
+    {src:"../gallery/1-04.jpg", cap:"團體合照 4", tag:"團隊"},
+    {src:"../gallery/2-01.jpg", cap:"Pathfinder 實驗室 1", tag:"硬體"},
+    {src:"../gallery/2-02.jpg", cap:"Pathfinder 實驗室 2", tag:"硬體"},
+    {src:"../gallery/2-03.jpg", cap:"Pathfinder 實驗室 3", tag:"硬體"},
+    {src:"../gallery/2-04.jpg", cap:"Pathfinder 實驗室 4", tag:"硬體"},
+    {src:"../gallery/3-01.jpg", cap:"光譜量測", tag:"物理"},
+    {src:"../gallery/4-01.jpg", cap:"實驗室基礎設施 1", tag:"硬體"},
+    {src:"../gallery/4-02.jpg", cap:"實驗室基礎設施 2", tag:"硬體"},
+    {src:"../gallery/4-03.jpg", cap:"實驗室基礎設施 3", tag:"硬體"},
+    {src:"../gallery/4-04.jpg", cap:"實驗室基礎設施 4", tag:"硬體"},
+    {src:"../gallery/4-05.jpg", cap:"實驗室基礎設施 5", tag:"硬體"},
+    {src:"../gallery/4-06.jpg", cap:"實驗室基礎設施 6", tag:"硬體"},
+    {src:"../gallery/4-07.jpg", cap:"實驗室基礎設施 7", tag:"硬體"},
+    {src:"../gallery/4-08.jpg", cap:"實驗室基礎設施 8", tag:"硬體"},
+    {src:"../images/nanofiber.png", cap:"奈米光纖介面", tag:"硬體", loc:"Lab 110 · 原分所", yr:"2025"},
+    {src:"../gallery/5-01.jpg", cap:"台灣 1", tag:"生活"},
+    {src:"../gallery/5-02.jpg", cap:"台灣 2", tag:"生活"},
+    {src:"../gallery/5-03.jpg", cap:"台灣 3", tag:"生活"},
+    {src:"../gallery/5-04.jpg", cap:"台灣 4", tag:"生活"},
+    {src:"../gallery/5-05.jpg", cap:"台灣 5", tag:"生活"}
+  ].map(p => ({tag:"", loc:DEFAULT_LOC, yr:"", ...p}));
+  const FALLBACK = PHOTOS_SRC;
 
   const ACCENTS = ['#A6C9B6', '#F6B6B7', '#3E828E', '#FFEBED'];
   const pad = n => String(n).padStart(2,'0');
 
-  function parseName(filename){
-    const base = filename.replace(/\.[^.]+$/, '');
-    let parts = base.split('__').map(s=>s.trim());
-    if(parts.length>1 && /^\d+$/.test(parts[0])) parts.shift();     // drop order prefix
-    const hero = parts.some(p=>p.toLowerCase()==='hero');
-    parts = parts.filter(p=>p.toLowerCase()!=='hero');
-    let [cap, tag, loc, yr] = parts;
-    cap = (cap||base).replace(/^\d+[-_ ]+/,'').replace(/[-_]+/g,' ').trim() || base;
-    return {cap, tag:tag||'', loc:loc||DEFAULT_LOC, yr:yr||'', hero};
-  }
-
   async function loadPhotos(){
-    const KEY='ybGalleryList', TTL=10*60*1000;
-    try{
-      const c = JSON.parse(sessionStorage.getItem(KEY));
-      if(c && Date.now()-c.t < TTL && Array.isArray(c.list) && c.list.length) return c.list;
-    }catch(e){}
-    const res = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+FOLDER);
-    if(!res.ok) throw new Error('folder listing failed: '+res.status);
-    const files = await res.json();
-    const list = files
-      .filter(f=> f.type==='file' && /\.(jpe?g|png|webp|gif|avif)$/i.test(f.name))
-      .sort((a,b)=> a.name.localeCompare(b.name, undefined, {numeric:true}))
-      .map(f=> ({src:f.download_url, ...parseName(f.name)}));
-    if(!list.length) throw new Error('folder is empty');
-    try{ sessionStorage.setItem(KEY, JSON.stringify({t:Date.now(), list})); }catch(e){}
-    return list;
+    return PHOTOS_SRC;
   }
 
   /* ---------- render ---------- */

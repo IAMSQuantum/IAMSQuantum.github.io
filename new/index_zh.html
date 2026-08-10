@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IAMS 鐿原子實驗室 — 超冷鐿原子量子科技</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="../fonts/fonts.css" rel="stylesheet">
 <style>
 :root{
   --lavender: #FFEBED;   /* Lavender Blush */
@@ -79,6 +77,21 @@ h1{
 }
 .config{margin-top:12px; font-family:'Space Mono',monospace; font-size:13.5px; color:var(--ink-dim); letter-spacing:.14em}
 .config sup{font-size:8.5px}
+/* ---------- MissAlign banner ---------- */
+.missalign{display:inline-flex; align-items:center; gap:12px; margin-top:18px;
+  padding:10px 20px; border-radius:999px; text-decoration:none;
+  font-family:'Space Mono','Noto Sans TC',monospace; font-size:12.5px; letter-spacing:.06em;
+  color:var(--ink); border:1px solid rgba(166,201,182,.55);
+  background:rgba(6,8,18,.6); backdrop-filter:blur(6px);
+  animation:maPulse 2.8s ease-in-out infinite;}
+.missalign:hover{border-color:rgba(166,201,182,.95); box-shadow:0 0 30px rgba(166,201,182,.5)}
+.missalign .ma-tag{font-size:9px; font-weight:700; letter-spacing:.24em; padding:2px 9px; border-radius:999px;
+  color:#04140B; background:linear-gradient(90deg,#F6B6B7,#A6C9B6)}
+.missalign b{color:var(--mint); font-weight:700}
+.missalign .ma-go{color:var(--mint); white-space:nowrap}
+@keyframes maPulse{0%,100%{box-shadow:0 0 12px rgba(166,201,182,.2)} 50%{box-shadow:0 0 28px rgba(166,201,182,.45)}}
+@media (prefers-reduced-motion:reduce){ .missalign{animation:none} }
+@media (max-width:640px){ .missalign{font-size:11px; gap:8px; padding:9px 14px} }
 .lang{
   position:absolute; top:26px; right:clamp(20px,5vw,60px);
   pointer-events:auto;
@@ -382,6 +395,7 @@ footer nav a:hover{color:var(--frozen)}
     <div class="eyebrow">中央研究院 · 原子與分子科學研究所</div>
     <h1>IAMS Yb Lab<span class="runway" aria-hidden="true"><span class="runner" id="runner"><span class="beam" style="--rb:0deg"></span><span class="beam" style="--rb:60deg"></span><span class="beam" style="--rb:120deg"></span><span class="tail"></span><span class="halo"></span><span class="core"></span><span class="mot-label">漂亮!你抓住原子了!</span></span></span></h1>
     <div class="config">以超冷鐿原子打造量子科技</div>
+    <a class="missalign" href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener"><span class="ma-tag">NEW</span><span>試用 <b>MissAlign</b> — 全新光學設計工具</span><span class="ma-go">開啟 ↗</span></a>
   </div>
   <a class="lang" href="index.html">English</a>
 
@@ -398,6 +412,7 @@ footer nav a:hover{color:var(--frozen)}
   <a class="e" data-i="5" style="--c:#3E828E" href="projects_zh.html"><span class="node"></span><span class="chip"><span class="t1">研究專案</span></span></a>
   <a class="e" data-i="6" style="--c:#A6C9B6" href="gallery_zh.html"><span class="node"></span><span class="chip"><span class="t1">實驗室相簿</span></span></a>
   <a class="e" data-i="7" style="--c:#F6B6B7" href="join_zh.html"><span class="node"></span><span class="chip"><span class="t1">加入我們</span></span></a>
+<a class="e" data-i="8" style="--c:#FFEBED" href="https://github.com/orgs/iams-yb-lab"><span class="node"></span><span class="chip"><span class="t1">GitHub</span></span></a>
 
 </div>
 <div id="warp" aria-hidden="true"></div>
@@ -438,6 +453,8 @@ footer nav a:hover{color:var(--frozen)}
   <a href="gallery_zh.html" style="--c:#A6C9B6"><span class="dot"></span>實驗室相簿</a>
   <a href="join_zh.html" style="--c:#F6B6B7"><span class="dot"></span>加入我們</a>
   <a href="contact_zh.html" style="--c:#FFEBED"><span class="dot"></span>聯絡我們</a>
+  <a href="https://github.com/orgs/iams-yb-lab" style="--c:#FFEBED"><span class="dot"></span>GitHub</a>
+  <a href="news_zh.html" style="--c:#A6C9B6"><span class="dot"></span>最新消息</a>
 </nav>
 
 <footer>
@@ -450,9 +467,12 @@ footer nav a:hover{color:var(--frozen)}
     <a href="gallery_zh.html">實驗室相簿</a>
     <a href="join_zh.html">加入我們</a>
     <a href="contact_zh.html">聯絡我們</a>
+    <a href="news_zh.html">最新消息</a>
+    <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
     <a href="https://www.iams.sinica.edu.tw/" target="_blank" rel="noopener">原分所 ↗</a>
   </nav>
   <span>中央研究院原子與分子科學研究所 · 台北市羅斯福路四段一號 · +886-2-2366-8236</span>
+  <span>網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao‑Rong Yang &#8599;</a></span>
 </footer>
 
 <script>
