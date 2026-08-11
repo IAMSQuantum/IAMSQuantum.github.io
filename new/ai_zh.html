@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 專案 — IAMS 鐿原子實驗室</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --gold:#F0D77B; --cyan2:#5FB0BD;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column; overflow-x:hidden}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(95,176,189,.10), transparent 60%)}
+a{color:inherit}
+.topbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px clamp(20px,5vw,60px); background:rgba(4,5,12,.78);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--cyan2); box-shadow:0 0 16px rgba(95,176,189,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:60px 0 80px}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--cyan2); box-shadow:0 0 14px rgba(95,176,189,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--blush); box-shadow:0 0 14px rgba(246,182,183,.7)}
+.phead h1{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.14em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(95,176,189,.3)}
+.phead h1 b{font-weight:300; color:var(--cyan2); text-shadow:0 0 24px rgba(95,176,189,.6)}
+.phead .sub{margin-top:10px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-dim)}
+/* ---------- group sections ---------- */
+.gsec{margin-top:34px}
+.gsec .gh{display:flex; align-items:center; gap:14px; margin-bottom:16px}
+.gsec .gh h2{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:200; font-size:clamp(17px,3vw,24px);
+  letter-spacing:.18em; color:#FFF6F4}
+.gsec .gh .gn{font-size:10px; letter-spacing:.26em; color:var(--gc,var(--mint)); white-space:nowrap;
+  text-transform:uppercase}
+.gsec .gh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent), transparent)}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px}
+.aicard{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; background:var(--panel-bg); backdrop-filter:blur(8px); text-decoration:none;
+  transition:border-color .25s, box-shadow .25s, transform .25s}
+.aicard:hover{border-color:color-mix(in srgb, var(--gc,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 26px color-mix(in srgb, var(--gc,#A6C9B6) 18%, transparent); transform:translateY(-4px)}
+.aicard .shot{position:relative; aspect-ratio:16/9; overflow:hidden;
+  background:
+    radial-gradient(220px 130px at 20% 15%, color-mix(in srgb, var(--gc,#A6C9B6) 22%, transparent), transparent 70%),
+    linear-gradient(150deg, rgba(39,21,61,.85), rgba(44,79,99,.85))}
+.aicard .shot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.aicard .shot .ph{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:100; font-size:44px; color:color-mix(in srgb, var(--gc,#A6C9B6) 80%, #fff);
+  text-shadow:0 0 26px color-mix(in srgb, var(--gc,#A6C9B6) 60%, transparent); letter-spacing:.08em}
+.aicard .tagrow{position:absolute; top:10px; left:10px; display:flex; gap:6px}
+.aicard .tag{font-size:8.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  padding:3px 9px; border-radius:999px; color:#04140B;
+  background:linear-gradient(90deg, var(--gc,#A6C9B6), color-mix(in srgb, var(--gc,#A6C9B6) 60%, #fff))}
+.aicard .body{flex:1; display:flex; flex-direction:column; padding:16px 18px 14px}
+.aicard h3{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300; font-size:17px;
+  letter-spacing:.04em; color:#FFF6F4}
+.aicard .by{margin-top:3px; font-size:9.5px; letter-spacing:.1em; color:var(--ink-dim)}
+.aicard p{margin-top:9px; font-size:12px; line-height:1.85; color:#C2B6D4; flex:1}
+.aicard .links{margin-top:12px; display:flex; gap:14px; flex-wrap:wrap}
+.aicard .links span{font-size:10.5px; letter-spacing:.12em; color:var(--mint);
+  border-bottom:1px dotted rgba(166,201,182,.4)}
+.aicard .links span:hover{color:var(--frozen)}
+.aicard.soon{border-style:dashed; opacity:.65; cursor:default}
+.aicard.soon:hover{transform:none; box-shadow:none; border-color:var(--line)}
+.aicard.soon .shot .ph{font-size:20px; letter-spacing:.3em}
+footer{position:relative; z-index:1; border-top:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
+footer nav a:hover{color:var(--frozen)}
+@media (max-width:760px){ .topbar{flex-direction:column; align-items:flex-start; gap:10px} .nav{justify-content:flex-start} }
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<header class="topbar">
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="ai.html" class="zh">English</a>
+      <a href="../classic/index_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em;">舊版網站</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="ai_zh.html" class="now" aria-current="page">AI</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+  <section class="phead">
+    <h1>實驗室裡的 <b>AI</b></h1>
+    <div class="sub">工具 · 模擬器 · 自動化 — 與 AI 共同打造</div>
+    <p style="margin-top:16px; font-size:12.5px; line-height:2; color:#C2B6D4; max-width:70ch; margin-left:auto; margin-right:auto">
+      我們把 AI 同時當作<b style="color:var(--frozen); font-weight:400">研究工具</b>與
+      <b style="color:var(--frozen); font-weight:400">開發方式</b>——在實驗室裡打造模擬器、設計軟體、電子設備與實驗自動化,
+      往往幾天就能完成過去需要數月的工作。本頁將隨著專案發布持續更新,敬請期待。</p>
+  </section>
+
+  <div id="groups"></div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="ai_zh.html">AI</a>
+    <a href="news_zh.html">最新消息</a>
+  </nav>
+  <span>中央研究院原子與分子科學研究所 · 台北市羅斯福路四段一號 · +886-2-2366-8236</span>
+  <span>新版網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao&#8209;Rong Yang &#8599;</a> 與 Claude</span>
+</footer>
+
+<script>
+/* ================= AI 專案清單 — 只要改這裡 =================
+   分組依下方 GROUPS 順序顯示;還沒有專案的分組會顯示「敬請期待」虛線卡片。
+   專案欄位:
+     name   專案名稱(必填)
+     group  分組 key(必填)
+     desc   一至兩句說明
+     by     作者(可省略)
+     img    截圖/GIF 路徑,例如 "../images/ai/missalign.gif"(可省略;
+            沒有圖時卡片顯示專案字首)
+     link   線上頁面 / demo 網址(可省略)
+     repo   GitHub 儲存庫網址(可省略)
+     tag    小徽章文字,例如 "Live"、"Beta"、"WIP"(可省略)
+   新增專案 = 加一行 {...},圖片放進 images/ai/。
+============================================================ */
+const GROUPS = [
+  {key:"optical",     title:"光學設計",   c:"#A6C9B6"},
+  {key:"atomic",      title:"原子物理",   c:"#F6B6B7"},
+  {key:"electronics", title:"電子設備",   c:"#F0D77B"},
+  {key:"aitools",     title:"AI 工具",    c:"#5FB0BD"},
+  {key:"automation",  title:"實驗自動化", c:"#FFEBED"},
+];
+const AI_PROJECTS = [
+  { name:"MissAlign", group:"optical", tag:"Live", by:"楊皓蓉 Hao-Rong Yang",
+    desc:"光學設計用的頻移與失準模擬器——直接在瀏覽器裡探索鏡片與透鏡的失準如何在光學系統中傳播。",
+    link:"https://s20000125-alt.github.io/frequency_shift_simulator/",
+    repo:"", img:"" },
+];
+/* ================= 清單結束 ================= */
+
+const esc = s => String(s??"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const SOON_TEXT = "敬請期待";
+const box = document.getElementById('groups');
+for(const g of GROUPS){
+  const sec = document.createElement('section');
+  sec.className = 'gsec';
+  sec.style.setProperty('--gc', g.c);
+  const items = AI_PROJECTS.filter(p => p.group === g.key);
+  let cards = '';
+  for(const p of items){
+    const href = p.link || p.repo || '#';
+    const shot = p.img
+      ? '<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.remove()">'
+      : '<span class="ph">'+esc(p.name[0])+'</span>';
+    let links = '';
+    if(p.link) links += '<span>開啟 &#8599;</span>';
+    if(p.repo) links += '<span>GitHub &#8599;</span>';
+    cards += '<a class="aicard" href="'+esc(href)+'" target="_blank" rel="noopener">'
+      + '<div class="shot">'+shot+(p.tag?'<div class="tagrow"><span class="tag">'+esc(p.tag)+'</span></div>':'')+'</div>'
+      + '<div class="body"><h3>'+esc(p.name)+'</h3>'
+      + (p.by?'<div class="by">'+esc(p.by)+'</div>':'')
+      + '<p>'+esc(p.desc)+'</p>'
+      + (links?'<div class="links">'+links+'</div>':'')
+      + '</div></a>';
+  }
+  if(!items.length){
+    cards = '<div class="aicard soon"><div class="shot"><span class="ph">'+SOON_TEXT+'</span></div>'
+      + '<div class="body"><h3>'+esc(g.title)+'</h3>'
+      + '<p>此領域的專案正在路上,敬請期待。</p></div></div>';
+  }
+  sec.innerHTML = '<div class="gh"><span class="gn">'+esc(g.key)+'</span><h2>'+esc(g.title)+'</h2></div>'
+    + '<div class="cards">'+cards+'</div>';
+  box.appendChild(sec);
+}
+</script>
+</body>
+</html>

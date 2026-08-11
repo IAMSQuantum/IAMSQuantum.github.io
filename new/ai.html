@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Projects — IAMS Yb Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --gold:#F0D77B; --cyan2:#5FB0BD;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column; overflow-x:hidden}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(95,176,189,.10), transparent 60%)}
+a{color:inherit}
+.topbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px clamp(20px,5vw,60px); background:rgba(4,5,12,.78);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--cyan2); box-shadow:0 0 16px rgba(95,176,189,.4)}
+.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:60px 0 80px}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--cyan2); box-shadow:0 0 14px rgba(95,176,189,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--blush); box-shadow:0 0 14px rgba(246,182,183,.7)}
+.phead h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.14em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(95,176,189,.3)}
+.phead h1 b{font-weight:300; color:var(--cyan2); text-shadow:0 0 24px rgba(95,176,189,.6)}
+.phead .sub{margin-top:10px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-dim)}
+/* ---------- group sections ---------- */
+.gsec{margin-top:34px}
+.gsec .gh{display:flex; align-items:center; gap:14px; margin-bottom:16px}
+.gsec .gh h2{font-family:'Exo 2',sans-serif; font-weight:200; font-size:clamp(17px,3vw,24px);
+  letter-spacing:.18em; text-transform:uppercase; color:#FFF6F4}
+.gsec .gh .gn{font-size:10px; letter-spacing:.26em; color:var(--gc,var(--mint)); white-space:nowrap;
+  text-transform:uppercase}
+.gsec .gh::after{content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent), transparent)}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px}
+.aicard{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; background:var(--panel-bg); backdrop-filter:blur(8px); text-decoration:none;
+  transition:border-color .25s, box-shadow .25s, transform .25s}
+.aicard:hover{border-color:color-mix(in srgb, var(--gc,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 26px color-mix(in srgb, var(--gc,#A6C9B6) 18%, transparent); transform:translateY(-4px)}
+.aicard .shot{position:relative; aspect-ratio:16/9; overflow:hidden;
+  background:
+    radial-gradient(220px 130px at 20% 15%, color-mix(in srgb, var(--gc,#A6C9B6) 22%, transparent), transparent 70%),
+    linear-gradient(150deg, rgba(39,21,61,.85), rgba(44,79,99,.85))}
+.aicard .shot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.aicard .shot .ph{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Exo 2',sans-serif; font-weight:100; font-size:44px; color:color-mix(in srgb, var(--gc,#A6C9B6) 80%, #fff);
+  text-shadow:0 0 26px color-mix(in srgb, var(--gc,#A6C9B6) 60%, transparent); letter-spacing:.08em}
+.aicard .tagrow{position:absolute; top:10px; left:10px; display:flex; gap:6px}
+.aicard .tag{font-size:8.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  padding:3px 9px; border-radius:999px; color:#04140B;
+  background:linear-gradient(90deg, var(--gc,#A6C9B6), color-mix(in srgb, var(--gc,#A6C9B6) 60%, #fff))}
+.aicard .body{flex:1; display:flex; flex-direction:column; padding:16px 18px 14px}
+.aicard h3{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300; font-size:17px;
+  letter-spacing:.04em; color:#FFF6F4}
+.aicard .by{margin-top:3px; font-size:9.5px; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase}
+.aicard p{margin-top:9px; font-size:12px; line-height:1.75; color:#C2B6D4; flex:1}
+.aicard .links{margin-top:12px; display:flex; gap:14px; flex-wrap:wrap}
+.aicard .links span{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--mint);
+  border-bottom:1px dotted rgba(166,201,182,.4)}
+.aicard .links span:hover{color:var(--frozen)}
+.aicard.soon{border-style:dashed; opacity:.65; cursor:default}
+.aicard.soon:hover{transform:none; box-shadow:none; border-color:var(--line)}
+.aicard.soon .shot .ph{font-size:20px; letter-spacing:.3em; text-transform:uppercase}
+footer{position:relative; z-index:1; border-top:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim)}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
+footer nav a:hover{color:var(--frozen)}
+@media (max-width:760px){ .topbar{flex-direction:column; align-items:flex-start; gap:10px} .nav{justify-content:flex-start} }
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<header class="topbar">
+  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="ai_zh.html" class="zh">繁體中文</a>
+      <a href="../classic/index.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="ai.html" class="now" aria-current="page">AI</a>
+      <a href="news.html">News</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+  <section class="phead">
+    <h1>AI in the <b>Lab</b></h1>
+    <div class="sub">Tools · Simulators · Automation — built with and for AI</div>
+    <p style="margin-top:16px; font-size:12.5px; line-height:1.9; color:#C2B6D4; max-width:70ch; margin-left:auto; margin-right:auto">
+      We use AI both as a <b style="color:var(--frozen); font-weight:400">research tool</b> and as a
+      <b style="color:var(--frozen); font-weight:400">way of building things</b> — simulators, design software,
+      electronics, and lab automation created in our lab, often in days instead of months.
+      This page collects those projects as they are released. More coming soon.</p>
+  </section>
+
+  <div id="groups"></div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="publications-papers.html">Publications</a>
+    <a href="projects.html">Projects</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="join.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="ai.html">AI</a>
+    <a href="news.html">News</a>
+  </nav>
+  <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
+  <span>New website by <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">Hao&#8209;Rong Yang &#8599;</a> and Claude</span>
+</footer>
+
+<script>
+/* ================= AI PROJECTS — edit here =================
+   Groups render in the order below; groups with no projects yet
+   show a dashed "coming soon" card so the structure is visible.
+   Project fields:
+     name   project name (required)
+     group  one of the GROUPS keys below (required)
+     desc   one/two sentence description
+     by     author credit (optional)
+     img    screenshot/gif path, e.g. "../images/ai/missalign.gif" (optional;
+            without it the card shows the project's initial as a placeholder)
+     link   live page / demo URL (optional)
+     repo   GitHub repository URL (optional)
+     tag    small badge text, e.g. "Live", "Beta", "WIP" (optional)
+   Add a project = one {...} line + drop the image in images/ai/.
+============================================================ */
+const GROUPS = [
+  {key:"optical",     title:"Optical Design",  c:"#A6C9B6"},
+  {key:"atomic",      title:"Atomic Physics",  c:"#F6B6B7"},
+  {key:"electronics", title:"Electronics",     c:"#F0D77B"},
+  {key:"aitools",     title:"AI Tools",        c:"#5FB0BD"},
+  {key:"automation",  title:"Lab Automation",  c:"#FFEBED"},
+];
+const AI_PROJECTS = [
+  { name:"MissAlign", group:"optical", tag:"Live", by:"Hao-Rong Yang",
+    desc:"A frequency-shift and misalignment simulator for optical design — explore how mirror and lens misalignments propagate through an optical system, right in the browser.",
+    link:"https://s20000125-alt.github.io/frequency_shift_simulator/",
+    repo:"", img:"" },
+];
+/* ================= end of list ================= */
+
+const esc = s => String(s??"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const SOON_TEXT = "Coming soon";
+const box = document.getElementById('groups');
+for(const g of GROUPS){
+  const sec = document.createElement('section');
+  sec.className = 'gsec';
+  sec.style.setProperty('--gc', g.c);
+  const items = AI_PROJECTS.filter(p => p.group === g.key);
+  let cards = '';
+  for(const p of items){
+    const href = p.link || p.repo || '#';
+    const shot = p.img
+      ? '<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.remove()">'
+      : '<span class="ph">'+esc(p.name[0])+'</span>';
+    let links = '';
+    if(p.link) links += '<span>Launch &#8599;</span>';
+    if(p.repo) links += '<span>GitHub &#8599;</span>';
+    cards += '<a class="aicard" href="'+esc(href)+'" target="_blank" rel="noopener">'
+      + '<div class="shot">'+shot+(p.tag?'<div class="tagrow"><span class="tag">'+esc(p.tag)+'</span></div>':'')+'</div>'
+      + '<div class="body"><h3>'+esc(p.name)+'</h3>'
+      + (p.by?'<div class="by">by '+esc(p.by)+'</div>':'')
+      + '<p>'+esc(p.desc)+'</p>'
+      + (links?'<div class="links">'+links+'</div>':'')
+      + '</div></a>';
+  }
+  if(!items.length){
+    cards = '<div class="aicard soon"><div class="shot"><span class="ph">'+SOON_TEXT+'</span></div>'
+      + '<div class="body"><h3>'+esc(g.title)+'</h3>'
+      + '<p>Projects in this area are on the way — watch this space.</p></div></div>';
+  }
+  sec.innerHTML = '<div class="gh"><span class="gn">'+esc(g.key)+'</span><h2>'+esc(g.title)+'</h2></div>'
+    + '<div class="cards">'+cards+'</div>';
+  box.appendChild(sec);
+}
+</script>
+</body>
+</html>
