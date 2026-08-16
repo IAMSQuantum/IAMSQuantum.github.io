@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Projects — IAMS Yb Lab</title>
+<title>短期專題 — IAMS Yb Lab</title>
 <link rel="icon" href="../favicon.ico" sizes="32x32">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link href="../fonts/fonts.css" rel="stylesheet">
@@ -39,24 +39,25 @@ a{color:inherit}
   text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
 .nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
 .nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
-  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s}
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s;
+  font-family:'Noto Sans TC','Space Mono',sans-serif}
 .nav a:hover{color:var(--frozen)}
 .nav a.now{color:#04050C; background:var(--violet); box-shadow:0 0 16px rgba(201,184,242,.4)}
-.nav a.zh{font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; border:1px solid var(--line)}
+.nav a.zh{letter-spacing:.05em; border:1px solid var(--line)}
 main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:60px 0 80px}
 .phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
   background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
 .phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
   background:var(--violet); box-shadow:0 0 14px rgba(201,184,242,.7)}
 .phead::before{left:24px} .phead::after{right:24px; background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
-.phead h1{font-family:'Exo 2',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+.phead h1{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
   letter-spacing:.14em; color:#FFF6F4;
   text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(201,184,242,.3)}
 .phead h1 b{font-weight:300; color:var(--violet); text-shadow:0 0 24px rgba(201,184,242,.6)}
 .phead .sub{margin-top:10px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-dim)}
-.phead p{margin-top:16px; font-size:12.5px; line-height:1.9; color:#C2B6D4; max-width:70ch;
-  margin-left:auto; margin-right:auto}
-.phead p b{color:var(--frozen); font-weight:400}
+.phead p{margin-top:16px; font-size:13px; line-height:2; color:#C2B6D4; max-width:62ch;
+  margin-left:auto; margin-right:auto; font-family:'Noto Sans TC',sans-serif}
+.phead p b{color:var(--frozen); font-weight:500}
 /* ---------- project cards ---------- */
 .cards{margin-top:34px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(420px,100%),1fr)); gap:20px}
 .pcard{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:16px;
@@ -69,20 +70,24 @@ main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto
     radial-gradient(260px 150px at 22% 18%, color-mix(in srgb, var(--gc,#A6C9B6) 18%, transparent), transparent 70%),
     linear-gradient(150deg, rgba(21,18,44,.9), rgba(10,24,38,.9))}
 .pcard .art svg{position:absolute; inset:0; width:100%; height:100%}
-.pcard .badge{position:absolute; top:10px; left:10px; font-size:8.5px; font-weight:700;
-  letter-spacing:.2em; text-transform:uppercase; padding:4px 10px; border-radius:999px; color:#04140B;
+.pcard .badge{position:absolute; top:10px; left:10px; font-size:10px; font-weight:700;
+  letter-spacing:.14em; padding:4px 10px; border-radius:999px; color:#04140B;
+  font-family:'Noto Sans TC',sans-serif;
   background:linear-gradient(90deg, var(--gc,#A6C9B6), color-mix(in srgb, var(--gc,#A6C9B6) 60%, #fff));
   box-shadow:0 0 14px color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent)}
 .pcard .body{flex:1; display:flex; flex-direction:column; padding:18px 20px 16px}
-.pcard h3{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300; font-size:18px;
-  letter-spacing:.04em; color:#FFF6F4}
-.pcard h3 .zht{font-size:12px; color:var(--ink-dim); margin-left:8px; letter-spacing:.1em}
-.pcard p{margin-top:10px; font-size:12px; line-height:1.8; color:#C2B6D4; flex:1}
+.pcard h3{font-family:'Noto Sans TC','Exo 2',sans-serif; font-weight:400; font-size:18px;
+  letter-spacing:.06em; color:#FFF6F4}
+.pcard h3 .ent{font-size:11px; color:var(--ink-dim); margin-left:8px; letter-spacing:.08em;
+  font-family:'Exo 2',sans-serif; font-weight:300}
+.pcard p{margin-top:10px; font-size:12.5px; line-height:1.95; color:#C2B6D4; flex:1;
+  font-family:'Noto Sans TC',sans-serif}
 .pcard .who{margin-top:14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
-.pcard .who .lbl{font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-dim)}
-.pcard .who a{font-size:10.5px; letter-spacing:.1em; text-decoration:none; padding:4px 12px;
+.pcard .who .lbl{font-size:10px; letter-spacing:.24em; color:var(--ink-dim); font-family:'Noto Sans TC',sans-serif}
+.pcard .who a{font-size:11px; letter-spacing:.08em; text-decoration:none; padding:4px 12px;
   border-radius:999px; border:1px solid color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent);
-  color:color-mix(in srgb, var(--gc,#A6C9B6) 85%, #fff); transition:background .2s, color .2s}
+  color:color-mix(in srgb, var(--gc,#A6C9B6) 85%, #fff); transition:background .2s, color .2s;
+  font-family:'Noto Sans TC',sans-serif}
 .pcard .who a:hover{background:var(--gc,#A6C9B6); color:#04140B}
 /* ---------- closing CTA ---------- */
 .cta{margin-top:38px; text-align:center}
@@ -90,13 +95,14 @@ main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto
   border:1px solid rgba(201,184,242,.5); background:rgba(201,184,242,.06);
   box-shadow:0 0 22px rgba(201,184,242,.15); transition:box-shadow .25s, background .25s}
 .cta a:hover{background:rgba(201,184,242,.14); box-shadow:0 0 34px rgba(201,184,242,.3)}
-.cta .c1{display:block; font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:300; font-size:17px;
-  letter-spacing:.08em; color:#FFF6F4}
-.cta .c2{display:block; margin-top:6px; font-size:10.5px; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--ink-dim)}
+.cta .c1{display:block; font-family:'Noto Sans TC',sans-serif; font-weight:400; font-size:17px;
+  letter-spacing:.1em; color:#FFF6F4}
+.cta .c2{display:block; margin-top:6px; font-size:11px; letter-spacing:.18em;
+  color:var(--ink-dim); font-family:'Noto Sans TC',sans-serif}
 footer{position:relative; z-index:1; border-top:1px solid var(--line);
   padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
-  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim)}
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim);
+  font-family:'Noto Sans TC','Space Mono',sans-serif}
 footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
 footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
 footer nav a:hover{color:var(--frozen)}
@@ -107,147 +113,129 @@ footer nav a:hover{color:var(--frozen)}
 <div class="aurora"></div>
 
 <header class="topbar">
-  <a class="logo" href="index.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
   <nav class="nav" aria-label="Main">
-    <a href="research.html">Research</a>
-    <a href="team.html">Team</a>
-    <a href="publications-papers.html">Publications</a>
-    <a href="projects.html">Projects</a>
-    <a href="student-projects.html" class="now" aria-current="page">Student Projects</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="join.html">Join Us</a>
-    <a href="contact.html">Contact</a>
-    <a href="student-projects_zh.html" class="zh">繁體中文</a>
-      <a href="../classic/index.html" title="Switch to the classic version of this website" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22);">Classic site</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">主要專案</a>
+    <a href="short-projects_zh.html" class="now" aria-current="page">短期專題</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="short-projects.html" class="zh">English</a>
+      <a href="../classic/index_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); letter-spacing:.05em;">舊版網站</a>
       <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
-      <a href="ai.html">AI</a>
-      <a href="news.html">News</a>
-    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+      <a href="ai_zh.html">AI</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://iams-yb-lab.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
 <main>
   <section class="phead">
-    <h1>Student <b>Projects</b></h1>
-    <div class="sub">Hands-on · Short &amp; medium projects · Open now</div>
-    <p>In addition to our main research lines we offer short projects from time to time that
-      students can take on to <b>gain experience working in an experimental physics laboratory</b>.
-      Interested in one of the projects below? Get in touch with its contact person, or just
-      come and visit the lab.</p>
+    <h1>短期<b>專題</b></h1>
+    <div class="sub">Short Projects · 學生實作訓練 · 開放中</div>
+    <p>除了主要的研究方向之外,我們也不定期提供短期專題,讓學生能夠
+      <b>親身體驗在實驗物理實驗室工作的經驗</b>。
+      對下面的專題有興趣嗎?歡迎直接與各專題的聯絡人聯繫,或親自來實驗室找我們!</p>
   </section>
 
-  <!-- ============ PROJECT CARDS — add a project = copy one <article> ============ -->
+  <!-- ============ 專題卡片 — 新增專題:複製一個 <article> ============ -->
   <div class="cards">
 
-    <!-- Injection-locked lasers -->
+    <!-- 注入鎖定雷射 -->
     <article class="pcard" style="--gc:#C9B8F2">
       <div class="art">
-        <svg viewBox="0 0 480 270" role="img" aria-label="Cartoon of a master laser injection-locking a slave diode">
+        <svg viewBox="0 0 480 270" role="img" aria-label="注入鎖定示意圖：主雷射經光隔離器將種子光注入從雷射，從雷射輸出放大的乾淨複製光">
           <!-- stars -->
           <g fill="#FFEBED" opacity=".5">
-            <circle cx="40" cy="34" r="1.4"/><circle cx="430" cy="26" r="1.1"/><circle cx="380" cy="220" r="1.3"/>
-            <circle cx="70" cy="230" r="1"/><circle cx="330" cy="52" r="1"/>
+            <circle cx="40" cy="34" r="1.4"/><circle cx="430" cy="26" r="1.1"/><circle cx="380" cy="234" r="1.3"/>
+            <circle cx="70" cy="226" r="1"/><circle cx="330" cy="40" r="1"/>
           </g>
-          <!-- master laser -->
+          <!-- master laser: emits a weak but spectrally clean seed -->
           <g stroke="#C9B8F2" stroke-width="2" fill="rgba(201,184,242,.08)">
-            <rect x="38" y="102" width="92" height="52" rx="8"/>
+            <rect x="36" y="82" width="92" height="56" rx="8"/>
           </g>
-          <circle cx="62" cy="128" r="7" fill="none" stroke="#C9B8F2" stroke-width="2"/>
-          <circle cx="62" cy="128" r="2.4" fill="#C9B8F2"/>
-          <!-- seed beam -->
-          <line x1="130" y1="128" x2="216" y2="128" stroke="#C9B8F2" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round"/>
-          <path d="M208 121 L222 128 L208 135 Z" fill="#C9B8F2"/>
-          <!-- optical isolator -->
-          <g stroke="#A6C9B6" stroke-width="2" fill="rgba(166,201,182,.1)">
-            <polygon points="238,110 268,128 238,146"/>
-          </g>
-          <!-- slave diode -->
+          <path d="M52 110 q5 -9 10 0 t10 0 t10 0 t10 0 t10 0 t10 0" fill="none" stroke="#C9B8F2" stroke-width="1.8"/>
+          <text x="82" y="160" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" letter-spacing="3" fill="#A395B8">MASTER</text>
+          <!-- weak seed beam -->
+          <path d="M128 110 q6 -6 12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#C9B8F2" stroke-width="1.8"/>
+          <!-- optical isolator: one-way only -->
+          <polygon points="196,96 226,110 196,124" stroke="#A6C9B6" stroke-width="2" fill="rgba(166,201,182,.1)"/>
+          <path d="M226 110 q6 -6 12 0 t12 0 t12 0" fill="none" stroke="#C9B8F2" stroke-width="1.8"/>
+          <!-- slave diode: noisy multimode on its own... -->
           <g stroke="#7FB8F0" stroke-width="2" fill="rgba(127,184,240,.08)">
-            <rect x="292" y="98" width="104" height="60" rx="8"/>
+            <rect x="262" y="78" width="112" height="64" rx="8"/>
           </g>
-          <circle cx="318" cy="128" r="8" fill="none" stroke="#7FB8F0" stroke-width="2"/>
-          <circle cx="318" cy="128" r="2.6" fill="#7FB8F0"/>
-          <!-- amplified output -->
-          <path d="M396 128 H452" stroke="#7FB8F0" stroke-width="7" stroke-linecap="round" opacity=".9"/>
-          <path d="M396 128 H452" stroke="#FFF6F4" stroke-width="2.4" stroke-linecap="round"/>
-          <!-- wavelength chips -->
-          <g font-family="'Space Mono',monospace" font-size="15" letter-spacing="1">
-            <rect x="52" y="176" width="88" height="28" rx="14" fill="rgba(201,184,242,.12)" stroke="#C9B8F2"/>
-            <text x="96" y="195" text-anchor="middle" fill="#DCD2F7">399 nm</text>
-            <rect x="300" y="176" width="88" height="28" rx="14" fill="rgba(127,184,240,.12)" stroke="#7FB8F0"/>
-            <text x="344" y="195" text-anchor="middle" fill="#BFDCF9">460 nm</text>
-          </g>
-          <!-- lock symbol between the chips -->
-          <g stroke="#F0D77B" stroke-width="2" fill="none">
-            <rect x="207" y="184" width="26" height="19" rx="4" fill="rgba(240,215,123,.12)"/>
-            <path d="M212 184 v-5 a8 8 0 0 1 16 0 v5"/>
-          </g>
+          <path d="M276 112 l8 -14 l6 20 l7 -12 l6 8 l7 -18 l8 22 l6 -10 l7 6 l8 -14 l7 10 l8 -6" fill="none" stroke="#A395B8" stroke-width="1.4" opacity=".6"/>
+          <text x="318" y="160" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" letter-spacing="3" fill="#A395B8">SLAVE</text>
+          <!-- ...but locked to the seed it emits an amplified clean copy (same colour = same wavelength) -->
+          <path d="M374 110 q6 -13 12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#C9B8F2" stroke-width="6" opacity=".28" stroke-linecap="round"/>
+          <path d="M374 110 q6 -13 12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#C9B8F2" stroke-width="2.6"/>
+          <path d="M438 101 L456 110 L438 119 Z" fill="#C9B8F2"/>
+          <!-- example wavelengths we build these at (independent lasers, one per colour) -->
+          <rect x="142" y="196" width="196" height="30" rx="15" fill="rgba(255,235,237,.04)" stroke="rgba(255,235,237,.22)"/>
+          <text x="240" y="216" text-anchor="middle" font-family="'Space Mono',monospace" font-size="13" letter-spacing="1" fill="#C2B6D4">&#955; = <tspan fill="#DCD2F7">399 nm</tspan> &#183; <tspan fill="#BFDCF9">460 nm</tspan></text>
         </svg>
-        <span class="badge">Short Project</span>
+        <span class="badge">短期專題</span>
       </div>
       <div class="body">
-        <h3>Injection-Locked Lasers <span class="zht">注入鎖定雷射</span></h3>
-        <p>Constructing injection-locked lasers at 399&nbsp;nm and 460&nbsp;nm — seed a
-          low-cost laser diode with light from a master laser so it faithfully amplifies
-          the master's colour. Hands-on optics, electronics and laser physics.</p>
-        <div class="who"><span class="lbl">Contact</span>
-          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">Chun-Chia</a>
-          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">Shayne</a>
+        <h3>注入鎖定雷射 <span class="ent">Injection-Locked Lasers</span></h3>
+        <p>建造 399&nbsp;nm 與 460&nbsp;nm 的注入鎖定雷射——將主雷射的光「種子」注入
+          低成本的雷射二極體,使它忠實地放大主雷射的頻率。
+          動手實作光學、電子學與雷射物理。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">陳俊嘉</a>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
         </div>
       </div>
     </article>
 
-    <!-- Fabry-Perot optical spectrum analyser -->
+    <!-- Fabry-Perot 光學頻譜分析儀 -->
     <article class="pcard" style="--gc:#A6C9B6">
       <div class="art">
-        <svg viewBox="0 0 480 270" role="img" aria-label="Cartoon of a Fabry-Perot cavity with transmission peaks">
+        <svg viewBox="0 0 480 270" role="img" aria-label="Fabry-Pérot 共振腔與穿透頻譜示意圖">
           <g fill="#FFEBED" opacity=".5">
             <circle cx="52" cy="30" r="1.2"/><circle cx="420" cy="40" r="1.4"/><circle cx="390" cy="228" r="1"/>
             <circle cx="96" cy="216" r="1.1"/>
           </g>
-          <!-- input beam -->
           <line x1="26" y1="96" x2="120" y2="96" stroke="#F6B6B7" stroke-width="2.4" stroke-linecap="round"/>
           <path d="M112 89 L126 96 L112 103 Z" fill="#F6B6B7"/>
-          <!-- cavity mirrors -->
           <path d="M138 46 q-16 50 0 100" fill="none" stroke="#A6C9B6" stroke-width="5" stroke-linecap="round"/>
           <path d="M342 46 q16 50 0 100" fill="none" stroke="#A6C9B6" stroke-width="5" stroke-linecap="round"/>
-          <!-- standing wave -->
           <path d="M146 96 q12 -34 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
                 fill="none" stroke="#F6B6B7" stroke-width="2.2"/>
           <path d="M146 96 q12 34 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
                 fill="none" stroke="#F6B6B7" stroke-width="2.2" opacity=".55"/>
-          <!-- transmitted beam -->
           <line x1="352" y1="96" x2="444" y2="96" stroke="#F6B6B7" stroke-width="2.4" stroke-dasharray="8 7" stroke-linecap="round"/>
-          <!-- transmission spectrum -->
           <g stroke="#A6C9B6" stroke-width="1.6" fill="none" opacity=".9">
             <path d="M92 226 H392"/>
-            <path d="M92 226 q22 -3 30 -3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q14 2 22 2"
+            <path d="M92 224 h47.5 q2 0 3.5 -48 q1.5 48 3.5 48 h58 q2 0 3.5 -48 q1.5 48 3.5 48 h58 q2 0 3.5 -48 q1.5 48 3.5 48 h58 q2 0 3.5 -48 q1.5 48 3.5 48 h50.5"
                   stroke="#FFF6F4" stroke-width="2"/>
           </g>
           <text x="240" y="252" text-anchor="middle" font-family="'Space Mono',monospace"
                 font-size="13" fill="#A6C9B6" letter-spacing="2">&#957; &#8594;</text>
         </svg>
-        <span class="badge">Short Project</span>
+        <span class="badge">短期專題</span>
       </div>
       <div class="body">
-        <h3>Fabry-P&eacute;rot Optical Spectrum Analyser <span class="zht">光學頻譜分析儀</span></h3>
-        <p>Constructing a Fabry-P&eacute;rot optical spectrum analyser for monitoring our
-          injection-locked lasers — build the cavity, scan it, and watch the laser's
-          spectrum resolve into sharp resonance peaks in real time.</p>
-        <div class="who"><span class="lbl">Contact</span>
-          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">Chun-Chia</a>
+        <h3>Fabry-P&eacute;rot 光學頻譜分析儀 <span class="ent">Optical Spectrum Analyser</span></h3>
+        <p>建造 Fabry-P&eacute;rot 光學頻譜分析儀,用於監測注入鎖定雷射——
+          親手打造共振腔、掃描腔長,即時觀察雷射頻譜化為一根根銳利的共振峰。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">陳俊嘉</a>
         </div>
       </div>
     </article>
 
-    <!-- AI assisted experimental control -->
+    <!-- AI 輔助實驗控制 -->
     <article class="pcard" style="--gc:#5FB0BD">
       <div class="art">
-        <svg viewBox="0 0 480 270" role="img" aria-label="Cartoon of an AI assistant talking to a control rack">
+        <svg viewBox="0 0 480 270" role="img" aria-label="AI 助理與實驗控制系統對話的示意圖">
           <g fill="#FFEBED" opacity=".5">
             <circle cx="46" cy="40" r="1.3"/><circle cx="428" cy="30" r="1.2"/><circle cx="404" cy="224" r="1.1"/>
           </g>
-          <!-- robot head -->
           <g stroke="#5FB0BD" stroke-width="2.4" fill="rgba(95,176,189,.08)">
             <rect x="64" y="86" width="96" height="82" rx="16"/>
           </g>
@@ -256,14 +244,12 @@ footer nav a:hover{color:var(--frozen)}
           <circle cx="94" cy="118" r="7" fill="#5FB0BD"/>
           <circle cx="130" cy="118" r="7" fill="#5FB0BD"/>
           <path d="M92 146 q20 14 40 0" fill="none" stroke="#5FB0BD" stroke-width="2.4" stroke-linecap="round"/>
-          <!-- speech bubble with live trace -->
           <g stroke="#F0D77B" stroke-width="2" fill="rgba(240,215,123,.07)">
             <rect x="188" y="44" width="150" height="64" rx="12"/>
             <path d="M204 108 l-10 16 l24 -16" fill="rgba(240,215,123,.07)"/>
           </g>
           <path d="M202 76 h18 l8 -18 l10 34 l8 -22 l6 10 h26 l8 -14 l10 22 l8 -8 h18"
                 fill="none" stroke="#F0D77B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-          <!-- control rack -->
           <g stroke="#A6C9B6" stroke-width="2" fill="rgba(166,201,182,.06)">
             <rect x="332" y="70" width="112" height="128" rx="8"/>
             <line x1="332" y1="112" x2="444" y2="112"/>
@@ -277,41 +263,36 @@ footer nav a:hover{color:var(--frozen)}
           </g>
           <rect x="402" y="86" width="30" height="10" rx="3" fill="none" stroke="#A6C9B6" stroke-width="1.6"/>
           <rect x="344" y="168" width="88" height="16" rx="4" fill="none" stroke="#A6C9B6" stroke-width="1.6"/>
-          <!-- data link between robot and rack -->
           <path d="M164 176 q84 44 164 24" fill="none" stroke="#5FB0BD" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/>
         </svg>
-        <span class="badge" style="--gc:#F0D77B">Medium Project</span>
+        <span class="badge" style="--gc:#F0D77B">中期專題</span>
       </div>
       <div class="body">
-        <h3>AI-Assisted Experimental Control <span class="zht">AI 輔助實驗控制</span></h3>
-        <p>Enhance our control system by augmenting it with an AI assistant that can talk
-          to the operator and provide real-time data analysis and support — a chance to
-          combine modern AI tools with a working cold-atom experiment.</p>
-        <div class="who"><span class="lbl">Contact</span>
-          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">Shayne</a>
+        <h3>AI 輔助實驗控制 <span class="ent">AI-Assisted Experimental Control</span></h3>
+        <p>為我們的實驗控制系統加入 AI 助理——能與操作者對話,並提供即時的數據分析與支援。
+          結合最新的 AI 工具與運轉中的冷原子實驗。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
         </div>
       </div>
     </article>
 
-    <!-- Optical cavity for atoms -->
+    <!-- 原子光學共振腔 -->
     <article class="pcard" style="--gc:#F6B6B7">
       <div class="art">
-        <svg viewBox="0 0 480 270" role="img" aria-label="Cartoon of an atom inside a high-finesse optical cavity">
+        <svg viewBox="0 0 480 270" role="img" aria-label="高精細度光學共振腔中的原子示意圖">
           <g fill="#FFEBED" opacity=".5">
             <circle cx="60" cy="36" r="1.3"/><circle cx="424" cy="44" r="1.2"/><circle cx="96" cy="224" r="1"/>
             <circle cx="396" cy="216" r="1.3"/>
           </g>
-          <!-- cavity mirrors -->
           <path d="M96 62 q-26 73 0 146" fill="none" stroke="#7FB8F0" stroke-width="6" stroke-linecap="round"/>
           <path d="M384 62 q26 73 0 146" fill="none" stroke="#7FB8F0" stroke-width="6" stroke-linecap="round"/>
           <path d="M84 70 q-24 65 0 130" fill="none" stroke="#7FB8F0" stroke-width="2" stroke-linecap="round" opacity=".5"/>
           <path d="M396 70 q24 65 0 130" fill="none" stroke="#7FB8F0" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-          <!-- photon mode -->
           <path d="M108 135 q16 -44 32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0"
                 fill="none" stroke="#F0D77B" stroke-width="2.2"/>
           <path d="M108 135 q16 44 32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0"
                 fill="none" stroke="#F0D77B" stroke-width="2.2" opacity=".5"/>
-          <!-- atom at the waist -->
           <g fill="none" stroke="#F6B6B7" stroke-width="2">
             <ellipse cx="240" cy="135" rx="40" ry="15" transform="rotate(24 240 135)"/>
             <ellipse cx="240" cy="135" rx="40" ry="15" transform="rotate(-24 240 135)"/>
@@ -320,48 +301,46 @@ footer nav a:hover{color:var(--frozen)}
           <circle cx="240" cy="135" r="14" fill="none" stroke="#FFF6F4" stroke-width="1" opacity=".5"/>
           <circle cx="276" cy="120" r="3.4" fill="#F6B6B7"/>
           <circle cx="204" cy="150" r="3.4" fill="#F6B6B7"/>
-          <!-- escaping photon -->
           <path d="M392 108 q18 -8 34 -22" fill="none" stroke="#F0D77B" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>
           <circle cx="432" cy="82" r="3.6" fill="#F0D77B"/>
         </svg>
-        <span class="badge" style="--gc:#F0D77B">Medium Project</span>
+        <span class="badge" style="--gc:#F0D77B">中期專題</span>
       </div>
       <div class="body">
-        <h3>Optical Cavity for Atoms <span class="zht">原子光學共振腔</span></h3>
-        <p>Developing high-finesse optical cavities for interacting atoms with photons —
-          the building block behind cavity QED, superradiant lasers and atom&ndash;photon
-          quantum interfaces.</p>
-        <div class="who"><span class="lbl">Contact</span>
-          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">Shayne</a>
+        <h3>原子光學共振腔 <span class="ent">Optical Cavity for Atoms</span></h3>
+        <p>開發高精細度(high finesse)光學共振腔,用於實現原子與光子的交互作用——
+          這是腔量子電動力學、超輻射雷射與原子—光子量子介面的核心元件。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
         </div>
       </div>
     </article>
 
   </div>
-  <!-- ============ end of project cards ============ -->
+  <!-- ============ 專題卡片結束 ============ -->
 
   <div class="cta">
-    <a href="contact.html">
-      <span class="c1">Nothing here that fits? New projects appear all the time.</span>
-      <span class="c2">All backgrounds &amp; career stages · Contact us or come visit &#8599;</span>
+    <a href="contact_zh.html">
+      <span class="c1">沒有適合你的專題?新的專題隨時都在出現。</span>
+      <span class="c2">歡迎各種背景與階段的學生 · 聯絡我們或直接來訪 &#8599;</span>
     </a>
   </div>
 </main>
 
 <footer>
   <nav aria-label="Text menu">
-    <a href="index.html">Home</a>
-    <a href="research.html">Research</a>
-    <a href="team.html">Team</a>
-    <a href="publications-papers.html">Publications</a>
-    <a href="projects.html">Projects</a>
-    <a href="student-projects.html">Student Projects</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="join.html">Join Us</a>
-    <a href="contact.html">Contact</a>
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">主要專案</a>
+    <a href="short-projects_zh.html">短期專題</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
   </nav>
-  <span>IAMS, Academia Sinica · No. 1, Roosevelt Rd. Sec. 4, Taipei · +886-2-2366-8236</span>
-  <span>New website by <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">Hao&#8209;Rong Yang &#8599;</a> and Claude</span>
+  <span>中央研究院原子與分子科學研究所 · 台北市羅斯福路四段一號 · +886-2-2366-8236</span>
+  <span>新版網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao&#8209;Rong Yang &#8599;</a> 與 Claude</span>
 </footer>
 </body>
 </html>

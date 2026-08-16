@@ -205,8 +205,8 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="research_zh.html">研究方向</a>
     <a href="team_zh.html">團隊成員</a>
     <a href="publications-papers_zh.html" class="now" aria-current="page">論文著作</a>
-    <a href="projects_zh.html">研究專案</a>
-    <a href="student-projects_zh.html">學生專題</a>
+    <a href="projects_zh.html">主要專案</a>
+    <a href="short-projects_zh.html">短期專題</a>
     <a href="gallery_zh.html">實驗室相簿</a>
     <a href="join_zh.html">加入我們</a>
     <a href="contact_zh.html">聯絡我們</a>
@@ -215,12 +215,12 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
       <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
       <a href="ai_zh.html">AI</a>
       <a href="news_zh.html">最新消息</a>
-    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+    <a href="https://iams-yb-lab.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
   </nav>
 </header>
 
 <main>
-<a class="ma-banner" href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="display:block; width:min(940px,92vw); margin:0 auto 28px; padding:18px 22px; text-align:center; border-radius:14px; text-decoration:none; position:relative; z-index:5; background:linear-gradient(135deg,#27153D,#2C4F63); border:1px solid rgba(166,201,182,.4); box-shadow:0 0 26px rgba(62,130,142,.35);">
+<a class="ma-banner" href="https://iams-yb-lab.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="display:block; width:min(940px,92vw); margin:0 auto 28px; padding:18px 22px; text-align:center; border-radius:14px; text-decoration:none; position:relative; z-index:5; background:linear-gradient(135deg,#27153D,#2C4F63); border:1px solid rgba(166,201,182,.4); box-shadow:0 0 26px rgba(62,130,142,.35);">
   <span style="display:block; font-size:10px; letter-spacing:.3em; color:#A6C9B6; font-family:'Noto Sans TC',sans-serif;">全新工具</span>
   <span style="display:block; font-family:'Noto Sans TC','Exo 2',sans-serif; font-weight:400; font-size:clamp(17px,2.6vw,22px); color:#FFF6F4; margin:7px 0 12px; letter-spacing:.06em;">試用 <b style="color:#A6C9B6; font-weight:500;">MissAlign</b> — 全新光學設計工具</span>
   <span style="display:inline-block; background:#FFEBED; color:#1A0F2E; font-weight:700; font-size:13px; letter-spacing:.08em; padding:8px 20px; border-radius:999px; font-family:'Noto Sans TC',sans-serif;">開啟 MissAlign &#8594;</span>
@@ -310,7 +310,7 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
     <a href="research_zh.html">研究方向</a>
     <a href="team_zh.html">團隊成員</a>
     <a href="publications-papers_zh.html">論文著作</a>
-    <a href="projects_zh.html">研究專案</a>
+    <a href="projects_zh.html">主要專案</a>
     <a href="gallery_zh.html">實驗室相簿</a>
     <a href="join_zh.html">加入我們</a>
     <a href="contact_zh.html">聯絡我們</a>
@@ -322,8 +322,17 @@ body.leave{animation:pageOut .55s cubic-bezier(.7,0,.5,1) both}
 
 <script>
 // ---------- Publications: edit this array to add/update papers ----------
-// Order here = order on the shelf. Covers are generated from journal colour + title + year.
+// Order here = order on the shelf (newest first). Covers are generated from journal colour + title + year.
+// NOTE: the shelf auto-sorts featured:true to the front, so the Nature paper stays the gold headline
+// no matter where new papers are inserted. Only ONE entry should carry featured:true.
 window.YB_PAPERS = [
+ {
+  "title": "Efficient and High-Fidelity Entanglement in Cavity QED without High Cooperativity",
+  "journal": "Phys. Rev. Lett.",
+  "authors": "S. Goswami, C.-H. Chien, N. Sinclair, B. Grinkemeyer, S. Bennetts, Y.-C. Chen, H. H. Jen",
+  "year": 2026,
+  "doi": "https://doi.org/10.1103/n9wg-k6q9"
+ },
  {
   "title": "Narrow-line mediated Sisyphus cooling in the \u00b3P\u2082 metastable state of strontium",
   "journal": "Phys. Rev. Research",
@@ -385,14 +394,25 @@ window.YB_JOURNAL_COLORS = {
   '_default':                ['#3E828E','#1D3E44'],
 };
 
+// Full list, newest first. A "sec" field starts a new section heading AT that entry
+// ("Recent" / "Before starting our Taiwan lab" / "Older papers") - when inserting at the
+// top, move "sec":"Recent" onto the new first entry. Fields: y year, a authors, t title,
+// v venue+volume, u url, p local PDF (optional), x arXiv (optional), feat gold chip (Nature only).
 window.YB_ALL = [
+{
+"y": 2026,
+"a": "S. Goswami, C.-H. Chien, N. Sinclair, B. Grinkemeyer, S. Bennetts, Y.-C. Chen, H. H. Jen",
+"t": "Efficient and High-Fidelity Entanglement in Cavity QED without High Cooperativity",
+"v": "Phys. Rev. Lett. 136, 050802",
+"u": "https://doi.org/10.1103/n9wg-k6q9",
+"sec": "Recent"
+},
 {
 "y": 2025,
 "a": "C.-C. Chen*, R. Takeuchi*, S. Okaba, H. Katori",
 "t": "Narrow-line mediated Sisyphus cooling in the \u00b3P\u2082 metastable state of strontium",
 "v": "Phys. Rev. Research 7, L022076",
-"u": "https://doi.org/10.1103/PhysRevResearch.7.L022076",
-"sec": "Recent"
+"u": "https://doi.org/10.1103/PhysRevResearch.7.L022076"
 },
 {
 "y": 2025,

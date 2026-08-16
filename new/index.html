@@ -80,21 +80,21 @@ h1{
 .config{margin-top:12px; font-family:'Space Mono',monospace; font-size:13.5px; color:var(--ink-dim); letter-spacing:.14em}
 .config sup{font-size:8.5px}
 /* ---------- MissAlign banner ---------- */
-.missalign{display:inline-flex; align-items:center; gap:14px; margin-top:18px;
-  padding:13px 26px; border-radius:14px; text-decoration:none;
-  font-family:'Space Mono','Noto Sans TC',monospace; font-size:14px; letter-spacing:.06em;
+.missalign{display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px; border-radius:999px; text-decoration:none;
+  font-family:'Space Mono','Noto Sans TC',monospace; font-size:11px; letter-spacing:.06em;
   color:#FFF6F4; border:1px solid rgba(166,201,182,.55);
   background:linear-gradient(135deg,rgba(39,21,61,.92),rgba(44,79,99,.92));
-  box-shadow:0 0 26px rgba(62,130,142,.4);
+  box-shadow:0 0 18px rgba(62,130,142,.35);
   animation:maPulse 2.8s ease-in-out infinite;}
 .missalign:hover{border-color:rgba(166,201,182,.95); box-shadow:0 0 30px rgba(166,201,182,.5)}
-.missalign .ma-tag{font-size:9px; font-weight:700; letter-spacing:.24em; padding:2px 9px; border-radius:999px;
+.missalign .ma-tag{font-size:8px; font-weight:700; letter-spacing:.2em; padding:2px 7px; border-radius:999px;
   color:#04140B; background:linear-gradient(90deg,#F6B6B7,#A6C9B6)}
 .missalign b{color:var(--mint); font-weight:700}
 .missalign .ma-go{color:var(--mint); white-space:nowrap}
 @keyframes maPulse{0%,100%{box-shadow:0 0 12px rgba(166,201,182,.2)} 50%{box-shadow:0 0 28px rgba(166,201,182,.45)}}
 @media (prefers-reduced-motion:reduce){ .missalign{animation:none} }
-@media (max-width:640px){ .missalign{font-size:11px; gap:8px; padding:9px 14px} }
+@media (max-width:640px){ .missalign{display:none} }
 .lang{
   position:absolute; top:26px; right:clamp(20px,5vw,60px);
   pointer-events:auto;
@@ -390,11 +390,14 @@ footer nav a:hover{color:var(--frozen)}
 </style>
 </head>
 <body>
-<div style="position:fixed; top:22px; left:clamp(16px,4vw,48px); z-index:60; display:flex; gap:8px; flex-wrap:wrap;">
+<div style="position:fixed; top:22px; left:clamp(16px,4vw,48px); z-index:60; display:flex; flex-direction:column; gap:8px; align-items:flex-start;">
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
   <a href="../classic/index.html" title="Switch to the classic version of this website" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); color:#A6C9B6; border:1px solid rgba(166,201,182,.45);">Classic site</a>
   <a href="news.html" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); color:#A395B8; border:1px solid rgba(255,235,237,.25);">News</a>
   <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); color:#A395B8; border:1px solid rgba(255,235,237,.25);">GitHub &#8599;</a>
   <a href="ai.html" style="font-family:'Space Mono','Noto Sans TC',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-radius:999px; padding:8px 14px; background:rgba(6,8,18,.65); backdrop-filter:blur(8px); color:#5FB0BD; border:1px solid rgba(95,176,189,.35);">AI</a>
+  </div>
+  <a class="missalign" href="https://iams-yb-lab.github.io/frequency_shift_simulator/" target="_blank" rel="noopener"><span class="ma-tag">NEW</span><span>Try <b>MissAlign</b> &mdash; optical design tool</span><span class="ma-go">&#8599;</span></a>
 </div>
 <div class="aurora"></div>
 
@@ -403,7 +406,6 @@ footer nav a:hover{color:var(--frozen)}
     <div class="eyebrow">Institute of Atomic and Molecular Sciences · Academia Sinica</div>
     <h1>IAMS Yb Lab<span class="runway" aria-hidden="true"><span class="runner" id="runner"><span class="beam" style="--rb:0deg"></span><span class="beam" style="--rb:60deg"></span><span class="beam" style="--rb:120deg"></span><span class="tail"></span><span class="halo"></span><span class="core"></span><span class="mot-label">Nice catch — you trapped the atom!</span></span></span></h1>
     <div class="config">quantum technology with ultracold ytterbium</div>
-    <a class="missalign" href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener"><span class="ma-tag">NEW</span><span>Try <b>MissAlign</b> &mdash; a new tool for optical design</span><span class="ma-go">Launch &#8599;</span></a>
   </div>
   <a class="lang" href="index_zh.html">繁體中文</a>
 
@@ -417,12 +419,12 @@ footer nav a:hover{color:var(--frozen)}
   <a class="e" data-i="2" style="--c:#A6C9B6"     href="research.html"><span class="node"></span><span class="chip"><span class="t1">Research</span></span></a>
   <a class="e" data-i="3" style="--c:#F6B6B7"     href="team.html"><span class="node"></span><span class="chip"><span class="t1">Team</span></span></a>
   <a class="e" data-i="4" style="--c:#FFEBED"     href="publications-papers.html"><span class="node"></span><span class="chip"><span class="t1">Publications</span></span></a>
-  <a class="e" data-i="5" style="--c:#3E828E" href="projects.html"><span class="node"></span><span class="chip"><span class="t1">Projects</span></span></a>
+  <a class="e" data-i="5" style="--c:#3E828E" href="projects.html"><span class="node"></span><span class="chip"><span class="t1">Main Projects</span></span></a>
   <a class="e" data-i="6" style="--c:#A6C9B6" href="gallery.html"><span class="node"></span><span class="chip"><span class="t1">Gallery</span></span></a>
   <a class="e" data-i="7" style="--c:#F6B6B7" href="join.html"><span class="node"></span><span class="chip"><span class="t1">Join Us</span></span></a>
   <a class="e" data-i="8" style="--c:#5FB0BD" href="ai.html"><span class="node"></span><span class="chip"><span class="t1">AI</span></span></a>
   <!-- N-shell guest — student projects ride an inner shell (O shell + valence pair are full) -->
-  <a class="e nsh" data-i="11" style="--c:#C9B8F2" href="student-projects.html"><span class="node"></span><span class="chip"><span class="t1">Student Projects</span></span></a>
+  <a class="e nsh" data-i="11" style="--c:#C9B8F2" href="short-projects.html"><span class="node"></span><span class="chip"><span class="t1">Short Projects</span></span></a>
   <!-- 6s² valence pair — the atom's links to the outside world -->
   <a class="e out" data-i="9" style="--c:#F0D77B" href="news.html"><span class="node"></span><span class="chip"><span class="t1">News</span></span></a>
   <a class="e out" data-i="10" style="--c:#FFEBED" href="https://github.com/orgs/iams-yb-lab"><span class="node"></span><span class="chip"><span class="t1">GitHub</span></span></a>
@@ -462,7 +464,7 @@ footer nav a:hover{color:var(--frozen)}
   <a href="research.html" style="--c:#A6C9B6"><span class="dot"></span>Research</a>
   <a href="team.html" style="--c:#F6B6B7"><span class="dot"></span>Team</a>
   <a href="publications-papers.html" style="--c:#FFEBED"><span class="dot"></span>Publications</a>
-  <a href="projects.html" style="--c:#3E828E"><span class="dot"></span>Projects</a>
+  <a href="projects.html" style="--c:#3E828E"><span class="dot"></span>Main Projects</a>
   <a href="gallery.html" style="--c:#A6C9B6"><span class="dot"></span>Gallery</a>
   <a href="join.html" style="--c:#F6B6B7"><span class="dot"></span>Join Us</a>
   <a href="contact.html" style="--c:#FFEBED"><span class="dot"></span>Contact</a>
@@ -477,8 +479,8 @@ footer nav a:hover{color:var(--frozen)}
     <a href="research.html">Research</a>
     <a href="team.html">Team</a>
     <a href="publications-papers.html">Publications</a>
-    <a href="projects.html">Projects</a>
-    <a href="student-projects.html">Student Projects</a>
+    <a href="projects.html">Main Projects</a>
+    <a href="short-projects.html">Short Projects</a>
     <a href="gallery.html">Gallery</a>
     <a href="join.html">Join Us</a>
     <a href="contact.html">Contact</a>
@@ -552,7 +554,7 @@ footer nav a:hover{color:var(--frozen)}
   shells.forEach(sh => sh.b = basis(sh.tilt[0]*D2R, sh.tilt[1]*D2R));
   const MENU = 4;                      // the O shell carries the menu
   const VAL  = 5;                      // the 6s² valence pair carries News + GitHub
-  const NSH  = 3;                      // the N shell hosts the student-projects chip
+  const NSH  = 3;                      // the N shell hosts the short-projects chip
 
   // ---------- glow sprites ----------
   function sprite(rgb){
@@ -654,7 +656,7 @@ footer nav a:hover{color:var(--frozen)}
       for(let k=0;k<sh.n;k++){
         if(si===MENU && k<links.length) continue;    // slots occupied by menu chips
         if(si===VAL  && k<vlinks.length) continue;   // slots occupied by valence chips
-        if(si===NSH  && k<nlinks.length) continue;   // slot occupied by the student-projects chip
+        if(si===NSH  && k<nlinks.length) continue;   // slot occupied by the short-projects chip
         const th=sh.th + k*Math.PI*2/sh.n;
         const p=project(V(orbitPoint(sh,th),G));
         const depth=((p.z/sh.r)+1)/2;
