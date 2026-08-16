@@ -421,6 +421,8 @@ footer nav a:hover{color:var(--frozen)}
   <a class="e" data-i="6" style="--c:#A6C9B6" href="gallery_zh.html"><span class="node"></span><span class="chip"><span class="t1">實驗室相簿</span></span></a>
   <a class="e" data-i="7" style="--c:#F6B6B7" href="join_zh.html"><span class="node"></span><span class="chip"><span class="t1">加入我們</span></span></a>
   <a class="e" data-i="8" style="--c:#5FB0BD" href="ai_zh.html"><span class="node"></span><span class="chip"><span class="t1">AI</span></span></a>
+  <!-- N-shell guest — student projects ride an inner shell (O shell + valence pair are full) -->
+  <a class="e nsh" data-i="11" style="--c:#C9B8F2" href="student-projects_zh.html"><span class="node"></span><span class="chip"><span class="t1">學生專題</span></span></a>
   <!-- 6s² valence pair — the atom's links to the outside world -->
   <a class="e out" data-i="9" style="--c:#F0D77B" href="news_zh.html"><span class="node"></span><span class="chip"><span class="t1">最新消息</span></span></a>
   <a class="e out" data-i="10" style="--c:#FFEBED" href="https://github.com/orgs/iams-yb-lab"><span class="node"></span><span class="chip"><span class="t1">GitHub</span></span></a>
@@ -476,6 +478,7 @@ footer nav a:hover{color:var(--frozen)}
     <a href="team_zh.html">團隊成員</a>
     <a href="publications-papers_zh.html">論文著作</a>
     <a href="projects_zh.html">研究專案</a>
+    <a href="student-projects_zh.html">學生專題</a>
     <a href="gallery_zh.html">實驗室相簿</a>
     <a href="join_zh.html">加入我們</a>
     <a href="contact_zh.html">聯絡我們</a>
@@ -493,8 +496,9 @@ footer nav a:hover{color:var(--frozen)}
   const canvas = document.getElementById('atom');
   const stage  = document.getElementById('stage');
   const ctx    = canvas.getContext('2d');
-  const links  = [...document.querySelectorAll('.e:not(.out)')];   // O-shell site menu
-  const vlinks = [...document.querySelectorAll('.e.out')];          // 6s² valence pair: News + GitHub
+  const links  = [...document.querySelectorAll('.e:not(.out):not(.nsh)')];   // O-shell site menu
+  const vlinks = [...document.querySelectorAll('.e.out')];
+  const nlinks = [...document.querySelectorAll('.e.nsh')];          // N-shell guest: student projects          // 6s² valence pair: News + GitHub
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = matchMedia('(max-width: 640px)').matches;
 
@@ -548,6 +552,7 @@ footer nav a:hover{color:var(--frozen)}
   shells.forEach(sh => sh.b = basis(sh.tilt[0]*D2R, sh.tilt[1]*D2R));
   const MENU = 4;                      // the O shell carries the menu
   const VAL  = 5;                      // the 6s² valence pair carries News + GitHub
+  const NSH  = 3;                      // the N shell hosts the student-projects chip
 
   // ---------- glow sprites ----------
   function sprite(rgb){
@@ -649,6 +654,7 @@ footer nav a:hover{color:var(--frozen)}
       for(let k=0;k<sh.n;k++){
         if(si===MENU && k<links.length) continue;    // slots occupied by menu chips
         if(si===VAL  && k<vlinks.length) continue;   // slots occupied by valence chips
+        if(si===NSH  && k<nlinks.length) continue;   // slot occupied by the student-projects chip
         const th=sh.th + k*Math.PI*2/sh.n;
         const p=project(V(orbitPoint(sh,th),G));
         const depth=((p.z/sh.r)+1)/2;
@@ -678,6 +684,7 @@ footer nav a:hover{color:var(--frozen)}
     // chip electrons: O shell = site menu, 6s² valence pair = News + GitHub
     placeChips(shells[MENU], links);
     placeChips(shells[VAL],  vlinks);
+    placeChips(shells[NSH],  nlinks);
 
     if(!reduced) requestAnimationFrame(draw);
   }
@@ -710,7 +717,7 @@ footer nav a:hover{color:var(--frozen)}
 
   // ---------- click an electron -> zoom into it, then travel ----------
   const warp = document.getElementById('warp');
-  [...links, ...vlinks].forEach(a => a.addEventListener('click', ev => {
+  [...links, ...vlinks, ...nlinks].forEach(a => a.addEventListener('click', ev => {
     if(ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button!==0) return;  // let new-tab clicks through
     ev.preventDefault();
     const href = a.href;

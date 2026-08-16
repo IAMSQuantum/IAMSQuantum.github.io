@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>學生專題 — IAMS Yb Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="../fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --frozen:#FFEBED; --blush:#F6B6B7; --mint:#A6C9B6; --teal:#3E828E; --gold:#F0D77B; --cyan2:#5FB0BD;
+  --violet:#C9B8F2; --blue:#7FB8F0;
+  --bg:#04050C; --ink:#F7EEF2; --ink-dim:#A395B8;
+  --line:rgba(255,235,237,.16); --panel-bg:rgba(6,8,18,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink);
+  font-family:'Space Mono','Noto Sans TC',monospace; min-height:100vh;
+  display:flex; flex-direction:column; overflow-x:hidden}
+.aurora{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(10,10,26,.9), transparent 60%),
+    radial-gradient(1000px 700px at 85% 10%, rgba(24,32,64,.45), transparent 60%),
+    radial-gradient(800px 900px at 50% 100%, rgba(201,184,242,.08), transparent 60%)}
+a{color:inherit}
+.topbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px clamp(20px,5vw,60px); background:rgba(4,5,12,.78);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+.logo .mark{position:relative; width:26px; height:26px; flex:none}
+.logo .mark::before,.logo .mark::after{content:""; position:absolute; inset:0;
+  border:1px solid rgba(255,235,237,.7); border-radius:50%; transform:rotate(60deg) scaleY(.42)}
+.logo .mark::after{transform:rotate(-60deg) scaleY(.42); border-color:rgba(166,201,182,.8)}
+.logo .mark i{position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  transform:translate(-50%,-50%); background:var(--frozen); box-shadow:0 0 8px rgba(255,235,237,.9)}
+.logo .word{font-family:'Exo 2',sans-serif; font-weight:200; font-size:15px; letter-spacing:.34em;
+  text-transform:uppercase; color:#FFF6F4; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.nav a{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+  text-decoration:none; padding:7px 11px; border-radius:999px; transition:color .2s, background .2s;
+  font-family:'Noto Sans TC','Space Mono',sans-serif}
+.nav a:hover{color:var(--frozen)}
+.nav a.now{color:#04050C; background:var(--violet); box-shadow:0 0 16px rgba(201,184,242,.4)}
+.nav a.zh{letter-spacing:.05em; border:1px solid var(--line)}
+main{position:relative; z-index:2; flex:1; width:min(1040px,94vw); margin:0 auto; padding:60px 0 80px}
+.phead{text-align:center; padding:30px 16px 34px; border:1px solid var(--line); border-radius:18px;
+  background:var(--panel-bg); backdrop-filter:blur(8px); position:relative}
+.phead::before,.phead::after{content:""; position:absolute; top:-1px; height:3px; width:120px;
+  background:var(--violet); box-shadow:0 0 14px rgba(201,184,242,.7)}
+.phead::before{left:24px} .phead::after{right:24px; background:var(--mint); box-shadow:0 0 14px rgba(166,201,182,.7)}
+.phead h1{font-family:'Exo 2','Noto Sans TC',sans-serif; font-weight:100; font-size:clamp(26px,4.6vw,46px);
+  letter-spacing:.14em; color:#FFF6F4;
+  text-shadow:0 0 18px rgba(255,235,237,.3), 0 0 60px rgba(201,184,242,.3)}
+.phead h1 b{font-weight:300; color:var(--violet); text-shadow:0 0 24px rgba(201,184,242,.6)}
+.phead .sub{margin-top:10px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-dim)}
+.phead p{margin-top:16px; font-size:13px; line-height:2; color:#C2B6D4; max-width:62ch;
+  margin-left:auto; margin-right:auto; font-family:'Noto Sans TC',sans-serif}
+.phead p b{color:var(--frozen); font-weight:500}
+/* ---------- project cards ---------- */
+.cards{margin-top:34px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(420px,100%),1fr)); gap:20px}
+.pcard{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; background:var(--panel-bg); backdrop-filter:blur(8px);
+  transition:border-color .25s, box-shadow .25s, transform .25s}
+.pcard:hover{border-color:color-mix(in srgb, var(--gc,#A6C9B6) 55%, transparent);
+  box-shadow:0 0 26px color-mix(in srgb, var(--gc,#A6C9B6) 18%, transparent); transform:translateY(-4px)}
+.pcard .art{position:relative; aspect-ratio:16/9; overflow:hidden;
+  background:
+    radial-gradient(260px 150px at 22% 18%, color-mix(in srgb, var(--gc,#A6C9B6) 18%, transparent), transparent 70%),
+    linear-gradient(150deg, rgba(21,18,44,.9), rgba(10,24,38,.9))}
+.pcard .art svg{position:absolute; inset:0; width:100%; height:100%}
+.pcard .badge{position:absolute; top:10px; left:10px; font-size:10px; font-weight:700;
+  letter-spacing:.14em; padding:4px 10px; border-radius:999px; color:#04140B;
+  font-family:'Noto Sans TC',sans-serif;
+  background:linear-gradient(90deg, var(--gc,#A6C9B6), color-mix(in srgb, var(--gc,#A6C9B6) 60%, #fff));
+  box-shadow:0 0 14px color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent)}
+.pcard .body{flex:1; display:flex; flex-direction:column; padding:18px 20px 16px}
+.pcard h3{font-family:'Noto Sans TC','Exo 2',sans-serif; font-weight:400; font-size:18px;
+  letter-spacing:.06em; color:#FFF6F4}
+.pcard h3 .ent{font-size:11px; color:var(--ink-dim); margin-left:8px; letter-spacing:.08em;
+  font-family:'Exo 2',sans-serif; font-weight:300}
+.pcard p{margin-top:10px; font-size:12.5px; line-height:1.95; color:#C2B6D4; flex:1;
+  font-family:'Noto Sans TC',sans-serif}
+.pcard .who{margin-top:14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.pcard .who .lbl{font-size:10px; letter-spacing:.24em; color:var(--ink-dim); font-family:'Noto Sans TC',sans-serif}
+.pcard .who a{font-size:11px; letter-spacing:.08em; text-decoration:none; padding:4px 12px;
+  border-radius:999px; border:1px solid color-mix(in srgb, var(--gc,#A6C9B6) 45%, transparent);
+  color:color-mix(in srgb, var(--gc,#A6C9B6) 85%, #fff); transition:background .2s, color .2s;
+  font-family:'Noto Sans TC',sans-serif}
+.pcard .who a:hover{background:var(--gc,#A6C9B6); color:#04140B}
+/* ---------- closing CTA ---------- */
+.cta{margin-top:38px; text-align:center}
+.cta a{display:inline-block; text-decoration:none; padding:16px 34px; border-radius:14px;
+  border:1px solid rgba(201,184,242,.5); background:rgba(201,184,242,.06);
+  box-shadow:0 0 22px rgba(201,184,242,.15); transition:box-shadow .25s, background .25s}
+.cta a:hover{background:rgba(201,184,242,.14); box-shadow:0 0 34px rgba(201,184,242,.3)}
+.cta .c1{display:block; font-family:'Noto Sans TC',sans-serif; font-weight:400; font-size:17px;
+  letter-spacing:.1em; color:#FFF6F4}
+.cta .c2{display:block; margin-top:6px; font-size:11px; letter-spacing:.18em;
+  color:var(--ink-dim); font-family:'Noto Sans TC',sans-serif}
+footer{position:relative; z-index:1; border-top:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 22px; display:flex; flex-wrap:wrap;
+  justify-content:space-between; gap:12px 24px; font-size:11.5px; color:var(--ink-dim);
+  font-family:'Noto Sans TC','Space Mono',sans-serif}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 22px}
+footer nav a{text-decoration:none; color:var(--ink-dim); letter-spacing:.1em; transition:color .25s}
+footer nav a:hover{color:var(--frozen)}
+@media (max-width:760px){ .topbar{flex-direction:column; align-items:flex-start; gap:10px} .nav{justify-content:flex-start} }
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<header class="topbar">
+  <a class="logo" href="index_zh.html"><span class="mark"><i></i></span><span class="word">IAMS Yb Lab</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="student-projects_zh.html" class="now" aria-current="page">學生專題</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+    <a href="student-projects.html" class="zh">English</a>
+      <a href="../classic/index_zh.html" title="切換到舊版網站" style="border:1px solid rgba(166,201,182,.55); color:#A6C9B6; box-shadow:0 0 12px rgba(166,201,182,.22); letter-spacing:.05em;">舊版網站</a>
+      <a href="https://github.com/orgs/iams-yb-lab" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="ai_zh.html">AI</a>
+      <a href="news_zh.html">最新消息</a>
+    <a href="https://s20000125-alt.github.io/frequency_shift_simulator/" target="_blank" rel="noopener" style="color:var(--mint)">&#10024; MissAlign</a>
+  </nav>
+</header>
+
+<main>
+  <section class="phead">
+    <h1>學生<b>專題</b></h1>
+    <div class="sub">Student Projects · 實作訓練 · 開放中</div>
+    <p>除了主要的研究方向之外,我們也不定期提供短期專題,讓學生能夠
+      <b>親身體驗在實驗物理實驗室工作的經驗</b>。
+      對下面的專題有興趣嗎?歡迎直接與各專題的聯絡人聯繫,或親自來實驗室找我們!</p>
+  </section>
+
+  <!-- ============ 專題卡片 — 新增專題:複製一個 <article> ============ -->
+  <div class="cards">
+
+    <!-- 注入鎖定雷射 -->
+    <article class="pcard" style="--gc:#C9B8F2">
+      <div class="art">
+        <svg viewBox="0 0 480 270" role="img" aria-label="主雷射注入鎖定從雷射的示意圖">
+          <g fill="#FFEBED" opacity=".5">
+            <circle cx="40" cy="34" r="1.4"/><circle cx="430" cy="26" r="1.1"/><circle cx="380" cy="220" r="1.3"/>
+            <circle cx="70" cy="230" r="1"/><circle cx="330" cy="52" r="1"/>
+          </g>
+          <g stroke="#C9B8F2" stroke-width="2" fill="rgba(201,184,242,.08)">
+            <rect x="38" y="102" width="92" height="52" rx="8"/>
+          </g>
+          <circle cx="62" cy="128" r="7" fill="none" stroke="#C9B8F2" stroke-width="2"/>
+          <circle cx="62" cy="128" r="2.4" fill="#C9B8F2"/>
+          <line x1="130" y1="128" x2="216" y2="128" stroke="#C9B8F2" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round"/>
+          <path d="M208 121 L222 128 L208 135 Z" fill="#C9B8F2"/>
+          <g stroke="#A6C9B6" stroke-width="2" fill="rgba(166,201,182,.1)">
+            <polygon points="238,110 268,128 238,146"/>
+          </g>
+          <g stroke="#7FB8F0" stroke-width="2" fill="rgba(127,184,240,.08)">
+            <rect x="292" y="98" width="104" height="60" rx="8"/>
+          </g>
+          <circle cx="318" cy="128" r="8" fill="none" stroke="#7FB8F0" stroke-width="2"/>
+          <circle cx="318" cy="128" r="2.6" fill="#7FB8F0"/>
+          <path d="M396 128 H452" stroke="#7FB8F0" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+          <path d="M396 128 H452" stroke="#FFF6F4" stroke-width="2.4" stroke-linecap="round"/>
+          <g font-family="'Space Mono',monospace" font-size="15" letter-spacing="1">
+            <rect x="52" y="176" width="88" height="28" rx="14" fill="rgba(201,184,242,.12)" stroke="#C9B8F2"/>
+            <text x="96" y="195" text-anchor="middle" fill="#DCD2F7">399 nm</text>
+            <rect x="300" y="176" width="88" height="28" rx="14" fill="rgba(127,184,240,.12)" stroke="#7FB8F0"/>
+            <text x="344" y="195" text-anchor="middle" fill="#BFDCF9">460 nm</text>
+          </g>
+          <g stroke="#F0D77B" stroke-width="2" fill="none">
+            <rect x="207" y="184" width="26" height="19" rx="4" fill="rgba(240,215,123,.12)"/>
+            <path d="M212 184 v-5 a8 8 0 0 1 16 0 v5"/>
+          </g>
+        </svg>
+        <span class="badge">短期專題</span>
+      </div>
+      <div class="body">
+        <h3>注入鎖定雷射 <span class="ent">Injection-Locked Lasers</span></h3>
+        <p>建造 399&nbsp;nm 與 460&nbsp;nm 的注入鎖定雷射——將主雷射的光「種子」注入
+          低成本的雷射二極體,使它忠實地放大主雷射的頻率。
+          動手實作光學、電子學與雷射物理。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">陳俊嘉</a>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Fabry-Perot 光學頻譜分析儀 -->
+    <article class="pcard" style="--gc:#A6C9B6">
+      <div class="art">
+        <svg viewBox="0 0 480 270" role="img" aria-label="Fabry-Pérot 共振腔與穿透頻譜示意圖">
+          <g fill="#FFEBED" opacity=".5">
+            <circle cx="52" cy="30" r="1.2"/><circle cx="420" cy="40" r="1.4"/><circle cx="390" cy="228" r="1"/>
+            <circle cx="96" cy="216" r="1.1"/>
+          </g>
+          <line x1="26" y1="96" x2="120" y2="96" stroke="#F6B6B7" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M112 89 L126 96 L112 103 Z" fill="#F6B6B7"/>
+          <path d="M138 46 q-16 50 0 100" fill="none" stroke="#A6C9B6" stroke-width="5" stroke-linecap="round"/>
+          <path d="M342 46 q16 50 0 100" fill="none" stroke="#A6C9B6" stroke-width="5" stroke-linecap="round"/>
+          <path d="M146 96 q12 -34 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
+                fill="none" stroke="#F6B6B7" stroke-width="2.2"/>
+          <path d="M146 96 q12 34 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
+                fill="none" stroke="#F6B6B7" stroke-width="2.2" opacity=".55"/>
+          <line x1="352" y1="96" x2="444" y2="96" stroke="#F6B6B7" stroke-width="2.4" stroke-dasharray="8 7" stroke-linecap="round"/>
+          <g stroke="#A6C9B6" stroke-width="1.6" fill="none" opacity=".9">
+            <path d="M92 226 H392"/>
+            <path d="M92 226 q22 -3 30 -3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q22 3 42 3 q6 0 9 -52 q3 52 9 52 q14 2 22 2"
+                  stroke="#FFF6F4" stroke-width="2"/>
+          </g>
+          <text x="240" y="252" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="13" fill="#A6C9B6" letter-spacing="2">&#957; &#8594;</text>
+        </svg>
+        <span class="badge">短期專題</span>
+      </div>
+      <div class="body">
+        <h3>Fabry-P&eacute;rot 光學頻譜分析儀 <span class="ent">Optical Spectrum Analyser</span></h3>
+        <p>建造 Fabry-P&eacute;rot 光學頻譜分析儀,用於監測注入鎖定雷射——
+          親手打造共振腔、掃描腔長,即時觀察雷射頻譜化為一根根銳利的共振峰。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:chunchia.chen@g.iams.sinica.edu.tw">陳俊嘉</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- AI 輔助實驗控制 -->
+    <article class="pcard" style="--gc:#5FB0BD">
+      <div class="art">
+        <svg viewBox="0 0 480 270" role="img" aria-label="AI 助理與實驗控制系統對話的示意圖">
+          <g fill="#FFEBED" opacity=".5">
+            <circle cx="46" cy="40" r="1.3"/><circle cx="428" cy="30" r="1.2"/><circle cx="404" cy="224" r="1.1"/>
+          </g>
+          <g stroke="#5FB0BD" stroke-width="2.4" fill="rgba(95,176,189,.08)">
+            <rect x="64" y="86" width="96" height="82" rx="16"/>
+          </g>
+          <line x1="112" y1="86" x2="112" y2="64" stroke="#5FB0BD" stroke-width="2.4"/>
+          <circle cx="112" cy="58" r="5" fill="#5FB0BD"/>
+          <circle cx="94" cy="118" r="7" fill="#5FB0BD"/>
+          <circle cx="130" cy="118" r="7" fill="#5FB0BD"/>
+          <path d="M92 146 q20 14 40 0" fill="none" stroke="#5FB0BD" stroke-width="2.4" stroke-linecap="round"/>
+          <g stroke="#F0D77B" stroke-width="2" fill="rgba(240,215,123,.07)">
+            <rect x="188" y="44" width="150" height="64" rx="12"/>
+            <path d="M204 108 l-10 16 l24 -16" fill="rgba(240,215,123,.07)"/>
+          </g>
+          <path d="M202 76 h18 l8 -18 l10 34 l8 -22 l6 10 h26 l8 -14 l10 22 l8 -8 h18"
+                fill="none" stroke="#F0D77B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <g stroke="#A6C9B6" stroke-width="2" fill="rgba(166,201,182,.06)">
+            <rect x="332" y="70" width="112" height="128" rx="8"/>
+            <line x1="332" y1="112" x2="444" y2="112"/>
+            <line x1="332" y1="154" x2="444" y2="154"/>
+          </g>
+          <g fill="#F6B6B7">
+            <circle cx="352" cy="91" r="4"/><circle cx="370" cy="91" r="4"/>
+          </g>
+          <g fill="#A6C9B6">
+            <circle cx="352" cy="133" r="4"/><circle cx="370" cy="133" r="4"/><circle cx="388" cy="133" r="4"/>
+          </g>
+          <rect x="402" y="86" width="30" height="10" rx="3" fill="none" stroke="#A6C9B6" stroke-width="1.6"/>
+          <rect x="344" y="168" width="88" height="16" rx="4" fill="none" stroke="#A6C9B6" stroke-width="1.6"/>
+          <path d="M164 176 q84 44 164 24" fill="none" stroke="#5FB0BD" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/>
+        </svg>
+        <span class="badge" style="--gc:#F0D77B">中期專題</span>
+      </div>
+      <div class="body">
+        <h3>AI 輔助實驗控制 <span class="ent">AI-Assisted Experimental Control</span></h3>
+        <p>為我們的實驗控制系統加入 AI 助理——能與操作者對話,並提供即時的數據分析與支援。
+          結合最新的 AI 工具與運轉中的冷原子實驗。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 原子光學共振腔 -->
+    <article class="pcard" style="--gc:#F6B6B7">
+      <div class="art">
+        <svg viewBox="0 0 480 270" role="img" aria-label="高精細度光學共振腔中的原子示意圖">
+          <g fill="#FFEBED" opacity=".5">
+            <circle cx="60" cy="36" r="1.3"/><circle cx="424" cy="44" r="1.2"/><circle cx="96" cy="224" r="1"/>
+            <circle cx="396" cy="216" r="1.3"/>
+          </g>
+          <path d="M96 62 q-26 73 0 146" fill="none" stroke="#7FB8F0" stroke-width="6" stroke-linecap="round"/>
+          <path d="M384 62 q26 73 0 146" fill="none" stroke="#7FB8F0" stroke-width="6" stroke-linecap="round"/>
+          <path d="M84 70 q-24 65 0 130" fill="none" stroke="#7FB8F0" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          <path d="M396 70 q24 65 0 130" fill="none" stroke="#7FB8F0" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          <path d="M108 135 q16 -44 32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0"
+                fill="none" stroke="#F0D77B" stroke-width="2.2"/>
+          <path d="M108 135 q16 44 32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0"
+                fill="none" stroke="#F0D77B" stroke-width="2.2" opacity=".5"/>
+          <g fill="none" stroke="#F6B6B7" stroke-width="2">
+            <ellipse cx="240" cy="135" rx="40" ry="15" transform="rotate(24 240 135)"/>
+            <ellipse cx="240" cy="135" rx="40" ry="15" transform="rotate(-24 240 135)"/>
+          </g>
+          <circle cx="240" cy="135" r="8" fill="#F6B6B7"/>
+          <circle cx="240" cy="135" r="14" fill="none" stroke="#FFF6F4" stroke-width="1" opacity=".5"/>
+          <circle cx="276" cy="120" r="3.4" fill="#F6B6B7"/>
+          <circle cx="204" cy="150" r="3.4" fill="#F6B6B7"/>
+          <path d="M392 108 q18 -8 34 -22" fill="none" stroke="#F0D77B" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>
+          <circle cx="432" cy="82" r="3.6" fill="#F0D77B"/>
+        </svg>
+        <span class="badge" style="--gc:#F0D77B">中期專題</span>
+      </div>
+      <div class="body">
+        <h3>原子光學共振腔 <span class="ent">Optical Cavity for Atoms</span></h3>
+        <p>開發高精細度(high finesse)光學共振腔,用於實現原子與光子的交互作用——
+          這是腔量子電動力學、超輻射雷射與原子—光子量子介面的核心元件。</p>
+        <div class="who"><span class="lbl">聯絡人</span>
+          <a href="mailto:s.p.bennetts@g.iams.sinica.edu.tw">肖恩 Shayne</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+  <!-- ============ 專題卡片結束 ============ -->
+
+  <div class="cta">
+    <a href="contact_zh.html">
+      <span class="c1">沒有適合你的專題?新的專題隨時都在出現。</span>
+      <span class="c2">歡迎各種背景與階段的學生 · 聯絡我們或直接來訪 &#8599;</span>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <nav aria-label="Text menu">
+    <a href="index_zh.html">首頁</a>
+    <a href="research_zh.html">研究方向</a>
+    <a href="team_zh.html">團隊成員</a>
+    <a href="publications-papers_zh.html">論文著作</a>
+    <a href="projects_zh.html">研究專案</a>
+    <a href="student-projects_zh.html">學生專題</a>
+    <a href="gallery_zh.html">實驗室相簿</a>
+    <a href="join_zh.html">加入我們</a>
+    <a href="contact_zh.html">聯絡我們</a>
+  </nav>
+  <span>中央研究院原子與分子科學研究所 · 台北市羅斯福路四段一號 · +886-2-2366-8236</span>
+  <span>新版網站設計 <a href="https://github.com/s20000125-alt" target="_blank" rel="noopener" style="color:var(--mint); text-decoration:none">楊皓蓉 Hao&#8209;Rong Yang &#8599;</a> 與 Claude</span>
+</footer>
+</body>
+</html>
