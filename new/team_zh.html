@@ -220,6 +220,7 @@ main{position:relative; z-index:1; flex:1; width:min(1120px, 100%); margin:0 aut
   font-family:'Noto Sans TC',sans-serif;
   font-size:13px; color:var(--ink-dim); margin-top:2px;
 }
+.card .zh.en{font-family:'Exo 2',sans-serif; white-space:nowrap}
 .card .aff{
   display:inline-block; margin-top:6px;
   font-size:12px; color:var(--mint); text-decoration:none;
@@ -664,7 +665,7 @@ footer nav a:hover{color:var(--frozen)}
           + '<span class="orb" aria-hidden="true"><span class="ring"></span><span class="path"><i></i></span></span>'
           + (roleInPhoto ? '' : roleHtml)
           + '<h3>'+esc(p.zh || p.name)+'</h3>';
-    if(p.zh)  html += '<div class="zh">'+esc(p.name)+'</div>';
+    if(p.zh)  html += '<div class="zh en">'+esc(p.name.replace(/\u2011/g,'-'))+'</div>';   // 英文副標: 一般連字號 + 英文版字型
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
     const dates = fmtDates(p);   // 在實驗室的期間: 所屬單位之後, 分隔線之上
     if(dates) html += '<div class="dates">'+dates+'</div>';
