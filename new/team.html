@@ -208,6 +208,9 @@ main{position:relative; z-index:1; flex:1; width:min(1120px, 100%); margin:0 aut
   border-radius:999px; padding:4px 9px;
   box-shadow:0 0 14px color-mix(in srgb, var(--rc) 55%, transparent);
 }
+/* rolePos:"bottom" 的成員: 標籤放在照片框左下角, 避免蓋到臉 */
+.card .ph{position:relative}
+.card .ph .role{top:auto; bottom:8px; left:8px}
 .card h3{
   margin-top:14px;
   font-family:'Exo 2',sans-serif; font-weight:300;
@@ -544,6 +547,7 @@ footer nav a:hover{color:var(--frozen)}
        meta    其他資訊, 可用 <b> 標粗體, <br> 換行 (可省略)
        initials 縮寫, 不填會自動用姓名首字母
        alumni  true = 放到校友區
+       rolePos "bottom" = 職稱標籤改放照片左下角 (照片上方是臉的時候用)
      新增成員 = 在清單加一段 {...},  然後把照片丟進 team/ 資料夾。
   ============================================================ */
   const PEOPLE = [
@@ -563,7 +567,7 @@ footer nav a:hover{color:var(--frozen)}
       aff:"NCU · Optics and Photonics", affUrl:"https://www.dop.ncu.edu.tw/en/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Hung‑Chi Wang", role:"Undergraduate Researcher", color:"sapphire", photo:"Hung-Chi2.jpg", initials:"HW",
       aff:"U. Toronto · Electronic Engineering", affUrl:"https://www.ece.utoronto.ca/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Yi‑Cheng Liu", zh:"劉奕成", role:"Undergraduate Researcher", color:"sapphire", photo:"Yi-Cheng.jpg", initials:"YL",
+    { name:"Yi‑Cheng Liu", zh:"劉奕成", role:"Undergraduate Researcher", color:"sapphire", photo:"Yi-Cheng.jpg", initials:"YL", rolePos:"bottom",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Jack Zheng", zh:"鄭介展", role:"Undergraduate Researcher", color:"sapphire", photo:"Jack.jpg",
       aff:"Taipei Tech · Electro-Optical Engineering", affUrl:"https://eo.ntut.edu.tw/index.php?Lang=en", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
@@ -588,7 +592,7 @@ footer nav a:hover{color:var(--frozen)}
       aff:"NYCU · Physics", affUrl:"https://phys.nycu.edu.tw/en/" },
     { name:"Mike Hung", zh:"洪詠盛", role:"Summer Undergraduate Researcher 2026", color:"indigo", photo:"Mike.jpg", alumni:true,
       aff:"U. Illinois Urbana-Champaign · Electrical Engineering", affUrl:"https://ece.illinois.edu/" },
-    { name:"Wen‑Ting Wang", role:"Co-Op Undergraduate Researcher", color:"indigo", photo:"WenTing.jpg", alumni:true,
+    { name:"Wen‑Ting Wang", role:"Co-Op Undergraduate Researcher", color:"indigo", photo:"WenTing.jpg", alumni:true, rolePos:"bottom",
       aff:"Waterloo · EE", affUrl:"https://uwaterloo.ca/electrical-computer-engineering/" },
     { name:"Dr. Ting‑Wei Hsu", zh:"許庭維 博士", role:"Postdoc", color:"indigo", photo:"TingWeiHsu.jpg", alumni:true,
       meta:"<b>Now at</b> ETH · Jonathan Home group" },
@@ -610,18 +614,21 @@ footer nav a:hover{color:var(--frozen)}
     const roleStyle = p.alumni ? ' style="color:var(--ink)"' : '';
     let html = '';
     // 照片框:有 photo 就先試著載入, 失敗自動退回縮寫
+    const roleHtml = '<span class="role"'+roleStyle+'>'+esc(p.role||'')+'</span>';
+    const roleInPhoto = p.rolePos === 'bottom';   // 標籤放照片左下角
     if(p.photo){
       html += '<div class="photo ph" data-ini="'+esc(ini)+'">'
             +   '<img alt="'+esc(p.name)+'" loading="lazy" '
             +        'style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block" '
             +        'src="'+TEAM_DIR+'/'+encodeURIComponent(p.photo)+'">'
+            +   (roleInPhoto ? roleHtml : '')
             + '</div>';
     } else {
-      html += '<div class="photo ph"><span class="ini">'+esc(ini)+'</span><span class="cap">Photo</span></div>';
+      html += '<div class="photo ph"><span class="ini">'+esc(ini)+'</span><span class="cap">Photo</span>'+(roleInPhoto ? roleHtml : '')+'</div>';
     }
     html += '<span class="glare" aria-hidden="true"></span>'
           + '<span class="orb" aria-hidden="true"><span class="ring"></span><span class="path"><i></i></span></span>'
-          + '<span class="role"'+roleStyle+'>'+esc(p.role||'')+'</span>'
+          + (roleInPhoto ? '' : roleHtml)
           + '<h3>'+esc(p.name)+'</h3>';
     if(p.zh)  html += '<div class="zh">'+esc(p.zh)+'</div>';
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
@@ -637,7 +644,7 @@ footer nav a:hover{color:var(--frozen)}
     if(img){
       img.addEventListener('error', ()=>{
         const box = img.parentElement;
-        box.innerHTML = '<span class="ini">'+esc(ini)+'</span><span class="cap">Photo</span>';
+        box.innerHTML = '<span class="ini">'+esc(ini)+'</span><span class="cap">Photo</span>'+(roleInPhoto ? roleHtml : '');
       });
     }
     return c;
