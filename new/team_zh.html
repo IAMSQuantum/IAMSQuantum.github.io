@@ -226,6 +226,11 @@ main{position:relative; z-index:1; flex:1; width:min(1120px, 100%); margin:0 aut
   border-bottom:1px dotted rgba(166,201,182,.5);
 }
 .card .aff:hover{color:var(--frozen)}
+.card .dates{
+  margin-top:7px;
+  font-family:'Space Mono',monospace;
+  font-size:10.5px; letter-spacing:.04em; color:var(--ink-dim);
+}
 .card .meta{
   margin-top:12px; padding-top:11px;
   border-top:1px dashed rgba(255,235,237,.1);
@@ -661,9 +666,9 @@ footer nav a:hover{color:var(--frozen)}
           + '<h3>'+esc(p.zh || p.name)+'</h3>';
     if(p.zh)  html += '<div class="zh">'+esc(p.name)+'</div>';
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
+    const dates = fmtDates(p);   // 在實驗室的期間: 所屬單位之後, 分隔線之上
+    if(dates) html += '<div class="dates">'+dates+'</div>';
     let meta = metaZH(p.meta) || '';
-    const dates = fmtDates(p);   // 校友放最前面, 現任成員放最後面
-    if(dates){ const d = dates; meta = p.alumni ? (meta ? d+'<br>'+meta : d) : (meta ? meta+'<br>'+d : d); }
     if(p.email){
       const [u,d] = p.email.split('@');
       meta += '<a href="mailto:'+esc(p.email)+'" title="'+esc(p.email)+'">'+esc(u)+'<span class="at">@</span>'+esc(d)+'</a>';
