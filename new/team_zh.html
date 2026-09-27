@@ -548,6 +548,7 @@ footer nav a:hover{color:var(--frozen)}
        initials 縮寫, 不填會自動用姓名首字母
        alumni  true = 放到校友區
        rolePos "bottom" = 職稱標籤改放照片左下角 (照片上方是臉的時候用)
+       from/to "YYYY-MM" 加入 / 離開實驗室的年月; 省略 to = 仍在實驗室
      新增成員 = 在清單加一段 {...},  然後把照片丟進 team/ 資料夾。
   ============================================================ */
   const PEOPLE = [
@@ -557,46 +558,46 @@ footer nav a:hover{color:var(--frozen)}
       email:"s.p.bennetts@g.iams.sinica.edu.tw", meta:"<b>Office</b> 307 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Talia Yu", zh:"于小姐", role:"Secretary", color:"frozen", photo:"Talia.jpg",
       email:"tyu@as.edu.tw", meta:"<b>Office</b> 404<br><b>Tel</b> +886-2-2366-8923" },
-    { name:"Ting‑Peng Huang", zh:"黃定芃", role:"Masters Student", color:"sapphire", photo:"TingPeng.jpg",
+    { name:"Ting‑Peng Huang", zh:"黃定芃", from:"2025-01", role:"Masters Student", color:"sapphire", photo:"TingPeng.jpg",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Jie‑En Chen", zh:"陳杰恩", role:"Research Assistant", color:"frozen", photo:"Jie-En.jpg",
+    { name:"Jie‑En Chen", zh:"陳杰恩", from:"2025-09", role:"Research Assistant", color:"frozen", photo:"Jie-En.jpg",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Po‑Yi (Miles) Lee", zh:"李柏毅", role:"Masters Student", color:"sapphire", photo:"Miles.jpg", initials:"PL",
+    { name:"Po‑Yi (Miles) Lee", zh:"李柏毅", from:"2026-09", role:"Masters Student", color:"sapphire", photo:"Miles.jpg", initials:"PL",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Hua‑Ying (Sophie) Chung", zh:"鍾華螢", role:"Undergraduate Researcher", color:"sapphire", photo:"Sophie_Chung.jpg",
+    { name:"Hua‑Ying (Sophie) Chung", zh:"鍾華螢", from:"2026-06", role:"Undergraduate Researcher", color:"sapphire", photo:"Sophie_Chung.jpg",
       aff:"NCU · Optics and Photonics", affUrl:"https://www.dop.ncu.edu.tw/en/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Hung‑Chi Wang", role:"Undergraduate Researcher", color:"sapphire", photo:"Hung-Chi2.jpg", initials:"HW",
+    { name:"Hung‑Chi Wang", from:"2026-06", role:"Undergraduate Researcher", color:"sapphire", photo:"Hung-Chi2.jpg", initials:"HW",
       aff:"U. Toronto · Electronic Engineering", affUrl:"https://www.ece.utoronto.ca/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Yi‑Cheng Liu", zh:"劉奕成", role:"Undergraduate Researcher", color:"sapphire", photo:"Yi-Cheng.jpg", initials:"YL", rolePos:"bottom",
+    { name:"Yi‑Cheng Liu", zh:"劉奕成", from:"2026-07", role:"Undergraduate Researcher", color:"sapphire", photo:"Yi-Cheng.jpg", initials:"YL", rolePos:"bottom",
       aff:"NTU · Physics", affUrl:"https://phys.ntu.edu.tw/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Jack Zheng", zh:"鄭介展", role:"Undergraduate Researcher", color:"sapphire", photo:"Jack.jpg",
+    { name:"Jack Zheng", zh:"鄭介展", from:"2026-07", role:"Undergraduate Researcher", color:"sapphire", photo:"Jack.jpg",
       aff:"Taipei Tech · Electro-Optical Engineering", affUrl:"https://eo.ntut.edu.tw/index.php?Lang=en", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Emon Wei", zh:"魏廷恩", role:"Undergraduate Researcher", color:"sapphire", photo:"Emon.jpg",
+    { name:"Emon Wei", zh:"魏廷恩", from:"2026-07", role:"Undergraduate Researcher", color:"sapphire", photo:"Emon.jpg",
       aff:"Taipei Tech · Electro-Optical Engineering", affUrl:"https://eo.ntut.edu.tw/index.php?Lang=en", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Gamal Shehata", role:"NSTC IIPP Researcher", color:"sapphire", photo:"Gamal.jpeg", initials:"GS",
+    { name:"Gamal Shehata", from:"2026-08", to:"2026-10", role:"NSTC IIPP Researcher", color:"sapphire", photo:"Gamal.jpeg", initials:"GS",
       aff:"Zewail City UST-Egypt · Opto Electronic Engineering", affUrl:"https://www.zewailcity.edu.eg/", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"George Deng (MSc)", role:"IAMS IIP Researcher", color:"sapphire", photo:"George.jpg", initials:"GD",
+    { name:"George Deng (MSc)", from:"2026-09", role:"IAMS IIP Researcher", color:"sapphire", photo:"George.jpg", initials:"GD",
       meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
-    { name:"Ichii Tamaru", zh:"市為田丸", role:"NSTC IIPP Researcher", color:"sapphire", photo:"default-avatar-M.jpg", initials:"IT",
+    { name:"Ichii Tamaru", zh:"市為田丸", from:"2026-09", to:"2026-10", role:"NSTC IIPP Researcher", color:"sapphire", photo:"default-avatar-M.jpg", initials:"IT",
       aff:"Waseda University / RIKEN · Aoki group", affUrl:"https://www.qo.phys.waseda.ac.jp/index_en.html", meta:"<b>Office</b> 110 · <b>Lab</b> 110<br><b>Tel</b> +886-2-2366-8215" },
     { name:"Baxter", role:"Lab Mascot", color:"red1798", photo:"Baxter.jpg", initials:"B",
       meta:"<b>Office</b> Garden HQ · <b>Lab</b> 110" },
     { name:"Rudolph", role:"Lab Mascot", color:"red1798", photo:"Rudi.jpg", initials:"R",
       meta:"<b>Office</b> Garden HQ · <b>Lab</b> 110" },
 
-    { name:"Hao‑Rong Yang (MSc)", zh:"楊皓蓉", role:"Masters Student", color:"indigo", photo:"Roxanne.jpg", alumni:true,
+    { name:"Hao‑Rong Yang (MSc)", zh:"楊皓蓉", from:"2024-09", to:"2026-07", role:"Masters Student", color:"indigo", photo:"Roxanne.jpg", alumni:true,
       meta:"<b>Graduated</b> July 2026" },
-    { name:"Javier Barrero Salazar", role:"IAMS IIP Researcher", color:"indigo", photo:"Javier.jpg", initials:"JB", alumni:true,
+    { name:"Javier Barrero Salazar", from:"2026-08", to:"2026-09", role:"IAMS IIP Researcher", color:"indigo", photo:"Javier.jpg", initials:"JB", alumni:true,
       aff:"U. Granada (Spain) · Physics", affUrl:"http://www.ugr.es/en/about/organization/entities/department-applied-physics" },
-    { name:"Shengta Tsai", zh:"蔡昇達", role:"IAMS Summer Researcher 2026", color:"indigo", photo:"ShengTa.jpg", alumni:true,
+    { name:"Shengta Tsai", zh:"蔡昇達", from:"2026-07", to:"2026-08", role:"IAMS Summer Researcher 2026", color:"indigo", photo:"ShengTa.jpg", alumni:true,
       aff:"NYCU · Physics", affUrl:"https://phys.nycu.edu.tw/en/" },
-    { name:"Mike Hung", zh:"洪詠盛", role:"Summer Undergraduate Researcher 2026", color:"indigo", photo:"Mike.jpg", alumni:true,
+    { name:"Mike Hung", zh:"洪詠盛", from:"2026-06", to:"2026-08", role:"Summer Undergraduate Researcher 2026", color:"indigo", photo:"Mike.jpg", alumni:true,
       aff:"U. Illinois Urbana-Champaign · Electrical Engineering", affUrl:"https://ece.illinois.edu/" },
-    { name:"Wen‑Ting Wang", role:"Co-Op Undergraduate Researcher", color:"indigo", photo:"WenTing.jpg", alumni:true, rolePos:"bottom",
+    { name:"Wen‑Ting Wang", from:"2026-01", to:"2026-04", role:"Co-Op Undergraduate Researcher", color:"indigo", photo:"WenTing.jpg", alumni:true, rolePos:"bottom",
       aff:"Waterloo · EE", affUrl:"https://uwaterloo.ca/electrical-computer-engineering/" },
-    { name:"Dr. Ting‑Wei Hsu", zh:"許庭維 博士", role:"Postdoc", color:"indigo", photo:"TingWeiHsu.jpg", alumni:true,
+    { name:"Dr. Ting‑Wei Hsu", zh:"許庭維 博士", from:"2025-08", to:"2025-12", role:"Postdoc", color:"indigo", photo:"TingWeiHsu.jpg", alumni:true,
       meta:"<b>Now at</b> ETH · Jonathan Home group" },
-    { name:"Yu‑Chen Lu", zh:"盧昱辰", role:"Research Assistant", color:"indigo", photo:"YuChen.jpg", alumni:true },
+    { name:"Yu‑Chen Lu", zh:"盧昱辰", from:"2025-08", to:"2025-09", role:"Research Assistant", color:"indigo", photo:"YuChen.jpg", alumni:true },
   ];
   /* ================= 名單結束 ================= */
 
@@ -621,8 +622,18 @@ footer nav a:hover{color:var(--frozen)}
             .replace(/<b>Lab<\/b>/g,'<b>實驗室</b>')
             .replace(/<b>Tel<\/b>/g,'<b>電話</b>')
             .replace(/<b>Now at<\/b>/g,'<b>現任職於</b>')
+            .replace(/<b>Graduated<\/b>/g,'<b>畢業</b>')
+            .replace(/\b(Jan|Feb|Mar|Apr|May|June|July|Aug|Sept|Oct|Nov|Dec)\w*\.? (\d{4})\b/g,
+                     (m,mo,y)=>y+' 年 '+({Jan:1,Feb:2,Mar:3,Apr:4,May:5,June:6,July:7,Aug:8,Sept:9,Oct:10,Nov:11,Dec:12}[mo])+' 月')
             .replace(/Garden HQ/g,'花園總部')
             .replace(/ Physics/g,' 物理系').replace(/ EE/g,' 電機');
+  }
+  function fmtDates(p){   // "YYYY-MM" -> 2025 年 9 月 – 至今
+    if(!p.from) return '';
+    const [fy,fm] = p.from.split('-').map(Number);
+    if(!p.to) return fy+' 年 '+fm+' 月 – 至今';
+    const [ty,tm] = p.to.split('-').map(Number);
+    return fy===ty ? fy+' 年 '+fm+' 月 – '+tm+' 月' : fy+' 年 '+fm+' 月 – '+ty+' 年 '+tm+' 月';
   }
   function buildCard(p){
     const c = document.createElement('article');
@@ -651,6 +662,8 @@ footer nav a:hover{color:var(--frozen)}
     if(p.zh)  html += '<div class="zh">'+esc(p.name)+'</div>';
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
     let meta = metaZH(p.meta) || '';
+    const dates = fmtDates(p);   // 校友放最前面, 現任成員放最後面
+    if(dates){ const d = '<b>期間</b> '+dates; meta = p.alumni ? (meta ? d+'<br>'+meta : d) : (meta ? meta+'<br>'+d : d); }
     if(p.email){
       const [u,d] = p.email.split('@');
       meta += '<a href="mailto:'+esc(p.email)+'" title="'+esc(p.email)+'">'+esc(u)+'<span class="at">@</span>'+esc(d)+'</a>';
