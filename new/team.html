@@ -643,7 +643,7 @@ footer nav a:hover{color:var(--frozen)}
     if(p.aff) html += '<a class="aff" href="'+esc(p.affUrl||'#')+'" target="_blank" rel="noopener">'+esc(p.aff)+'</a>';
     let meta = p.meta || '';
     const dates = fmtDates(p);   // 校友放最前面, 現任成員放最後面
-    if(dates){ const d = '<b>Dates</b> '+dates; meta = p.alumni ? (meta ? d+'<br>'+meta : d) : (meta ? meta+'<br>'+d : d); }
+    if(dates){ const d = dates; meta = p.alumni ? (meta ? d+'<br>'+meta : d) : (meta ? meta+'<br>'+d : d); }
     if(p.email){
       const [u,d] = p.email.split('@');
       meta += '<a href="mailto:'+esc(p.email)+'" title="'+esc(p.email)+'">'+esc(u)+'<span class="at">@</span>'+esc(d)+'</a>';
