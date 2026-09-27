@@ -1,3 +1,21 @@
 # Claude maintainer notes — local only, never published
 CLAUDE.md
 .claude/
+
+# projector expert files (pm experts init)
+cases/
+reports/
+mail/
+.projector/
+WRAP_UP.md
+AGENTS.md
+.expert.git/
+.claude/settings.json
+.claude/agents/
+.claude/skills/
+KNOWLEDGE.md
+GLOSSARY.md
+OPEN_QUESTIONS.md
+/CLAUDE.md
+/.claude/HANDOVER-home.md
+/.claude/HANDOVER.md
