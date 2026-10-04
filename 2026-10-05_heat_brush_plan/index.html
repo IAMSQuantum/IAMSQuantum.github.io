@@ -26,42 +26,65 @@ p,li{font-size:2.6vh;line-height:1.35}
 .card{background:#fff;border:1px solid #e3e1da;border-radius:1.2vh;padding:2vh 2.4vh;flex:1}
 .dark .card{background:#243752;border-color:#3b5276}
 .foot{position:absolute;left:5vh;bottom:2.2vh;font-size:1.9vh;color:#8a8a8a}
+.phases{display:flex;gap:1.6vh;flex:1;min-height:0;align-items:stretch}
+.phase{flex:1;display:flex;flex-direction:column;background:#fff;border:1px solid #e3e1da;border-radius:1.2vh;overflow:hidden}
+.phase .band{padding:1.4vh 2vh;color:#f7f6f2}
+.phase .band p{font-size:2.1vh;opacity:0.85}
+.phase .band h3{font-size:3vh;font-weight:600;line-height:1.1}
+.phase ul{padding:1.6vh 2vh 1vh 4.2vh;flex:1}
+.phase li{font-size:2.15vh;line-height:1.3;margin-bottom:0.9vh}
+.phase .gate{padding:1.4vh 2vh;border-top:1px solid #e3e1da;font-size:2vh;background:#faf9f5;color:#1b2a41}
+.next{align-self:center;width:0;height:0;border-top:2.4vh solid transparent;border-bottom:2.4vh solid transparent;border-left:2.4vh solid #8a8a8a}
 svg text{font-family:'Segoe UI',Calibri,Arial,sans-serif}
 ul{padding-left:3vh}
 li{margin-bottom:0.8vh}
 </style></head>
 <body><div class="deck">
-<section class="slide"><div class="frame dark" style="justify-content:center">
+<section class="slide" id="s1"><div class="frame dark" style="justify-content:center">
  <p class="sub">Lab110 nanofiber pulling, SMF-28 Ultra at 1539 nm</p>
  <h1>A heat-brush motion plan for 650 nm nanofibers</h1>
  <p class="sub">Why the present pull loses 3 to 4 %, how the heater is modelled, and what the brush changes</p>
  <p class="note">2026-10-05. Model: taperplan (fluidity model, two-mode coupling). Data: 18 transmission records, 11 image scans, 19 cut-offs.</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s2"><div class="frame">
  <h2>The rig and the present recipe</h2>
  <div class="row"><div class="fig" style="flex:3">
-<svg viewBox="0 0 1000 420" aria-label="the pulling rig">
- <rect x="60" y="300" width="880" height="14" fill="#c9c6bd"/>
- <rect x="110" y="250" width="560" height="56" rx="6" fill="#dcd9d0" stroke="#8a8a8a" stroke-width="2"/>
- <text x="390" y="340" font-size="22" text-anchor="middle" fill="#5a6472">axis 2: carries both clamps along the fiber (brush, up to 1.05 mm/s)</text>
- <rect x="150" y="196" width="400" height="48" rx="6" fill="#ece9e0" stroke="#8a8a8a" stroke-width="2"/>
- <text x="350" y="186" font-size="22" text-anchor="middle" fill="#5a6472">axis 1: clamp separation (stretch, 0.10 mm/s)</text>
- <rect x="170" y="150" width="56" height="48" rx="4" fill="#1b2a41"/>
- <rect x="604" y="150" width="56" height="48" rx="4" fill="#1b2a41"/>
- <text x="198" y="140" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 1</text>
- <text x="632" y="140" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 2</text>
- <line x1="226" y1="174" x2="604" y2="174" stroke="#1f6fd0" stroke-width="5"/>
- <rect x="372" y="104" width="86" height="56" rx="10" fill="#e4572e" opacity="0.85"/>
- <text x="415" y="92" font-size="22" text-anchor="middle" fill="#e4572e">heater (fixed; lifted away on axis 3 at the end)</text>
- <path d="M 790 150 h 110 M 845 150 v 60" stroke="#8a8a8a" stroke-width="3"/>
- <text x="845" y="240" font-size="20" text-anchor="middle" fill="#5a6472">1539 nm laser in,</text>
- <text x="845" y="266" font-size="20" text-anchor="middle" fill="#5a6472">detector out: transmission</text>
- <text x="845" y="292" font-size="20" text-anchor="middle" fill="#5a6472">recorded during the pull</text>
- <path d="M 300 60 h 90" stroke="#1b2a41" stroke-width="3" marker-end="url(#ar)"/>
- <path d="M 530 60 h -90" stroke="#1b2a41" stroke-width="3" marker-end="url(#ar)"/>
- <text x="415" y="40" font-size="22" text-anchor="middle" fill="#1b2a41">present recipe: clamps separate at 0.1 mm/s, 45 mm, heater still</text>
- <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1b2a41"/></marker></defs>
+<svg viewBox="0 0 1000 560" aria-label="the pulling rig, side view">
+ <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b2a41"/></marker>
+ <marker id="ao" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e4572e"/></marker></defs>
+ <!-- optical path -->
+ <rect x="20" y="186" width="90" height="48" rx="6" fill="#f3e9c6" stroke="#8a8a8a"/>
+ <text x="65" y="216" font-size="20" text-anchor="middle" fill="#1b2a41">1539 nm</text>
+ <rect x="890" y="186" width="90" height="48" rx="6" fill="#f3e9c6" stroke="#8a8a8a"/>
+ <text x="935" y="216" font-size="20" text-anchor="middle" fill="#1b2a41">detector</text>
+ <line x1="110" y1="210" x2="890" y2="210" stroke="#1f6fd0" stroke-width="4"/>
+ <!-- clamps -->
+ <rect x="200" y="170" width="50" height="80" rx="5" fill="#1b2a41"/>
+ <rect x="750" y="170" width="50" height="80" rx="5" fill="#1b2a41"/>
+ <text x="225" y="152" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 1</text>
+ <text x="775" y="152" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 2</text>
+ <!-- heater -->
+ <rect x="465" y="178" width="70" height="64" rx="10" fill="#e4572e" opacity="0.9"/>
+ <text x="500" y="66" font-size="22" text-anchor="middle" fill="#e4572e">ceramic heater, hot zone 5 mm</text>
+ <text x="500" y="92" font-size="18" text-anchor="middle" fill="#e4572e">lifted out at the end of the pull (axis 3)</text>
+ <path d="M 500 108 v 56" stroke="#e4572e" stroke-width="3" marker-start="url(#ao)"/>
+ <!-- stages -->
+ <line x1="225" y1="250" x2="225" y2="300" stroke="#5a6472" stroke-width="6"/>
+ <rect x="150" y="300" width="330" height="34" rx="5" fill="#ece9e0" stroke="#8a8a8a" stroke-width="2"/>
+ <text x="315" y="324" font-size="20" text-anchor="middle" fill="#1b2a41">axis 1, top stage</text>
+ <line x1="775" y1="250" x2="775" y2="380" stroke="#5a6472" stroke-width="6"/>
+ <line x1="315" y1="334" x2="315" y2="380" stroke="#5a6472" stroke-width="6"/>
+ <rect x="130" y="380" width="740" height="34" rx="5" fill="#dcd9d0" stroke="#8a8a8a" stroke-width="2"/>
+ <text x="500" y="404" font-size="20" text-anchor="middle" fill="#1b2a41">axis 2, bottom stage</text>
+ <rect x="80" y="414" width="840" height="14" fill="#b8b4a8"/>
+ <!-- motions -->
+ <path d="M 140 317 h -50" stroke="#1b2a41" stroke-width="3" marker-end="url(#ar)"/>
+ <text x="20" y="356" font-size="18" fill="#1b2a41">stretch: clamp 1 moves</text>
+ <text x="20" y="378" font-size="18" fill="#1b2a41">away, 0.10 mm/s</text>
+ <path d="M 400 460 h 200" stroke="#1b2a41" stroke-width="3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+ <text x="500" y="495" font-size="20" text-anchor="middle" fill="#1b2a41">brush: both clamps together, back and forth, up to 1.05 mm/s</text>
+ <text x="500" y="525" font-size="20" text-anchor="middle" fill="#5a6472">present recipe: stretch only, heater still, 45 mm in 7.5 min</text>
 </svg>
 </div>
  <div class="col" style="flex:1">
@@ -72,7 +95,7 @@ li{margin-bottom:0.8vh}
  <p class="foot">Axes: 1 top OSMS26-200 stretch, 2 bottom HST-200X brush, 3 oven lift. Controller HSC-103.</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s3"><div class="frame">
  <h2>What the light does during a present-recipe pull</h2>
  <div class="row"><div class="fig"><img src="fig/measured_old.png" alt="measured transmission and beating against elongation"></div>
  <div class="col" style="flex:1">
@@ -83,7 +106,7 @@ li{margin-bottom:0.8vh}
  <p class="foot">results/adiabaticity/measured_vs_model_T.png; 18 records at 1539 nm with a cut-off, aligned to end-of-pull anchors or the clock model</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s4"><div class="frame">
  <h2>Why a taper loses light: the mode leaves the core</h2>
  <div class="row"><div class="fig" style="flex:3">
 <svg viewBox="0 0 1000 440" aria-label="the fundamental mode leaving the core">
@@ -113,7 +136,7 @@ li{margin-bottom:0.8vh}
  </div></div>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s5"><div class="frame">
  <h2>The heater model and its calibration</h2>
  <div class="row"><div class="fig" style="flex:3"><img src="fig/heater.png" alt="Gaussian and box hot zones; waist against elongation"></div>
  <div class="col" style="flex:1">
@@ -123,7 +146,7 @@ li{margin-bottom:0.8vh}
  </div></div>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s6"><div class="frame">
  <h2>Check against the image scans: the transition the fixed heater draws</h2>
  <div class="row"><div class="fig"><img src="fig/decay.png" alt="decay lengths of the measured transitions and the model"></div>
  <div class="col" style="flex:1">
@@ -133,7 +156,7 @@ li{margin-bottom:0.8vh}
  </div></div>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s7"><div class="frame">
  <h2>The present recipe measured against the rule</h2>
  <div class="row"><div class="fig"><img src="fig/angle.png" alt="local taper angle against radius, with the adiabatic limits"></div>
  <div class="col" style="flex:1">
@@ -143,7 +166,7 @@ li{margin-bottom:0.8vh}
  </div></div>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s8"><div class="frame">
  <h2>What the heat brush changes</h2>
  <div class="row"><div class="fig">
 <svg viewBox="0 0 1000 440" aria-label="fixed heater against the heat brush">
@@ -170,7 +193,7 @@ li{margin-bottom:0.8vh}
  <p class="note">The heater cannot be made shorter, so the transitions cannot be made steeper than its own; sweeping the fiber through it makes them shallower where it matters. Sweep programme: constant from the start, then falling at da/dx = -1, chosen as the smallest that keeps |dr/dz| below 0.3 of the delineation angle with the hot zone at 0.9, 1.0 and 1.1 times its calibrated length.</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s9"><div class="frame">
  <h2>The motion plan, F = 0.3</h2>
  <div class="row"><div class="fig" style="flex:3"><img src="fig/plan.png" alt="clamp positions against time and the sweep programme"></div>
  <div class="col" style="flex:1">
@@ -181,7 +204,7 @@ li{margin-bottom:0.8vh}
  <p class="foot">results/plan/motion_plan_650nm_1539nm_lphi0_5.33_F0.3.csv and _hsc103_program.txt. The waist ends 4.2 mm from the clamp midpoint towards clamp 1.</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s10"><div class="frame">
  <h2>Present recipe and brush plan, simulated with the same heater</h2>
  <div class="row">
   <div class="fig"><img src="fig/profiles.png" alt="taper shapes: measured scans, present recipe model, brush plan model"></div>
@@ -195,7 +218,7 @@ li{margin-bottom:0.8vh}
  <p class="foot">Expected on the machine: 0.985 to 0.995. The measured transitions are 20 % steeper than the model's (F = 0.3 would read 0.36), and the sub-micron loss of 0.5 to 1.5 % is not from the shape.</p>
 </div></section>
 
-<section class="slide"><div class="frame">
+<section class="slide" id="s11"><div class="frame">
  <h2>Where to stop the pull</h2>
  <div class="row"><div class="fig"><img src="fig/sensitivity.png" alt="waist against elongation for three hot-zone lengths"></div>
  <div class="col" style="flex:1">
@@ -205,20 +228,36 @@ li{margin-bottom:0.8vh}
  </div></div>
 </div></section>
 
-<section class="slide"><div class="frame dark">
- <h2>Before a fiber is pulled with this plan</h2>
- <div class="row">
-  <div class="col">
-   <div class="card"><p><b>Joint review</b> of the F = 0.3 plan CSV and Sim Full Cycle in the stage viewer.</p></div>
-   <div class="card"><p><b>Controller</b>: set the three speed sets with SGSample, load the 81-line program into slot 2 with the SigmaKoki GUI, run it once without a fiber and compare the reported end positions with the plan.</p></div>
-   <div class="card"><p><b>Bench tests</b> of program mode: axis 2 reversals inside a continuous range, the OUT marker, the stop command.</p></div>
-  </div>
-  <div class="col">
-   <div class="card"><p><b>Measurements that settle the open points</b>: an SEM of one 41 or 45 mm fiber (0.78 against 1.25 um decides the cut-off reading; waist length tells Gaussian from box); OUT1 wired to the scope for exact time anchors; one slow pull for surface tension.</p></div>
-   <div class="card"><p><b>Rule that stands</b>: nothing runs on the pulling machine without Shayne present and a joint check; the planner never opens a serial port.</p></div>
-  </div>
+<section class="slide" id="s12"><div class="frame">
+ <h2>Phase 2: a 10 mm uniform waist by an end-of-pull sweep</h2>
+ <div class="row"><div class="fig" style="flex:3"><img src="fig/phase2.png" alt="Phase 1 and Phase 2 profiles, whole taper and waist region"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p>Birks and Li: a hot zone that <b>grows as fast as the fiber stretches</b> lays down no new transition; the glass inside thins together and the waist is as long as the hot zone.</p></div>
+  <div class="card"><p class="num new">11 mm <small>waist within 5 %, from a 26 mm sweep started when the waist is 3.2 um</small></p></div>
+  <div class="card"><p class="num new">+13 mm <small>elongation over Phase 1: 62 mm in total, 76 mm tapered, 10 min</small></p></div>
+ </div></div>
+ <p class="foot">Model only. The transitions are Phase 1's; the sweep amplitude follows the inverse of the hot-zone-length relation and rises steeply at the switch, which the model flags for a bench check.</p>
+</div></section>
+
+<section class="slide" id="s13"><div class="frame">
+ <h2>The plan</h2>
+ <div class="phases">
+  <div class="phase"><div class="band" style="background:#5a6472"><p>done, October 2026</p><h3>Model and files</h3></div>
+   <ul><li>Physics review; fiber index step corrected</li><li>Heater length from 19 cut-offs, shape checked on 11 scans</li><li>F = 0.3 brush plan designed and chosen</li><li>HSC-103 program file emitted, 81 lines</li></ul>
+   <div class="gate">All committed on main; nothing has run on the machine.</div></div>
+  <div class="next"></div>
+  <div class="phase"><div class="band" style="background:#1f6fd0"><p>next, with Shayne present</p><h3>Phase 1: first brush pulls</h3></div>
+   <ul><li>Bench tests of program mode, no fiber: reversals, end positions, stop command, OUT marker (half a day)</li><li>Joint review of the plan file and Sim Full Cycle</li><li>Speed sets and program loaded; one run without a fiber</li><li>First F = 0.3 pull with a transmission record; stop 4.3 mm after the final beat</li><li>SEM of one fiber: waist 0.78 or 1.25 um decides the cut-off reading</li></ul>
+   <div class="gate">Done when a pull gives T at or above 0.985 and the measured shape is within 20 % of the model.</div></div>
+  <div class="next"></div>
+  <div class="phase"><div class="band" style="background:#0d3f85"><p>after Phase 1</p><h3>Phase 2: 10 mm uniform waist</h3></div>
+   <ul><li>Re-fit the heater length and shape on the Phase 1 records and scans</li><li>Add the end-of-pull sweep: 26 mm from a 3.2 um waist, +13 mm elongation</li><li>Bench check of the fast amplitude rise at the switch</li><li>Pull; measure the waist length and uniformity by scan and SEM</li></ul>
+   <div class="gate">Done when the waist is within 5 % over 10 mm and T holds.</div></div>
+  <div class="next"></div>
+  <div class="phase"><div class="band" style="background:#e4572e"><p>in parallel</p><h3>Instrumentation</h3></div>
+   <ul><li>HSC-103 OUT1 wired to the scope: exact time anchors on every record</li><li>Class board (about 2026-10-18): live transmission and markers</li><li>Live cut-off detector and the stop command replace the fixed elongation</li><li>One 0.03 mm/s pull with a record, for surface tension</li></ul>
+   <div class="gate">Rule that stands: nothing runs without Shayne present and a joint check.</div></div>
  </div>
- <p class="foot">HANDOVER.md, docs/2026-10-04_adiabaticity_proposal.md, docs/2026-10-04_motion_executor_options.md</p>
 </div></section></div><script>
 const deck=document.querySelector('.deck');const slides=[...document.querySelectorAll('.slide')];
 function go(i){slides[Math.max(0,Math.min(slides.length-1,i))].scrollIntoView({behavior:'smooth'});}
@@ -226,4 +265,5 @@ function cur(){return Math.round(deck.scrollTop/deck.clientHeight);}
 addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(cur()+1);}
 if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur()-1);}
 if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1);});
+if(location.hash){const el=document.querySelector(location.hash);if(el)el.scrollIntoView();}
 </script></body></html>
