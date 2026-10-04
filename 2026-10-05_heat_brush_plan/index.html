@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Heat-brush motion plan</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#2a2a2a;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#1b2a41}
+.deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.slide{scroll-snap-align:start;height:100vh;display:flex;align-items:center;justify-content:center}
+.frame{width:min(100vw,177.78vh);height:min(56.25vw,100vh);background:#f7f6f2;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;padding:4.5vh 5vh;gap:2vh}
+.dark{background:#1b2a41;color:#f7f6f2}
+h1{font-size:6.2vh;font-weight:600;line-height:1.1}
+h2{font-size:4.2vh;font-weight:600;line-height:1.15}
+p,li{font-size:2.6vh;line-height:1.35}
+.sub{color:#5a6472;font-size:2.8vh}
+.dark .sub{color:#bfd0e6}
+.row{display:flex;gap:3vh;flex:1;min-height:0;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:1.6vh;flex:1;min-height:0;justify-content:center}
+.fig{flex:2.2;display:flex;align-items:center;justify-content:center;min-height:0;min-width:0}
+.fig img{max-height:100%;max-width:100%;width:auto;height:auto;border-radius:0.8vh}
+.fig svg{max-height:100%;max-width:100%}
+.note{font-size:2.3vh;color:#5a6472}
+.dark .note{color:#bfd0e6}
+.num{font-size:5.2vh;font-weight:600;line-height:1}
+.num small{font-size:2.3vh;font-weight:400;color:#5a6472;display:block;margin-top:0.6vh}
+.old{color:#e4572e}.new{color:#1f6fd0}
+.card{background:#fff;border:1px solid #e3e1da;border-radius:1.2vh;padding:2vh 2.4vh;flex:1}
+.dark .card{background:#243752;border-color:#3b5276}
+.foot{position:absolute;left:5vh;bottom:2.2vh;font-size:1.9vh;color:#8a8a8a}
+svg text{font-family:'Segoe UI',Calibri,Arial,sans-serif}
+ul{padding-left:3vh}
+li{margin-bottom:0.8vh}
+</style></head>
+<body><div class="deck">
+<section class="slide"><div class="frame dark" style="justify-content:center">
+ <p class="sub">Lab110 nanofiber pulling, SMF-28 Ultra at 1539 nm</p>
+ <h1>A heat-brush motion plan for 650 nm nanofibers</h1>
+ <p class="sub">Why the present pull loses 3 to 4 %, how the heater is modelled, and what the brush changes</p>
+ <p class="note">2026-10-05. Model: taperplan (fluidity model, two-mode coupling). Data: 18 transmission records, 11 image scans, 19 cut-offs.</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>The rig and the present recipe</h2>
+ <div class="row"><div class="fig" style="flex:3">
+<svg viewBox="0 0 1000 420" aria-label="the pulling rig">
+ <rect x="60" y="300" width="880" height="14" fill="#c9c6bd"/>
+ <rect x="110" y="250" width="560" height="56" rx="6" fill="#dcd9d0" stroke="#8a8a8a" stroke-width="2"/>
+ <text x="390" y="340" font-size="22" text-anchor="middle" fill="#5a6472">axis 2: carries both clamps along the fiber (brush, up to 1.05 mm/s)</text>
+ <rect x="150" y="196" width="400" height="48" rx="6" fill="#ece9e0" stroke="#8a8a8a" stroke-width="2"/>
+ <text x="350" y="186" font-size="22" text-anchor="middle" fill="#5a6472">axis 1: clamp separation (stretch, 0.10 mm/s)</text>
+ <rect x="170" y="150" width="56" height="48" rx="4" fill="#1b2a41"/>
+ <rect x="604" y="150" width="56" height="48" rx="4" fill="#1b2a41"/>
+ <text x="198" y="140" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 1</text>
+ <text x="632" y="140" font-size="22" text-anchor="middle" fill="#1b2a41">clamp 2</text>
+ <line x1="226" y1="174" x2="604" y2="174" stroke="#1f6fd0" stroke-width="5"/>
+ <rect x="372" y="104" width="86" height="56" rx="10" fill="#e4572e" opacity="0.85"/>
+ <text x="415" y="92" font-size="22" text-anchor="middle" fill="#e4572e">heater (fixed; lifted away on axis 3 at the end)</text>
+ <path d="M 790 150 h 110 M 845 150 v 60" stroke="#8a8a8a" stroke-width="3"/>
+ <text x="845" y="240" font-size="20" text-anchor="middle" fill="#5a6472">1539 nm laser in,</text>
+ <text x="845" y="266" font-size="20" text-anchor="middle" fill="#5a6472">detector out: transmission</text>
+ <text x="845" y="292" font-size="20" text-anchor="middle" fill="#5a6472">recorded during the pull</text>
+ <path d="M 300 60 h 90" stroke="#1b2a41" stroke-width="3" marker-end="url(#ar)"/>
+ <path d="M 530 60 h -90" stroke="#1b2a41" stroke-width="3" marker-end="url(#ar)"/>
+ <text x="415" y="40" font-size="22" text-anchor="middle" fill="#1b2a41">present recipe: clamps separate at 0.1 mm/s, 45 mm, heater still</text>
+ <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1b2a41"/></marker></defs>
+</svg>
+</div>
+ <div class="col" style="flex:1">
+  <div class="card"><p class="num">125 um <small>fiber diameter at the start</small></p></div>
+  <div class="card"><p class="num">0.65 um <small>target waist, 1 mm long</small></p></div>
+  <div class="card"><p class="num">45 mm <small>present pull at 0.1 mm/s, 7.5 min</small></p></div>
+ </div></div>
+ <p class="foot">Axes: 1 top OSMS26-200 stretch, 2 bottom HST-200X brush, 3 oven lift. Controller HSC-103.</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>What the light does during a present-recipe pull</h2>
+ <div class="row"><div class="fig"><img src="fig/measured_old.png" alt="measured transmission and beating against elongation"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p class="num old">0.965 to 0.975 <small>transmission plateau from 15 to 33 mm; 0.95 at the end</small></p></div>
+  <div class="card"><p class="num old">5 to 7 % <small>beating, peak to peak, from 20 to 34 mm</small></p></div>
+  <p class="note">The beat frequency follows the LP01-LP02 beat of the model to 20 % and stops at the model's LP02 cut-off. The loss is set while the transitions form, long before the waist is thin.</p>
+ </div></div>
+ <p class="foot">results/adiabaticity/measured_vs_model_T.png; 18 records at 1539 nm with a cut-off, aligned to end-of-pull anchors or the clock model</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>Why a taper loses light: the mode leaves the core</h2>
+ <div class="row"><div class="fig" style="flex:3">
+<svg viewBox="0 0 1000 440" aria-label="the fundamental mode leaving the core">
+ <path d="M 40 100 C 300 110, 420 200, 560 212 L 960 212" fill="none" stroke="#1b2a41" stroke-width="3"/>
+ <path d="M 40 340 C 300 330, 420 240, 560 228 L 960 228" fill="none" stroke="#1b2a41" stroke-width="3"/>
+ <path d="M 40 212 C 250 212, 380 219, 560 220" fill="none" stroke="#1b2a41" stroke-width="1.5" stroke-dasharray="6 6"/>
+ <path d="M 40 228 C 250 228, 380 221, 560 220" fill="none" stroke="#1b2a41" stroke-width="1.5" stroke-dasharray="6 6"/>
+ <ellipse cx="110" cy="220" rx="40" ry="20" fill="#1f6fd0" opacity="0.75"/>
+ <ellipse cx="330" cy="220" rx="60" ry="62" fill="#1f6fd0" opacity="0.45"/>
+ <ellipse cx="700" cy="220" rx="80" ry="60" fill="#1f6fd0" opacity="0.3"/>
+ <text x="110" y="290" font-size="22" text-anchor="middle" fill="#1f6fd0">LP01 held by the core</text>
+ <text x="330" y="330" font-size="22" text-anchor="middle" fill="#1f6fd0">core too small to hold it:</text>
+ <text x="330" y="358" font-size="22" text-anchor="middle" fill="#1f6fd0">the mode spreads to the cladding</text>
+ <text x="700" y="330" font-size="22" text-anchor="middle" fill="#1f6fd0">guided by cladding and air</text>
+ <rect x="250" y="60" width="200" height="30" rx="6" fill="#f3e9c6"/>
+ <text x="350" y="82" font-size="20" text-anchor="middle" fill="#7a5a00">r = 20 to 35 um</text>
+ <path d="M 330 150 C 400 120, 470 300, 560 260 C 620 230, 680 300, 760 280" fill="none" stroke="#e4572e" stroke-width="4" stroke-dasharray="10 8"/>
+ <text x="560" y="400" font-size="22" text-anchor="middle" fill="#e4572e">too steep here: power leaks into the next mode, LP02,</text>
+ <text x="560" y="428" font-size="22" text-anchor="middle" fill="#e4572e">beats with LP01, and is lost where LP02 is cut off (d = 1.8 um)</text>
+ <text x="960" y="196" font-size="20" text-anchor="end" fill="#5a6472">waist</text>
+</svg>
+</div>
+ <div class="col" style="flex:1.1">
+  <div class="card"><p><b>Adiabatic rule</b> (Love; Nagai and Aoki): the local angle |dr/dz| must stay below F times the delineation angle r (beta<sub>01</sub> - beta<sub>02</sub>) / 2pi.</p></div>
+  <div class="card"><p>The delineation angle has its <b>minimum, 11 mrad, at r = 28 um</b> for SMF-28 Ultra at 1539 nm: the band where the fiber must be shallowest.</p></div>
+  <div class="card"><p>Nagai and Aoki reach 99.7 % with <b>F = 0.4</b>. The design here uses <b>F = 0.3</b>.</p></div>
+ </div></div>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>The heater model and its calibration</h2>
+ <div class="row"><div class="fig" style="flex:3"><img src="fig/heater.png" alt="Gaussian and box hot zones; waist against elongation"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p><b>Fluidity model</b>: glass flows where the heater makes it fluid; the hot zone is a Gaussian with 1/phi(0) = 5.33 mm.</p></div>
+  <div class="card"><p class="num new">38.1 mm <small>model elongation at the 1.13 um cut-off; measured 37.8 mm (18 records). Box length from 19 cut-offs: 4.01 +- 0.05 mm.</small></p></div>
+  <p class="note">The images cannot tell a Gaussian from a box; the cut-off elongation fixes the length, the shape is an assumption checked below.</p>
+ </div></div>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>Check against the image scans: the transition the fixed heater draws</h2>
+ <div class="row"><div class="fig"><img src="fig/decay.png" alt="decay lengths of the measured transitions and the model"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p class="num">4.7 +- 0.9 mm <small>decay length of d(z), 11 scans, both sides</small></p></div>
+  <div class="card"><p class="num new">4.5 mm <small>fluidity model with the calibrated Gaussian</small></p></div>
+  <p class="note">The April scans are 10 to 20 % short along z (volume check), which makes their measured angles too large by the same factor. The three October scans pass the volume check.</p>
+ </div></div>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>The present recipe measured against the rule</h2>
+ <div class="row"><div class="fig"><img src="fig/angle.png" alt="local taper angle against radius, with the adiabatic limits"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p class="num old">0.70 <small>largest angle over the delineation angle, measured median, at r = 30 um (model 0.57)</small></p></div>
+  <div class="card"><p>Above F = 0.4 from <b>r = 24 to 39 um</b>. The two-mode model with this steepness gives <b>T = 0.970 and 6 % beating</b>, as measured.</p></div>
+  <p class="note">The shape is the main cause of the present loss. A further 0.5 to 1.5 % appears below a 1 um waist and is not a shape effect.</p>
+ </div></div>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>What the heat brush changes</h2>
+ <div class="row"><div class="fig">
+<svg viewBox="0 0 1000 440" aria-label="fixed heater against the heat brush">
+ <text x="250" y="36" font-size="26" text-anchor="middle" fill="#1b2a41" font-weight="600">fixed heater</text>
+ <rect x="205" y="60" width="90" height="40" rx="8" fill="#e4572e" opacity="0.85"/>
+ <path d="M 60 120 C 180 122, 220 170, 250 176 C 280 170, 320 122, 440 120" fill="none" stroke="#e4572e" stroke-width="4"/>
+ <path d="M 60 232 C 180 230, 220 182, 250 176 C 280 182, 320 230, 440 232" fill="none" stroke="#e4572e" stroke-width="4"/>
+ <text x="250" y="280" font-size="22" text-anchor="middle" fill="#5a6472">hot zone 5 mm: transition decays over 4.5 mm,</text>
+ <text x="250" y="308" font-size="22" text-anchor="middle" fill="#5a6472">about 0.6 to 0.7 of the delineation angle at r = 30 um</text>
+ <text x="750" y="36" font-size="26" text-anchor="middle" fill="#1b2a41" font-weight="600">heat brush</text>
+ <rect x="705" y="60" width="90" height="40" rx="8" fill="#e4572e" opacity="0.85"/>
+ <rect x="585" y="60" width="330" height="40" rx="8" fill="#e4572e" opacity="0.25"/>
+ <path d="M 560 46 h 380" stroke="#1f6fd0" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+ <text x="750" y="22" font-size="20" text-anchor="middle" fill="#1f6fd0">clamps sweep together, 8.3 mm at 1 mm/s</text>
+ <path d="M 540 120 C 660 124, 710 165, 750 170 C 790 165, 840 124, 960 120" fill="none" stroke="#1f6fd0" stroke-width="4"/>
+ <path d="M 540 232 C 660 228, 710 187, 750 182 C 790 187, 840 228, 960 232" fill="none" stroke="#1f6fd0" stroke-width="4"/>
+ <text x="750" y="280" font-size="22" text-anchor="middle" fill="#5a6472">the glass sees a longer, flatter hot zone while</text>
+ <text x="750" y="308" font-size="22" text-anchor="middle" fill="#5a6472">r = 20 to 40 um forms: shallower there, 0.3 of the limit</text>
+ <text x="500" y="370" font-size="22" text-anchor="middle" fill="#1b2a41">then the sweep shrinks to zero and the fixed heater alone draws the waist,</text>
+ <text x="500" y="398" font-size="22" text-anchor="middle" fill="#1b2a41">where the heater's own steepness is already far below the limit</text>
+ <defs><marker id="ab" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f6fd0"/></marker></defs>
+</svg>
+</div></div>
+ <p class="note">The heater cannot be made shorter, so the transitions cannot be made steeper than its own; sweeping the fiber through it makes them shallower where it matters. Sweep programme: constant from the start, then falling at da/dx = -1, chosen as the smallest that keeps |dr/dz| below 0.3 of the delineation angle with the hot zone at 0.9, 1.0 and 1.1 times its calibrated length.</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>The motion plan, F = 0.3</h2>
+ <div class="row"><div class="fig" style="flex:3"><img src="fig/plan.png" alt="clamp positions against time and the sweep programme"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p class="num new">8.3 mm <small>sweep at 1.0 mm/s, 38 reversals</small></p></div>
+  <div class="card"><p class="num new">49.3 mm <small>elongation, 8.2 min, stretch at 0.10 mm/s</small></p></div>
+  <div class="card"><p class="num new">81 lines <small>HSC-103 internal program, three speed sets; the CSV is the simulation input</small></p></div>
+ </div></div>
+ <p class="foot">results/plan/motion_plan_650nm_1539nm_lphi0_5.33_F0.3.csv and _hsc103_program.txt. The waist ends 4.2 mm from the clamp midpoint towards clamp 1.</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>Present recipe and brush plan, simulated with the same heater</h2>
+ <div class="row">
+  <div class="fig"><img src="fig/profiles.png" alt="taper shapes: measured scans, present recipe model, brush plan model"></div>
+  <div class="fig"><img src="fig/lp02.png" alt="power in LP02 along the taper for both"></div>
+ </div>
+ <div class="row" style="flex:0 0 auto">
+  <div class="card"><p class="num old">0.57 to 0.70 &rarr; <span class="new">0.29</span> <small>largest angle over the delineation angle in the band</small></p></div>
+  <div class="card"><p class="num old">0.984 &rarr; <span class="new">0.9999</span> <small>two-mode transmission, LP02 only; beating 3.2 % &rarr; 0.012 %</small></p></div>
+  <div class="card"><p class="num old">52 mm &rarr; <span class="new">63 mm</span> <small>tapered length; the waist stays 1.9 mm long within 5 %</small></p></div>
+ </div>
+ <p class="foot">Expected on the machine: 0.985 to 0.995. The measured transitions are 20 % steeper than the model's (F = 0.3 would read 0.36), and the sub-micron loss of 0.5 to 1.5 % is not from the shape.</p>
+</div></section>
+
+<section class="slide"><div class="frame">
+ <h2>Where to stop the pull</h2>
+ <div class="row"><div class="fig"><img src="fig/sensitivity.png" alt="waist against elongation for three hot-zone lengths"></div>
+ <div class="col" style="flex:1">
+  <div class="card"><p>A 10 % error in the hot-zone length moves a fixed-elongation waist from 0.65 um to <b>0.40 or 0.98 um</b>.</p></div>
+  <div class="card"><p>The final beat on the scope ends when the waist reaches 1.13 um, in any hot zone. Stopping a fixed <b>4.3 mm</b> later gives 0.65 um at all three.</p></div>
+  <p class="note">Surface tension, absent from the model, would shorten that stretch at slow speeds; one 0.03 mm/s pull with a record would measure it.</p>
+ </div></div>
+</div></section>
+
+<section class="slide"><div class="frame dark">
+ <h2>Before a fiber is pulled with this plan</h2>
+ <div class="row">
+  <div class="col">
+   <div class="card"><p><b>Joint review</b> of the F = 0.3 plan CSV and Sim Full Cycle in the stage viewer.</p></div>
+   <div class="card"><p><b>Controller</b>: set the three speed sets with SGSample, load the 81-line program into slot 2 with the SigmaKoki GUI, run it once without a fiber and compare the reported end positions with the plan.</p></div>
+   <div class="card"><p><b>Bench tests</b> of program mode: axis 2 reversals inside a continuous range, the OUT marker, the stop command.</p></div>
+  </div>
+  <div class="col">
+   <div class="card"><p><b>Measurements that settle the open points</b>: an SEM of one 41 or 45 mm fiber (0.78 against 1.25 um decides the cut-off reading; waist length tells Gaussian from box); OUT1 wired to the scope for exact time anchors; one slow pull for surface tension.</p></div>
+   <div class="card"><p><b>Rule that stands</b>: nothing runs on the pulling machine without Shayne present and a joint check; the planner never opens a serial port.</p></div>
+  </div>
+ </div>
+ <p class="foot">HANDOVER.md, docs/2026-10-04_adiabaticity_proposal.md, docs/2026-10-04_motion_executor_options.md</p>
+</div></section></div><script>
+const deck=document.querySelector('.deck');const slides=[...document.querySelectorAll('.slide')];
+function go(i){slides[Math.max(0,Math.min(slides.length-1,i))].scrollIntoView({behavior:'smooth'});}
+function cur(){return Math.round(deck.scrollTop/deck.clientHeight);}
+addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(cur()+1);}
+if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur()-1);}
+if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1);});
+</script></body></html>
