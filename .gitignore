@@ -2,21 +2,13 @@
 CLAUDE.md
 .claude/
 
-# projector expert files (pm experts init)
-cases/
-reports/
-mail/
+# projector session files (the expert's home is the parent folder since 2026-10-12)
 .projector/
 WRAP_UP.md
 AGENTS.md
-.expert.git/
 .claude/settings.json
 .claude/agents/
 .claude/skills/
-KNOWLEDGE.md
-GLOSSARY.md
-OPEN_QUESTIONS.md
 /CLAUDE.md
 /.claude/SITE-HANDOVER.md
-/.claude/HANDOVER.md
 /HISTORY.md
