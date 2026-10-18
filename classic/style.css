@@ -156,6 +156,15 @@ a.pdf-local { font-size: .95em; margin-left: 6px; }
 /*.pi-name-zh { font-size: 1.4rem; color: #333; }*/
 .pi-text { font-size: 0.8rem; } 
 .pi-lines div { margin: 2px 0; }
+.pi-teams { display: flex; flex-wrap: wrap; gap: 3px; margin: 3px 0 1px; max-width: 255px; /* the .pi-spacer width, so a pill row never widens a card */ }
+.pi-team  { font-size: .65rem; line-height: 1.5; padding: 0 7px; border-radius: 999px;
+            border: 1px solid var(--tc); color: var(--tc); background: color-mix(in srgb, var(--tc) 8%, white); white-space: nowrap; }
+.pi-team.lead { color: #fff; background: var(--tc); }
+.t-spectroscopy  { --tc: #B8860B; }
+.t-pathfinder    { --tc: #1F7FB8; }
+.t-lattice       { --tc: #6B4FC2; }
+.t-dqc           { --tc: #1E8E5A; }
+.t-superradiance { --tc: #D9591B; }
 .contact-block { margin-top: 28px; }
 
 .pi-spacer {
